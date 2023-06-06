@@ -231,11 +231,11 @@ function displayProjectDetails(data, projectName) {
         <div class="container">
             <div class="row floor-plan-section">
                 <div class="col-12 col-md-6">
-                    <img src="${project.floor_plan[0]}" alt="${project.name} Image">
+                    <img src="${project.floor_plan[0]}" alt="${project.name} Planta Baja">
                     <p>Planta Baja</p>
                 </div>
                 <div class="col-12 col-md-6">
-                    <img src="${project.floor_plan[1]}" alt="${project.name} Image">
+                    <img src="${project.floor_plan[1]}" alt="${project.name} Planta Alta">
                     <p>Planta Alta</p>
                 </div>
             </div>
