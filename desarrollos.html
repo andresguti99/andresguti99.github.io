@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A brief description of your webpage for better SEO.">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap/css/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+
+    <title>Desarrollos</title>
+
+    <!-- Include your custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- NavBar -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">
+            <img src="images/UREPPSA/UP_logo.png" id="company-logo" alt="Company Logo">
+        </a>
+        <div id="motto" class="mx-auto">
+            <span>Cada Vivienda un Compromiso</span>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+
+            <li class="nav-item dropdown space-right">
+                <a class="nav-link dropdown-toggle nav-icon-link " href="desarrollos.html?city=all" id="navbarDesarrollos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="bi bi-houses-fill"></i> Desarrollos
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDesarrollos" id="cities-dropdown">
+                    <li><a class="dropdown-item" href="desarrollos.html?city=all">Todos</a></li>
+                    <!-- Cities will be inserted here by JavaScript -->
+                </ul>
+            </li>
+
+            <!-- Add new Contacto link here -->
+            <li class="nav-item space-right">
+                <a class="nav-link dropdown-toggle nav-icon-link hide-caret " href="contacto.html" id="navbarContacto">
+                    <i class="bi bi-telephone-fill"></i> Contacto
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row" id="projects-container">
+        <!-- Projects will be injected here -->
+
+    </div>
+</div>
+
+<footer class="footer">
+    <p>Colores del boton: <span class="badge badge-available">Disponible</span> <span class="badge badge-sold">Vendido</span></p>
+</footer>
+
+<!-- JavaScript -->
+<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="general.js"></script>
+<script type="module" src="desarrollos.js"></script>
+
+</body>
+
+</html>

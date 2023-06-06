@@ -1,0 +1,289 @@
+{
+    "Celaya": {
+        "position": {
+            "x": "51",
+            "y": "62"
+        },
+        "Sienna": {
+            "name": "Nueva Sienna Residencial",
+            "short_name": "Sienna",
+            "year": "2021",
+            "description": "ENTREGA INMEDIATA - Sin Costo de Apartado <br>Vivienda ecológica <br> VISITA LA CASA MUESTRA",
+            "link": "https://www.facebook.com/NuevaSiennaResidencial/",
+            "price": "ULTIMAS $870,375.00",
+            "floors": "2",
+            "bedrooms": "3",
+            "bathrooms": "2",
+            "size": "4.6 x 16.5 (75.9) m2",
+            "construction_size": "77.16 m2",
+            "additional_info": "Fraccionamiento cerrado con cerco electrico y camaras de vigilancia, cerca del hospital materno de Celaya",
+            "phone": "+52 461 377 7723",
+            "location": "Lima 101, Celaya, Guanajuato<br>ESTAMOS UBICADOS ENTRANDO POR LA UNIVERSIDAD DE GUANAJUATO Y EL HOSPITAL MATERNO DE CELAYA.<br>A DOS CUADRAS DE DEL LIBRAMIENTO JUAN PABLO II<br><br>",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.4289339979!2d-100.83731052488231!3d20.488635406110934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842cbb5aa8b05997%3A0xa1fbac46d3468000!2sNueva%20Sienna%20Residencial!5e0!3m2!1ses-419!2smx!4v1682039781244!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "images/Ciudades/Celaya/Sienna/Logo_Sienna.png",
+            "images": [
+                "images/Ciudades/Celaya/Sienna/Sienna.jpg",
+                "images/Ciudades/Celaya/Sienna/Sala.jpg",
+                "images/Ciudades/Celaya/Sienna/Cocina.jpg",
+                "images/Ciudades/Celaya/Sienna/IMG_4063.JPG"
+            ],
+            "floor_plan": [
+                "images/Ciudades/Celaya/Sienna/Planta_Baja_color.png",
+                "images/Ciudades/Celaya/Sienna/Planta_Alta_color.png"
+            ]
+        }
+    },
+    "Lazaro": {
+        "position": {
+            "x": "45.5",
+            "y": "77"
+        },
+        "Bassols": {
+            "name": "Bassols",
+            "short_name": "Bassols",
+            "year": "2019",
+            "description": "72 viviendas Divididas en 4 Privadas<br>Acceso Independiente y Reja Automatizada.<br>Área Verde en Cada Privada.<br>Malla Electrificada en Todo el Perímetro.<br>Alumbrado Público Subterráneo.<br>Pavimentación de Adoquín.<br>",
+            "link": "https://www.facebook.com/ureppsa.mx/",
+            "price": "VENDIDO",
+            "floors": "2",
+            "bedrooms": "3 con Área de Guardado",
+            "bathrooms": "2 1/2",
+            "size": " 7 x 18 (126) m2",
+            "construction_size": "124 m2",
+            "additional_info": "(Vestidor, Aire Acondicionado Inverter y Baño en Recámara Principal).<br>Instalación a 220v y Preparación en Habitaciones Secundarias con Ductos Para los Aires Acondicionados.<br>Acceso Cubierto, vestíbulos y Estudio.<br>Patio de Servicio Independiente al Frente<br>Area de Jardín en Parte Posterior.<br>Doble Cochera<br>Cocina Integral Equipada con (Parrilla, Campana, Tarja y Barra Desayunadora)<br>Protecciones en Todo el Frente de la Casa.<br>      Calentador de Recuperación Rápida y Lavadero.<br>Arquitectura Contemporánea.<br>Orientadas para clima cálido.<br>Diseño estructural para zona de alta sismicidad.<br>Casas solas con muros independientes.",
+            "phone": "+52 753 120 0721",
+            "location": "Av. Narciso Bassols, Pie de Casa, 60956 Lázaro Cárdenas, Mich.",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3795.0246271950036!2d-102.23238878919008!3d17.977591185463677!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315df4a5e92a95%3A0xb09f4c02f19862fb!2sConjunto%20Habitacional%20BASSOLS!5e0!3m2!1ses-419!2smx!4v1685560571036!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "images/Ciudades/Lazaro/Bassols/Logo_Bassols.jpg",
+            "images": [
+                "images/Ciudades/Lazaro/Bassols/Bassols.jpg",
+                "images/Ciudades/Lazaro/Bassols/Baño_Principal.jpg",
+                "images/Ciudades/Lazaro/Bassols/Cocina.jpg",
+                "images/Ciudades/Lazaro/Bassols/Hab_Principal.jpg",
+                "images/Ciudades/Lazaro/Bassols/Sala_PBaja.jpg"
+            ]
+        },
+        "Rinconada": {
+            "name": "Rinconada del Balsas",
+            "short_name": "Rinconada",
+            "year": 2017,
+            "logo": "images/Ciudades/Lazaro/Rinconada/Logo_Rinconada_del_Balsas.jpg",
+            "address": "Rinconada del Balsas Address",
+            "images": [
+                "images/Ciudades/Lazaro/Rinconada/Rinconada.jpg",
+                "images/Ciudades/Lazaro/Rinconada/Modelo_Corbeta.jpg",
+                "images/Ciudades/Lazaro/Rinconada/Modelo_Fragata.jpg",
+                "images/Ciudades/Lazaro/Rinconada/Modelo_Goleta.jpg",
+                "images/Ciudades/Lazaro/Rinconada/Multiple.jpg",
+                "images/Ciudades/Lazaro/Rinconada/Muestra.jpg"
+            ],
+            "description": "Todas nuestras viviendas cuentan con eco-tecnologías, que se traducen en ahorro para tu economía.",
+            "link": "https://www.facebook.com/ureppsa.mx/",
+            "price": "VENDIDO",
+            "bedrooms": "3 con Área de Guardado",
+            "bathrooms": "2 1/2",
+            "size": "229.76 m2",
+            "construction_size": "136.20 m2",
+            "additional_info": "Contamos con 3 modelos de viviendas: Goleta, Fragata y Corbeta. -DOBLE COCHERA Y PROTECCIONES EN TODO EL FRENTE DE LA CASA. -COCINA INTEGRAL EQUIPADA (CON PARRILLA, CAMPANA Y BARRA DESAYUNADORA. -AIRE ACONDICIONADO INVERTER EN RECÁMARA PRINCIPAL.",
+            "phone": "+52 753 120 0721",
+            "location": "Arroyo Guacamayas,Lazaro Cardenas, Michoacan<br>Estamos ubicados sobre el canal que se ubica atrás del aeropuerto a un lado del Campo del Pato.",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1207.6964119592456!2d-102.21640395489209!3d18.000193606065483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315d05ca744269%3A0x95e1dc0863f22c5a!2sFraccionamiento%20Rinconada%20Del%20Balsas!5e0!3m2!1ses-419!2smx!4v1685561512407!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>"
+        },
+        "PuertoPacifico": {
+            "name": "Puerto Pacifico",
+            "short_name": "PuertoPacifico",
+            "year": "2014",
+            "description": "Somos el fraccionamiento más grande de la costa michoacana. \n<br>\nNuestras viviendas son en 2 niveles con 3 recamaras en la planta alta, de muros independientes, y contamos con 19 áreas verdes equipadas. ",
+            "link": "https://www.facebook.com/ureppsa.mx/ ",
+            "price": "VENDIDO",
+            "bedrooms": "3",
+            "bathrooms": "2",
+            "size": "XX",
+            "construction_size": "XX",
+            "additional_info": "Todas nuestras viviendas cuentan con eco-tecnologías, que se traducen en ahorro para tu economía.",
+            "phone": "+52 753 120 0721",
+            "location": "Puertos Mexicanos 59-E, Fraccionamiento Puerto Pacífico, 60990 Mich.",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3794.765350514099!2d-102.21495548918983!3d17.98965078510518!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315d01d463685d%3A0x23f35235f7871001!2sFraccionamiento%20Puerto%20Pac%C3%ADfico%2C%2060995%20Mich.!5e0!3m2!1ses-419!2smx!4v1685653980319!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "images/Ciudades/Lazaro/PuertoPacifico/puerto-pacifico.jpg",
+            "images": [
+                "images/Ciudades/Lazaro/PuertoPacifico/PUERTO_PACIFICO_PORTICO.jpg",
+                "images/Ciudades/Lazaro/PuertoPacifico/7 02 R.jpg"
+            ]
+        },
+        "PuertoNuevo": {
+            "name": "Puerto Nuevo",
+            "short_name": "PuertoNuevo",
+            "year": "2010",
+            "description": "PUERTO NUEVO EN CD.LAZARO CARDENAS, MICHOACAN",
+            "link": "https://www.facebook.com/ureppsa.mx/ ",
+            "price": "VENDIDO",
+            "bedrooms": "XX",
+            "bathrooms": "XX",
+            "size": "XX",
+            "construction_size": "XX",
+            "additional_info": "XX",
+            "phone": "+52 753 120 0721",
+            "location": "Revisar el mapa",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5614.866892804052!2d-102.1952201507369!3d17.960175792458095!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315c6e5e7c7767%3A0xe3e08f4add12efab!2sPuerto%20nuevo!5e0!3m2!1ses-419!2smx!4v1685654477582!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "images/Ciudades/Lazaro/PuertoNuevo/logo.png",
+            "images": [
+                "images/Ciudades/Lazaro/PuertoNuevo/100_9584 r.jpg",
+                "images/Ciudades/Lazaro/PuertoNuevo/100_9325 r.jpg"
+            ]
+        },
+        "PuertoReal": {
+            "name": "Puerto Real",
+            "short_name": "PuertoReal",
+            "year": "2009",
+            "description": "PUERTO REAL EN CD. LAZARO CARDENAS, MICHOACAN",
+            "link": "https://www.facebook.com/ureppsa.mx/ ",
+            "price": "VENDIDO",
+            "bedrooms": "XX",
+            "bathrooms": "XX",
+            "size": "XX",
+            "construction_size": "XX",
+            "additional_info": "XX",
+            "phone": "+52 753 120 0721",
+            "location": "Belisario Domínguez, La Laguna, Comunal Morelos, 60990 La Orilla, Mich.",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3794.603599113351!2d-102.22389238918974!3d17.997170284881562!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315d1b5b196857%3A0x10fc6e62ae916e0!2sFraccionamiento%20Puerto%20Real!5e0!3m2!1ses-419!2smx!4v1685654749300!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "images/Ciudades/Lazaro/PuertoReal/PuertoReal.png",
+            "images": [
+                "images/Ciudades/Lazaro/PuertoReal/03_FACHADA_PUERTO_REAL_001.jpg",
+                "images/Ciudades/Lazaro/PuertoReal/05_CALLE_BOYA_PUERTO_REAL_001.jpg",
+                "images/Ciudades/Lazaro/PuertoReal/04_FACHADA_PUERTO_REAL_002.jpg",
+                "images/Ciudades/Lazaro/PuertoReal/CALLE_BOYA_PUERTO_REAL_002.jpg",
+                "images/Ciudades/Lazaro/PuertoReal/DSC00142.JPG"
+            ]
+        }
+    },
+    "Ixtapa": {
+        "position": {
+            "x": "50",
+            "y": "81"
+        },
+        "VillasAcqua": {
+            "name": "Villas Acqua",
+            "short_name": "VillasAcqua",
+            "year": "2016",
+            "description": "En la zona residencial de Ixtapa-Zihuatanejo, a solo tres cuadras de la playa de El Palmar y a dos cuadras de la zona comercial.",
+            "link": "https://www.facebook.com/ureppsa.mx",
+            "price": "VENDIDO",
+            "bedrooms": "3",
+            "bathrooms": "2 1/2",
+            "size": "XX",
+            "construction_size": "XX",
+            "additional_info": "Mejores Villas de Ixtapa",
+            "phone": "+52 753 120 0721",
+            "location": "Paseo Agua de Corre 11, Las Brisas, Ixtapa, Zihuatanejo, Guerrero",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3801.7439112248403!2d-101.59982788919602!3d17.662283994757868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84347666cfa20c91%3A0xba00d5d1e1ea6f40!2sVillas%20Acqua!5e0!3m2!1ses-419!2smx!4v1685649176233!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "images/Ciudades/Ixtapa/VillasAcqua/villas-acqua.jpg",
+            "images": [
+                "images/Ciudades/Ixtapa/VillasAcqua/galeria_1b.jpg",
+                "images/Ciudades/Ixtapa/VillasAcqua/galeria_1c.jpg",
+                "images/Ciudades/Ixtapa/VillasAcqua/galeria_1j.jpg",
+                "images/Ciudades/Ixtapa/VillasAcqua/galeria_2d.jpg",
+                "images/Ciudades/Ixtapa/VillasAcqua/galeria_2e.jpg",
+                "images/Ciudades/Ixtapa/VillasAcqua/galeria_3j.jpg",
+                "images/Ciudades/Ixtapa/VillasAcqua/galeria_3n.jpg"
+            ]
+        }
+    },
+    "Morelia": {
+        "position": {
+            "x": "49",
+            "y": "70"
+        },
+        "RinconadaMorelia": {
+            "name": "Rinconada De Morelia",
+            "short_name": "RinconadaMorelia",
+            "year": "2015",
+            "description": "ESTRENA CASA : DOS PLANTAS: 2 RECAMARAS, SALA-COMEDOR, COCINA, PATIO DE SERVICIO, 1 1/2 BAÑOS, CAJÓN DE ESTACIONAMIENTO.",
+            "link": "https://www.facebook.com/ureppsa.mx/",
+            "price": "VENDIDO",
+            "bedrooms": "2",
+            "bathrooms": "1 1/2",
+            "size": "XX",
+            "construction_size": "XX",
+            "additional_info": "Mejor Rinconada de Morelia --- A",
+            "phone": "+52 753 120 0721",
+            "location": "CALLE VILLALONGIN FRACC. RINCONADA DE MORELIA (POR AVENIDA TORREÓN NUEVO)",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3755.315900349612!2d-101.21928358915483!3d19.741728730659304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842d0f031e3e75ef%3A0x59202f3e6048d0ce!2sVillalong%C3%ADn%2C%2058116%20Morelia%2C%20Mich.!5e0!3m2!1ses-419!2smx!4v1685651142870!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "images/Ciudades/Morelia/RinconadaMorelia/logo_rinconada_morelia.png",
+            "images": [
+                "images/Ciudades/Morelia/RinconadaMorelia/22Conjunto_D_430_pm.png",
+                "images/Ciudades/Morelia/RinconadaMorelia/ejemplo.png",
+                "images/Ciudades/Morelia/RinconadaMorelia/1-Planta_baja.png",
+                "images/Ciudades/Morelia/RinconadaMorelia/2-Planta_alta.png",
+                "images/Ciudades/Morelia/RinconadaMorelia/3-Fachadas.png"
+            ]
+        }
+    },
+    "Zitacuaro": {
+        "position": {
+            "x": "52",
+            "y": "70"
+        },
+        "MiradorFresno": {
+            "name": "Mirador Del Fresno",
+            "short_name": "MiradorFresno",
+            "year": "2008",
+            "description": "MIRADOR DEL FRESNO EN ZITÁCUARO, MICHOACÁN",
+            "link": "https://www.facebook.com/ureppsa.mx/ ",
+            "price": "VENDIDO",
+            "bedrooms": "XX",
+            "bathrooms": "XX",
+            "size": "XX",
+            "construction_size": "XX",
+            "additional_info": "XX",
+            "phone": "+52 753 120 0721",
+            "location": "Checar Map Las Jacarandas, 61512 Zitácuaro, Mich.",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.5696325088084!2d-100.3756826541817!3d19.430992294091723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d2a56d08bab02f%3A0x8e6ef93892cdfd2e!2sMirador%20del%20Fresno%20III!5e0!3m2!1ses-419!2smx!4v1685654998906!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "images/Ciudades/Zitacuaro/MiradorFresno/mirador-del-fresno.jpg",
+            "images": [
+                "images/Ciudades/Zitacuaro/MiradorFresno/PANORAMICA MZ r.jpg"
+            ]
+        },
+        "MiradorSanFrancisco": {
+            "name": "Mirador  De San Francisco",
+            "short_name": "MiradorSanFrancisco",
+            "year": "2005",
+            "description": "MIRADOR DE SAN FRANCISCO EN ZITÁCUARO, MICHOACÁN",
+            "link": "https://www.facebook.com/ureppsa.mx/ ",
+            "price": "VENDIDO",
+            "bedrooms": "XX",
+            "bathrooms": "XX",
+            "size": "XX",
+            "construction_size": "XX",
+            "additional_info": "XX",
+            "phone": "+52 753 120 0721",
+            "location": "Checar Mapa -- Sin nombre No. 320 8, La Cuesta, 61510 Zitácuaro, Mich.",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15050.275764056229!2d-100.37310040574174!3d19.431022143983352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d2a53dde05b307%3A0xcbdcc9131a7329d4!2sFraccionamiento%20San%20Francisco!5e0!3m2!1ses-419!2smx!4v1685662796434!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "images/Ciudades/Zitacuaro/MiradorSanFrancisco/mirador-de-san-francisco.jpg",
+            "images": [
+                "images/Ciudades/Zitacuaro/MiradorSanFrancisco/DSC07623 r.jpg",
+                "images/Ciudades/Zitacuaro/MiradorSanFrancisco/DSC07624 r.jpg"
+            ]
+        },
+        "MiradorCarolina": {
+            "name": "Mirador De La Carolina",
+            "short_name": "MiradorCarolina",
+            "year": "2004",
+            "description": "MIRADOR DE LA CAROLINA EN ZITÁCUARO, MICHOACÁN",
+            "link": "https://www.facebook.com/ureppsa.mx/ ",
+            "price": "VENDIDO",
+            "bedrooms": "XX",
+            "bathrooms": "XX",
+            "size": "XX",
+            "construction_size": "XX",
+            "additional_info": "XX",
+            "phone": "+52 753 120 0721",
+            "location": "Lomas de la Carolina, Zitacuaro, Michoacan",
+            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7525.500420041182!2d-100.35347271244281!3d19.423195759184814!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d2a37b8f271dbd%3A0x149f275d9f7350d!2sLa%20Carolina%2C%20Lomas%20de%20la%20Carolina%2C%20Zit%C3%A1cuaro%2C%20Mich.!5e0!3m2!1ses-419!2smx!4v1685662916627!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+            "logo": "images/Ciudades/Zitacuaro/MiradorCarolina/mirador-de-la-carolina.jpg",
+            "images": [
+                "images/Ciudades/Zitacuaro/MiradorCarolina/DSC05698 r.jpg",
+                "images/Ciudades/Zitacuaro/MiradorCarolina/DSC05691 r.jpg"
+            ]
+        }
+    }
+}

@@ -1,0 +1,540 @@
+:root {
+    --popover-max-width: 400px;
+    --padding: 10px;
+    --map-container-width: 100%;
+    --map-container-height: 100%;
+    --map-container-margin: 20px auto;
+    --color-vendido: #dc3545; /*Color for sold projects button*/
+    --color-disponible:#00b309;/*Color for available projects button*/
+    --color-default:#007bff /*Default color for projects button */
+}
+
+* {
+    font-family: Poppins, serif;
+
+}
+
+strong {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700; /* adjust this as needed */
+}
+
+
+/* Popover Styles */
+.popover-body div {
+    padding: var(--padding);
+}
+
+.popover {
+    max-width: var(--popover-max-width);
+}
+
+/* Map Styles */
+#map-image {
+    width: var(--map-container-width);
+    height: var(--map-container-height);
+    object-fit: contain;
+}
+
+#map-container svg {
+    pointer-events: none;
+}
+
+#map-container .bi-geo-alt-fill {
+    pointer-events: auto;
+}
+
+#map-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--map-container-width);
+    height: var(--map-container-height);
+    z-index: 1;
+}
+
+#map-wrapper {
+    position: relative;
+    width: auto;
+    padding-top: 67.97%; /* Adjust this according to your map's aspect ratio */
+    height: 0;
+    margin: auto;
+}
+
+#map-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: var(--map-container-width);
+    height: var(--map-container-height);
+    margin: var(--map-container-margin);
+}
+
+.border {
+    border: 1px solid #000; /* Change as needed */
+    padding: 15px;
+    border-radius: 10px; /* Change this value to adjust the roundness of the border */
+}
+
+/*Project Carousel styles*/
+
+.carousel-item {
+    position: relative;
+}
+
+.project-overlay-1 {
+    animation: foldDown 1.5s ease-out forwards;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50%;
+    width: 25%;
+    background-color: rgb(100, 100, 100, 90%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.5); /* Change as needed */
+    cursor: default;
+
+}
+
+
+.project-logo-container img {
+    width: 20vw;
+    height:auto;
+}
+
+.project-overlay-2 {
+    animation: foldUp 1.5s ease-out forwards;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 50%;
+    width: 25%;
+    background-color: rgba(0, 179, 9, 0.7); /*background-color: rgba(0, 158, 179, 0.5);  Azul*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 10px 3px rgba(0, 0, 0, 0.7); /* Change as needed */
+    padding: 10px; /* Added to prevent text from touching the edges */
+    text-align: center; /* Centers text */
+    cursor: default;
+}
+
+.project-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1; /* Allows the text-wrapper to take up available space, pushing the <p> to the bottom */
+}
+
+.project-overlay-2 h3 {
+    font-size: 2vw; /* Adjust as needed */
+    line-height: 2.5vw; /* Adjust as needed */
+    color: white; /* Change the color as needed */
+    word-wrap: break-word; /* Allows the text to break onto the next line */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds shadow to text */
+    padding-bottom: 10px;
+}
+
+.project-overlay-2 p {
+    font-size: 1.5vw; /* Adjust as needed */
+    line-height: 1.7vw; /* Adjust as needed */
+    color: white; /* Change the color as needed */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Adds shadow to text */
+    margin-top: auto; /* Pushes the paragraph to the bottom */
+}
+
+
+/*Project logos from the JS*/
+.project-logos-container {
+    animation: loadUP 1.5s cubic-bezier(0.680, -0.550, 0.265, 1.550) both;
+    position: absolute;
+    bottom: 0;
+    left: 25%;
+    height: 50%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding: 10px;
+
+
+}
+
+.project-logo-overlay {
+    position: relative;
+    width:15%; /* adjust as necessary */
+    height: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: center;
+    padding: 0.5vw; /* Adjust as per your requirements */
+}
+
+.project-logo-overlay img {
+    max-width: 100%;
+    height: auto;
+}
+
+/*Classes for the project slide images*/
+.project-carousel-image-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 66.67%; /* based on your first image aspect ratio */
+    background-color: #ffffff;
+}
+
+.project-carousel-image {
+    position: absolute;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+
+
+/* Set a minimum font size for small screens */
+@media screen and (max-width: 480px) {
+    .project-overlay-2 h3 {
+        font-size: 10px; /* Adjust as needed */
+        line-height: 15px;
+    }
+}
+
+@keyframes foldDown {
+    0% {
+        transform-origin: top;
+        transform: perspective(400px) rotateX(-90deg);
+    }
+    100% {
+        transform-origin: top;
+        transform: perspective(400px) rotateX(0deg);
+    }
+}
+
+@keyframes foldUp {
+    0% {
+        transform-origin: bottom;
+        transform: perspective(400px) rotateX(90deg);
+    }
+    100% {
+        transform-origin: bottom;
+        transform: perspective(400px) rotateX(0deg);
+    }
+}
+
+@keyframes loadUP {
+    0% {
+        transform: scaleY(0.1) translateY(100%);
+        transform-origin: 50% 100%;
+        opacity: 1;
+    }
+    100% {
+        transform: scaleY(1) translateY(0);
+        transform-origin: 50% 100%;
+        opacity: 1;
+    }
+}
+
+
+/* Badge Styles */
+.badge {
+    padding: 10px 15px;
+    font-size: 0.9em;
+    border-radius: 3px;
+    margin: 0 5px;
+}
+
+.badge-available {
+    background-color: var(--color-disponible);
+    color: #fff;
+}
+
+.badge-sold {
+    background-color: var(--color-vendido);
+    color: #fff;
+}
+
+
+
+.badge-mini {
+    padding: 5px 10px;  /* adjust these values to your preference */
+}
+
+
+
+/* Button Styles
+ Recordar consultar si dejar el cambio cuando hover o dejar sus colores de
+ Disponible o vendido por default.
+ Solo remover btn y :hover de los estilos*/
+.btn {
+    background-color: var(--color-default);
+    color: #fff;
+    transition: background-color 0.3s ease;
+}
+
+.btn-available:hover {
+    border: 1px solid var(--color-disponible);
+    background-color: var(--color-disponible);
+    color: #fff;
+}
+
+.btn-sold:hover {
+    border: 1px solid var(--color-vendido);
+    background-color: var(--color-vendido);
+    color: #fff;
+}
+
+/* Projects Container Styles */
+#projects-container {
+    margin-bottom: 80px;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Icon Styles */
+.bi {
+    cursor: pointer;
+    width: 1.5em;
+    height: 1.5em;
+
+}
+
+
+
+
+.icon-facebook {
+    font-size: 2em;
+}
+
+.bi-facebook {
+    width: 1.5em;
+}
+
+.project-logo {
+    margin-right: 10px;
+}
+
+.hovered {
+    filter: drop-shadow(0 0 10px blue);
+    transition: filter 0.3s ease-in-out;
+}
+
+/* Navbar Styles */
+#company-logo {
+    height: 10vw;
+}
+
+.nav-item {
+    font-size: max(3vw, 14px);
+}
+
+.dropdown-item {
+    font-size: max(2vw, 12px);
+}
+
+.nav-icon-link {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.hide-caret::after {
+    display: none;
+}
+
+.space-right {
+    margin-right: 1.5rem; /* Adjust as needed */
+}
+
+#motto {
+    font-style: italic;
+    color: #fff; /* adjust as needed */
+    font-size: max(2vw, 14px);
+}
+
+.bi-houses-fill::before {
+    color: rgb(13, 110, 253);
+}
+
+.bi-telephone-fill::before {
+    color: rgba(200,0,0,1)
+}
+
+/* Media Query */
+@media only screen and (max-width: 600px) {
+    #company-logo {
+        height: 80px;
+    }
+
+    .navbar-item {
+        font-size: 16px;
+    }
+
+    .dropdown-item {
+        font-size: 16px;
+    }
+}
+
+/* Footer Styles */
+.footer {
+    width: 100%;
+    padding: 20px 0;
+    background-color: #f8f9fa;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    font-size: 0.9rem;
+}
+
+/*Detailed project page*/
+.top-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 100vh;
+    text-align: center;
+    color: white;
+}
+
+.top-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: white;
+    opacity: 0.3;
+    z-index: 1;
+}
+
+.bg-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0; /* Make sure the image is below the white overlay */
+}
+
+.logo-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+.logo-overlay {
+    width: 100%;
+    opacity: 0.5;
+    animation: fadeInUp 2s ease-in-out forwards;
+}
+
+
+.project-info {
+    text-align: center;
+    padding: 20px;
+}
+
+.project-info h2 {
+    font-size: 2em;
+    animation: fadeInUp 2s ease-in-out forwards;
+}
+
+.project-info .project-price,
+.project-info .project-description {
+    animation: fadeInLeft 2s ease-in-out forwards;
+}
+
+.project-details-section {
+    margin-top: 2em;
+}
+
+.project-details {
+    animation: fadeInRight 2s ease-in-out forwards;
+}
+
+.project-map {
+    width: 100%;
+    height: 500px;
+    border: none;
+    animation: fadeInLeft 2s ease-in-out forwards;
+}
+
+.floor-plan-section {
+    display: flex;
+    justify-content: center;
+}
+
+.floor-plan-section img {
+    max-width: 80%;
+    height: auto;
+}
+
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 100%, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translate3d(-100%, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+.contact-icons i {
+    font-size: 24px; /* Change this value to adjust the size */
+    margin-right: 10px;
+}
+
+.price-badge-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+
+
+

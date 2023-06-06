@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A brief description of your webpage for better SEO.">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bootstrap/css/bootstrap-icons.css">
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+
+  <title>Desarrollos</title>
+
+  <!-- Include your custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<!-- NavBar -->
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">
+      <img src="images/UREPPSA/UP_logo.png" id="company-logo" alt="Company Logo">
+    </a>
+    <div id="motto" class="mx-auto">
+      <span>Cada Vivienda un Compromiso</span>
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </div>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav ml-auto">
+
+      <li class="nav-item dropdown space-right">
+        <a class="nav-link dropdown-toggle nav-icon-link " href="desarrollos.html?city=all" id="navbarDesarrollos" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-houses-fill"></i> Desarrollos
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDesarrollos" id="cities-dropdown">
+          <li><a class="dropdown-item" href="desarrollos.html?city=all">Todos</a></li>
+          <!-- Cities will be inserted here by JavaScript -->
+        </ul>
+      </li>
+
+      <!-- Add new Contacto link here -->
+      <li class="nav-item space-right">
+        <a class="nav-link dropdown-toggle nav-icon-link hide-caret " href="contacto.html" id="navbarContacto">
+          <i class="bi bi-telephone-fill"></i> Contacto
+        </a>
+      </li>
+
+    </ul>
+  </div>
+</nav>
+
+<!-- **Remplazar a server side-->
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <form action="https://formspree.io/f/mwkjjrrj" method="POST">
+        <div class="container mt-5">
+          <h2>Contactanos</h2>
+          <p><strong>Llámanos y haz una cita o escríbenos para que resolvamos tus dudas</strong></p>
+          <form>
+            <div class="mb-3">
+              <label for="inputName" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="inputName" name="Nombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="inputPhone" class="form-label">Teléfono</label>
+              <input type="tel" class="form-control" id="inputPhone" name="Tel" required>
+            </div>
+            <div class="mb-3">
+              <label for="inputEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="inputEmail" name="Mail" required>
+            </div>
+            <div class="mb-3">
+              <label for="inputDestination" class="form-label">Destino</label>
+              <select  id="inputDestination" name="Destino" class="form-control" required>
+                <option value="">Seleccione una Opción</option>
+                <option value="igarza@ureppsa.mx">Gerencia Comercial</option>
+                <option value="enieto@ureppsa.mx">Asesor Comercial</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="inputSubject" class="form-label">Asunto</label>
+              <textarea id="inputSubject" name="Asunto" class="form-control" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Enviar</button>
+            <small id="emailHelp" class="form-text text-muted">*Nota: Si al regresar a la página su información todavía aparece en el formulario, no se preocupe. Esto es normal y no afecta el envío exitoso de su mensaje.</small>
+          </form>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4 mt-3">
+      <h3>Información de Contacto</h3>
+      <p><strong>Telefono:</strong> <a href="tel:4433242601">4433242601</a></p>
+      <p><strong>Celular:</strong> <a href="tel:7531200721">7531200721</a></p>
+      <p><strong>E-mail:</strong> <a href="mailto:enieto@ureppsa.mx">enieto@ureppsa.mx</a></p>
+
+      <h3>Redes Sociales</h3>
+      <div class="contact-icons">
+        <a href="https://wa.me/7531200721?text=Quiero%20informes%20de%20UREPPSA" target="_blank" rel="noopener noreferrer"><i class="bi bi-whatsapp"></i></a>
+        <a href="https://www.facebook.com/ureppsa.mx/" target="_blank" rel="noopener noreferrer"><i class="bi bi-facebook"></i></a>
+      </div>
+
+      <h3>Dirección</h3>
+      <p>Casa Mata #300</p>
+      <p>Chapultepec Sur, Morelia, Michoacán</p>
+
+      <h3>Mapa</h3>
+      <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3756.48997749896!2d-101.18086075414018!3d19.691752985187936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842d0de254266b33%3A0xc3759eabebefb7fa!2sBatalla%20de%20Casa%20Mata%20300%2C%20Chapultepec%20Sur%2C%2058260%20Morelia%2C%20Mich.!5e0!3m2!1ses!2smx!4v1685121446802!5m2!1ses!2smx" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="general.js"></script>
+<script>
+  document.querySelector("form").addEventListener("submit", function(event) {
+    var phoneInput = document.querySelector("#inputPhone");
+    var phone = phoneInput.value;
+
+    // Check if the phone number only contains numbers and is exactly 10 digits long
+    var phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+      alert("Por favor introduce un telefono valido.");
+      event.preventDefault();
+    }
+
+    var emailInput = document.querySelector("#inputEmail");
+    var email = emailInput.value;
+
+    // Email validation is handled by the built-in HTML5 validation due to the input type being "email",
+    // but you can add custom email validation here if needed
+
+  }, false);
+</script>
+
+</body>
+
+</html>
