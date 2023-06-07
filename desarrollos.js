@@ -206,8 +206,12 @@ function displayProjectDetails(data, projectName) {
                 <p><strong>Baños:</strong> ${project.bathrooms}</p>
                 <p><strong>Superficie de Terreno:</strong> ${project.size}</p>
                 <p><strong>Superficie Construida:</strong> ${project.construction_size}</p>
-                <p><strong>Características Principales:</strong> ${project.additional_info}</p>
+                <p><strong>Características Principales de la Vivienda:</strong> ${project.house_info}</p>
+                <p><strong>Características del Fraccionamiento:</strong> ${project.additional_info}</p>
 
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
                 <div class="contact-info mt-4 mb-4">
                     <h3>Contactanos</h3>
                     <p><strong>Teléfono:</strong> <a href="tel:${project.phone}">${project.phone}</a></p>
@@ -216,9 +220,6 @@ function displayProjectDetails(data, projectName) {
                         <a href="${project.link}" target="_blank"><i class="bi bi-facebook"></i></a>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-12 col-md-6">
             <p><strong>Ubicación:</strong> ${project.location}</p>
             ${project.mapEmbed}
         </div>
