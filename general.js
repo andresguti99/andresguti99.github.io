@@ -67,7 +67,7 @@ function updateCarousel (projects) {
             </div>
             <div class="project-overlay-2">
               <div class="project-text-wrapper">
-                <h3> Precio: <span style="color:#29292f;font-weight:bold">${project.price}</span>!</h3>
+                <h3> Precio: <span style="color:#FFFFFF;font-weight:bold">${project.price}</span>!</h3>
               </div>
               <p>${project.name}</p>
             </div>
