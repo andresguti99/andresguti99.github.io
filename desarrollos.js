@@ -202,7 +202,7 @@ function displayProjectDetails(data, projectName) {
         <div class="col-12 col-md-6">
             <div class="project-details">
                 <p><strong>Plantas:</strong> ${project.floors}</p>
-                <p><strong>Recamaras:</strong> ${project.bedrooms}</p>
+                <p><strong>Recámaras:</strong> ${project.bedrooms}</p>
                 <p><strong>Baños:</strong> ${project.bathrooms}</p>
                 <p><strong>Superficie de Terreno:</strong> ${project.size}</p>
                 <p><strong>Superficie Construida:</strong> ${project.construction_size}</p>
@@ -213,7 +213,7 @@ function displayProjectDetails(data, projectName) {
         </div>
         <div class="col-12 col-md-6">
                 <div class="contact-info mt-4 mb-4">
-                    <h3>Contactanos</h3>
+                    <h3>Contáctanos</h3>
                     <p><strong>Teléfono:</strong> <a href="tel:${project.phone}">${project.phone}</a></p>
                     <div class="contact-icons">
                         <a href="https://wa.me/${project.phone.replace(/\s/g, '')}?text=Quiero%20informes%20de%20${encodeURIComponent(project.name)}" target="_blank"><i class="bi bi-whatsapp"></i></a>
