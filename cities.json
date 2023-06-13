@@ -91,7 +91,10 @@
             "location": "Arroyo Guacamayas,Lazaro Cardenas, Michoacan<br>Estamos ubicados sobre el canal que se ubica atrás del aeropuerto a un lado del Campo del Pato.",
             "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1207.6964119592456!2d-102.21640395489209!3d18.000193606065483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315d05ca744269%3A0x95e1dc0863f22c5a!2sFraccionamiento%20Rinconada%20Del%20Balsas!5e0!3m2!1ses-419!2smx!4v1685561512407!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
             "floors": "2",
-            "house_info": "<ul><li>Contamos Con 3 Modelos De Viviendas: Goleta, Fragata y Corbeta</li><li>Doble Cochera y Protecciones en Todo el Frente de la Casa</li><li>Cocina Integral Equipada (Con Parrilla, Campana y Barra Desayunadora)</li><li>Aire Acondicionado Inverter en Recámara Principal</li><li>Ecotencias (Baños Bajo Consumo, 6 lamparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rapido)</li><li>Orientadas para Clima Cálido</li> <li>Diseño Estructural para Zona de Alta Sismicidad</li> <li>Casas con Muros Independientes</li></ul>"
+            "house_info": "<ul><li>Contamos Con 3 Modelos De Viviendas: Goleta, Fragata y Corbeta</li><li>Doble Cochera y Protecciones en Todo el Frente de la Casa</li><li>Cocina Integral Equipada (Con Parrilla, Campana y Barra Desayunadora)</li><li>Aire Acondicionado Inverter en Recámara Principal</li><li>Ecotencias (Baños Bajo Consumo, 6 lamparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rapido)</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas con Muros Independientes</li></ul>",
+            "floor_plan": [
+                "images/Ciudades/Lazaro/Rinconada/Plantas_Rinconada.png"
+            ]
         },
         "PuertoPacifico": {
             "name": "Puerto Pacifico",
@@ -114,7 +117,10 @@
                 "images/Ciudades/Lazaro/PuertoPacifico/7 02 R.jpg"
             ],
             "floors": "2",
-            "house_info": "<ul><li>Ecotencias (Baños Bajo Consumo, 6 lamparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rapido)</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas con Muros Independientes</li></ul>"
+            "house_info": "<ul><li>Ecotencias (Baños Bajo Consumo, 6 lamparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rapido)</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas con Muros Independientes</li></ul>",
+            "floor_plan": [
+                "images/Ciudades/Lazaro/PuertoPacifico/Plantas_PuertoPacifico.jpeg"
+            ]
         },
         "PuertoNuevo": {
             "name": "Puerto Nuevo",
@@ -137,7 +143,10 @@
                 "images/Ciudades/Lazaro/PuertoNuevo/100_9325 r.jpg"
             ],
             "floors": "1",
-            "house_info": "<ul><li>Tres modelos de viviendas</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas con Muros Independientes</li></ul>"
+            "house_info": "<ul><li>Tres modelos de viviendas</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas con Muros Independientes</li></ul>",
+            "floor_plan": [
+                "images/Ciudades/Lazaro/PuertoNuevo/Plantas_PuertoNuevo.jpeg"
+            ]
         },
         "PuertoReal": {
             "name": "Puerto Real",
@@ -280,7 +289,10 @@
                 "images/Ciudades/Zitacuaro/MiradorSanFrancisco/DSC07624 r.jpg"
             ],
             "floors": "2",
-            "house_info": "<ul><li>Muros Independientes</li></ul>"
+            "house_info": "<ul><li>Muros Independientes</li></ul>",
+            "floor_plan": [
+                "images/Ciudades/Zitacuaro/MiradorSanFrancisco/Plantas_MiradorFrancisco.jpeg"
+            ]
         },
         "MiradorCarolina": {
             "name": "Mirador De La Carolina",
@@ -303,7 +315,10 @@
                 "images/Ciudades/Zitacuaro/MiradorCarolina/DSC05691 r.jpg"
             ],
             "floors": "1",
-            "house_info": "<ul><li>Muros Independientes</li></ul>"
+            "house_info": "<ul><li>Muros Independientes</li></ul>",
+            "floor_plan": [
+                "images/Ciudades/Zitacuaro/MiradorCarolina/Plantas_MiradorCarolina.jpeg"
+            ]
         }
     }
 }

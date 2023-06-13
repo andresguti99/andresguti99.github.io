@@ -227,9 +227,22 @@ function displayProjectDetails(data, projectName) {
     `;
 
     if (project.floor_plan) {
+        let floor_planSection;
 
-        const floor_planSection = `
-        <div class="container">
+        if (project.floor_plan.length === 1) {
+            floor_planSection = `
+        <div class="container my-2">
+            <div class="row floor-plan-section justify-content-center">
+                <div class="col-12 col-md-6 text-center">
+                    <img src="${project.floor_plan[0]}" alt="${project.name} Planta Arquitectónica">
+                    <p>Planta Arquitectónica</p>
+                </div>
+            </div>
+        </div>
+        `;
+        } else {
+            floor_planSection = `
+        <div class="container my-2">
             <div class="row floor-plan-section">
                 <div class="col-12 col-md-6">
                     <img src="${project.floor_plan[0]}" alt="${project.name} Planta Baja">
@@ -242,12 +255,14 @@ function displayProjectDetails(data, projectName) {
             </div>
         </div>
         `;
+        }
 
-        projectsContainer.innerHTML = topSection + carouselSection + floor_planSection +  detailsSection;
+        projectsContainer.innerHTML = topSection + carouselSection + floor_planSection + detailsSection;
 
     } else {
         projectsContainer.innerHTML = topSection + carouselSection + detailsSection;
     }
+
 
 
 }
