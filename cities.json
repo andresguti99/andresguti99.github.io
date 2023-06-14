@@ -16,7 +16,7 @@
             "bathrooms": "2 Completos, Uno en Cada Planta",
             "size": "4.6 x 16.5 (75.9) m2",
             "construction_size": "77.16 m2",
-            "additional_info": "<ul> <li> 150 Viviendas en Primera Etapa</li> <li>Régimen de Propiedad en Condominio</li><li>Pórtico de Accesso Controlado con Caseta de Vigilancia</li>\n<li>Circuito Cerrado</li>\n<li>Barda Perimetral con Cerco Electrificado</li>\n<li>Áreas Verdes Equipadas</li>\n<li>Área Especial de Recolección</li></ul>",
+            "additional_info": "<ul> <li> 150 Viviendas en Primera Etapa</li> <li>Régimen de Propiedad en Condominio</li><li>Pórtico de Accesso Controlado con Caseta de Vigilancia</li>\n<li>Circuito Cerrado</li>\n<li>Barda Perimetral con Cerco Electrificado</li>\n<li>Áreas Verdes Equipadas</li>\n<li>Área Especial de Recolección de Residuos</li></ul>",
             "phone": "+52 461 377 7723",
             "location": "Lima 101, Celaya, Guanajuato<br>Estamos Ubicados Entrando por la Universidad de Guanajuato y el Hospital Materno de Celaya. <br> A Dos Cuadras del Libramiento Juan Pablo II",
             "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.4289339979!2d-100.83731052488231!3d20.488635406110934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842cbb5aa8b05997%3A0xa1fbac46d3468000!2sNueva%20Sienna%20Residencial!5e0!3m2!1ses-419!2smx!4v1682039781244!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
@@ -31,7 +31,7 @@
                 "images/Ciudades/Celaya/Sienna/Planta_Baja_Color.png",
                 "images/Ciudades/Celaya/Sienna/Planta_Alta_Color.png"
             ],
-            "house_info": "<ul>\n<li>Iluminación Natural todo el día </li> <li>Patio de Servicio con Fregadero e Instalaciones de Lavadora </li> <li> Ecotencias (Baños Bajo Consumo, 6 lamparas LED, LLaves Ahorradoras de Agua, Calentador Paso Rapido)</li> <li> Aislante Térmico de Espuma Poliestireno Estruido XPS de 1.25” de Espesor (Mejor Temperatura Interior Todas las Temporadas)</li> <li>Ventanas con Sol-Lite (Vidrio con Capas de Control Solar y Filtros UV, Mayor Privacidad)</li> </ul>"
+            "house_info": "<ul>\n<li>Iluminación Natural todo el día </li> <li>Patio de Servicio con Lavadero e Instalaciones de Lavadora </li> <li> Ecotencias (Inodoros de Bajo Consumo, 6 lamparas LED, LLaves Ahorradoras de Agua, Calentador Paso Rapido)</li> <li> Aislante Térmico de Espuma Poliestireno Estruido XPS de 1.25” de Espesor (Mejor Temperatura Interior en Todas las Temporadas)</li> <li>Cristales con Sol-Lite (Capas de Control Solar y Filtros UV, Mayor Privacidad)</li> </ul>"
         }
     },
     "Lazaro": {
@@ -43,7 +43,7 @@
             "name": "Bassols",
             "short_name": "Bassols",
             "year": "2019",
-            "description": "Conjunto Habitacional Exclusivo con 4 Privadas <br> Áreas Verdes Equipadas <br> Alta Seguridad con Perímetro Completamente Cerrado y Electrificado <br> Vivienda Prequipada y con Preparaciones de Aire Acondicionado",
+            "description": "Conjunto Habitacional Exclusivo con 4 Privadas <br> Áreas Verdes Equipadas <br> Alta Seguridad con Perímetro Completamente Cerrado y Electrificado <br> Vivienda Equipada y con Preparaciones de Aire Acondicionado",
             "link": "https://www.facebook.com/ureppsa.mx/",
             "price": "VENDIDO",
             "floors": "2",
@@ -63,7 +63,7 @@
                 "images/Ciudades/Lazaro/Bassols/Hab_Principal.jpg",
                 "images/Ciudades/Lazaro/Bassols/Sala_PBaja.jpg"
             ],
-            "house_info": "<ul><li>Vestidor, Aire Acondicionado y Baño Dentro de Habitación Principal</li><li>Instalación a 220v y Preparación en Habitaciones Secundarias con Ductos para los Aires Acondicionados</li><li>Acceso Cubierto, Vestíbulos y Estudio</li><li>Cocina Integral Equipada con (Parrilla, Campana, Tarja y Barra Desayunadora)</li><li>Iluminación Natural Todo el Día</li><li>Área de Jardín en Parte Posterior</li><li>Patio de Servicio Independiente al Frente con Fregadero e Instalaciones de Lavadora</li><li>Doble Cochera</li><li>Ecotecnias (Baños Bajo Consumo, 6 Lámparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rápido)</li><li>Protecciones en Todo el Frente de la Casa</li><li>Arquitectura Contemporánea</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas Solas con Muros Independientes</li></ul>"
+            "house_info": "<ul><li>Vestidor, Aire Acondicionado y Baño Dentro de Habitación Principal</li><li>Instalación a 220v y Preparación en Habitaciones Secundarias con Ductos para los Aires Acondicionados</li><li>Acceso Cubierto, Vestíbulos y Estudio</li><li>Cocina Integral Equipada con (Parrilla, Campana, Tarja y Barra Desayunadora)</li><li>Iluminación Natural, Todo el Día</li><li>Área de Jardín en Parte Posterior</li><li>Patio de Servicio Independiente al Frente con Fregadero e Instalaciones de Lavadora</li><li>Doble Cochera</li><li>Ecotecnias (Baños Bajo Consumo, 6 Lámparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rápido)</li><li>Protecciones en Todo el Frente de la Casa</li><li>Arquitectura Contemporánea</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas Solas con Muros Independientes</li></ul>"
         },
         "Rinconada": {
             "name": "Rinconada del Balsas",

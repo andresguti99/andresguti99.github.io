@@ -14,6 +14,7 @@
 
 }
 
+
 strong {
     font-family: 'Poppins', sans-serif;
     font-weight: 700; /* adjust this as needed */
@@ -334,11 +335,11 @@ strong {
 }
 
 .nav-item {
-    font-size: max(3vw, 14px);
+    font-size: max(3vw, 20px);
 }
 
 .dropdown-item {
-    font-size: max(2vw, 12px);
+    font-size: max(2vw, 15px);
 }
 
 .nav-icon-link {
