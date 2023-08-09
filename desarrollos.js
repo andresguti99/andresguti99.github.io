@@ -226,10 +226,25 @@ function displayProjectDetails(data, projectName) {
     </div>
     `;
 
+    projectsContainer.innerHTML = topSection + carouselSection; //Add te top and image carousel to the html
+
+    if (project.virtual_tour){
+        const virtual_tourSection =`
+        <div class="container my-2">
+            <div class="row justify-content-center">
+                   ${project.virtual_tour}
+                   <p>Tour Virutal</p>
+            </div>
+        </div>
+        `;
+        projectsContainer.innerHTML += virtual_tourSection; //Add the virtual section after the images if it exists;
+    }
+
+ //Seccion para añadir planta arquitectonica si esta se encuentra como atributo del proyecto seleccionado
     if (project.floor_plan) {
         let floor_planSection;
 
-        if (project.floor_plan.length === 1) {
+        if (project.floor_plan.length === 1) { //Una sola imagen de planta
             floor_planSection = `
         <div class="container my-2">
             <div class="row floor-plan-section justify-content-center">
@@ -240,7 +255,7 @@ function displayProjectDetails(data, projectName) {
             </div>
         </div>
         `;
-        } else {
+        } else { //Dos imagenes o dos plantas
             floor_planSection = `
         <div class="container my-2">
             <div class="row floor-plan-section">
@@ -257,11 +272,13 @@ function displayProjectDetails(data, projectName) {
         `;
         }
 
-        projectsContainer.innerHTML = topSection + carouselSection + floor_planSection + detailsSection;
+        projectsContainer.innerHTML += floor_planSection; //Add the floor plan section if it exists to the hthml
 
-    } else {
-        projectsContainer.innerHTML = topSection + carouselSection + detailsSection;
     }
+
+    projectsContainer.innerHTML += detailsSection; //Add the detail section to the end always in the html
+
+
 
 
 

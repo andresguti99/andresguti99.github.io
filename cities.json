@@ -31,7 +31,8 @@
                 "images/Ciudades/Celaya/Sienna/Planta_Baja_Color.png",
                 "images/Ciudades/Celaya/Sienna/Planta_Alta_Color.png"
             ],
-            "house_info": "<ul>\n<li>Iluminación Natural todo el día </li> <li>Patio de Servicio con Lavadero e Instalaciones de Lavadora </li> <li> Ecotencias (Inodoros de Bajo Consumo, 6 lamparas LED, LLaves Ahorradoras de Agua, Calentador Paso Rapido)</li> <li> Aislante Térmico de Espuma Poliestireno Estruido XPS de 1.25” de Espesor (Mejor Temperatura Interior en Todas las Temporadas)</li> <li>Cristales con Sol-Lite (Capas de Control Solar y Filtros UV, Mayor Privacidad)</li> </ul>"
+            "house_info": "<ul>\n<li>Iluminación Natural todo el día </li> <li>Patio de Servicio con Lavadero e Instalaciones de Lavadora </li> <li> Ecotencias (Inodoros de Bajo Consumo, 6 lamparas LED, LLaves Ahorradoras de Agua, Calentador Paso Rapido)</li> <li> Aislante Térmico de Espuma Poliestireno Estruido XPS de 1.25” de Espesor (Mejor Temperatura Interior en Todas las Temporadas)</li> <li>Cristales con Sol-Lite (Capas de Control Solar y Filtros UV, Mayor Privacidad)</li> </ul>",
+            "virtual_tour": "<iframe width='853' height='480' src='https://my.matterport.com/show/?m=FpY393z8LWj' frameborder='0' allowfullscreen allow='xr-spatial-tracking'></iframe>"
         }
     },
     "Lazaro": {
