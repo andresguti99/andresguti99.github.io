@@ -156,22 +156,23 @@
   <div class="row">
     <div class="col-md-8">
       <form action="https://formspree.io/f/mwkjjrrj" method="POST">
-        <div class="container mt-5">
+      <div class="container mt-5">
           <h2>Contáctanos</h2>
           <p><strong>Llámanos y haz una cita o escríbenos para que resolvamos tus dudas</strong></p>
-          <form>
             <div class="mb-3">
               <label for="inputName" class="form-label">Nombre</label>
               <input type="text" class="form-control" id="inputName" name="Nombre" required>
             </div>
-            <div class="mb-3">
-              <label for="inputPhone" class="form-label">Teléfono</label>
-              <input type="tel" class="form-control" id="inputPhone" name="Tel" required>
-            </div>
-            <div class="mb-3">
-              <label for="inputEmail" class="form-label">Email</label>
-              <input type="email" class="form-control" id="inputEmail" name="Mail" required>
-            </div>
+          <div class="mb-3">
+            <label for="inputPhone" class="form-label">Teléfono (10 dígitos sin espacio)</label>
+            <input type="tel" class="form-control" id="inputPhone" name="Tel" pattern="[0-9]{10}" required>
+            <div class="invalid-feedback">Por favor introduce un teléfono valido con exactamente 10 dígitos.</div>
+          </div>
+          <div class="mb-3">
+            <label for="inputEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="inputEmail" name="Mail" required>
+            <div class="invalid-feedback">Por favor introduce un correo electrónico válido.</div>
+          </div>
             <div class="mb-3">
               <label for="inputDestination" class="form-label">Destino</label>
               <select  id="inputDestination" name="Destino" class="form-control" required>
@@ -185,8 +186,7 @@
               <textarea id="inputSubject" name="Asunto" class="form-control" rows="3" required></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Enviar</button>
-            <small id="emailHelp" class="form-text text-muted">*Nota: Si al regresar a la página su información todavía aparece en el formulario, no se preocupe. Esto es normal y no afecta el envío exitoso de su mensaje. Al enviar esta forma, usted acepta el tratamiento de sus datos conforme a lo establecido en nuestro <a href="privacy.html">Aviso de Privacidad</a></small>
-          </form>
+            <small id="emailHelp" class="form-text text-muted">*Al enviar esta forma, usted acepta el tratamiento de sus datos conforme a lo establecido en nuestro <a href="privacy.html">Aviso de Privacidad</a></small>
         </div>
       </form>
     </div>
@@ -217,25 +217,13 @@
 <!-- JavaScript -->
 <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 <script type="module" src="general.js"></script>
+
 <script>
-  document.querySelector("form").addEventListener("submit", function(event) {
-    var phoneInput = document.querySelector("#inputPhone");
-    var phone = phoneInput.value;
-
-    // Check if the phone number only contains numbers and is exactly 10 digits long
-    var phoneRegex = /^[0-9]{10}$/;
-    if (!phoneRegex.test(phone)) {
-      alert("Por favor introduce un telefono valido.");
-      event.preventDefault();
-    }
-
-    var emailInput = document.querySelector("#inputEmail");
-    var email = emailInput.value;
-
-    // Email validation is handled by the built-in HTML5 validation due to the input type being "email",
-    // but you can add custom email validation here if needed
-
-  }, false);
+  window.onbeforeunload = () => {
+  for(const form of document.getElementsByTagName('form')) {
+    form.reset();
+  }
+}
 </script>
 
 </body>
