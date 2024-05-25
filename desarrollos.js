@@ -139,19 +139,18 @@ function displayProjects(data, city) {
 function displayProjectDetails(data, projectName) {
     const project = Object.values(data).find(city => city[projectName] !== undefined)[projectName];
     const projectsContainer = document.querySelector('#projects-container');
-    projectsContainer.innerHTML = '';
+    let combinedHTML = '';
 
     // Check if the project is available or sold and add the appropriate class to the badge
-    let availabilityClass
+    let availabilityClass;
     if (project.price.toLowerCase().includes("vendido")) {
         availabilityClass = 'badge-sold';
     } else {
         availabilityClass = 'badge-available';
     }
 
-// Add the badge to your HTML string
+    // Add the badge to your HTML string
     const availabilityBadge = `<span class="badge ${availabilityClass} badge-mini">&nbsp;</span>`;
-
 
     const topSection = `
         <div class="top-section">
@@ -170,19 +169,17 @@ function displayProjectDetails(data, projectName) {
         </div>
     `;
 
-
-
     const carouselSection = `
         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 ${project.images.map((image, index) =>
-        `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${index+1}"></button>`
+        `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${index + 1}"></button>`
     ).join('')}
             </div>
             <div class="carousel-inner">
                 ${project.images.map((image, index) =>
         `<div class="carousel-item ${index === 0 ? 'active' : ''}">
-                        <img src="${image}" class="d-block w-100" alt="${project.name} Image ${index+1}">
+                        <img src="${image}" class="d-block w-100" alt="${project.name} Image ${index + 1}">
                     </div>`
     ).join('')}
             </div>
@@ -197,89 +194,178 @@ function displayProjectDetails(data, projectName) {
         </div>
     `;
 
-    const detailsSection = `
+    combinedHTML += topSection + carouselSection;
+
+    if (project.virtual_tour) {
+        const virtualTourSection = `
+        <div class="container my-2">
+            <div class="row justify-content-center">
+                ${project.virtual_tour}
+                <p>Tour Virtual</p>
+            </div>
+        </div>
+        `;
+        combinedHTML += virtualTourSection;
+    }
+
+    if (project.models) {
+        combinedHTML += `<div class="my-4"></div><h3>Modelos de Vivienda</h3>`;
+        combinedHTML += createAccordionNavigation(project);
+    } else {
+        combinedHTML += createProjectDetailsSection(project);
+    }
+
+    combinedHTML += createContactInfoSection(project);
+
+    projectsContainer.innerHTML = combinedHTML;
+}
+
+function createModelDetails(model, modelName) {
+    return `
+        ${createModelCarousel(model.images, modelName)}
+        ${createFloorPlans(model.floor_plan)}
+        <p><strong>Precio:</strong> ${model.price}</p>
+        <p><strong>Plantas:</strong> ${model.floors}</p>
+        <p><strong>Recámaras:</strong> ${model.bedrooms}</p>
+        <p><strong>Baños:</strong> ${model.bathrooms}</p>
+        <p><strong>Superficie de Terreno:</strong> ${model.size}</p>
+        <p><strong>Superficie Construida:</strong> ${model.construction_size}</p>
+        <p><strong>Características Principales de la Vivienda:</strong> ${model.house_info}</p>
+        <p><strong>Características del Conjunto Habitacional:</strong> ${model.additional_info}</p>
+    `;
+}
+
+function createFloorPlans(floorPlans) {
+    if (floorPlans.length === 1) {
+        return `
+            <div class="container my-2">
+                <div class="row floor-plan-section justify-content-center">
+                    <div class="col-12 col-md-6 text-center">
+                        <img src="${floorPlans[0]}" alt="Planta Arquitectónica">
+                        <p>Planta Arquitectónica</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        return `
+            <div class="container my-2">
+                <div class="row floor-plan-section">
+                    <div class="col-12 col-md-6">
+                        <img src="${floorPlans[0]}" alt="Planta Baja">
+                        <p>Planta Baja</p>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <img src="${floorPlans[1]}" alt="Planta Alta">
+                        <p>Planta Alta</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+}
+
+function createProjectDetailsSection(project) {
+    let detailsSection = '';
+    if (project.floor_plan) {
+        detailsSection += createFloorPlans(project.floor_plan);
+    }
+    detailsSection += `
     <div class="row project-details-section">
         <div class="col-12 col-md-6">
             <div class="project-details">
+                <p><strong>Precio:</strong> ${project.price}</p>
                 <p><strong>Plantas:</strong> ${project.floors}</p>
                 <p><strong>Recámaras:</strong> ${project.bedrooms}</p>
                 <p><strong>Baños:</strong> ${project.bathrooms}</p>
                 <p><strong>Superficie de Terreno:</strong> ${project.size}</p>
                 <p><strong>Superficie Construida:</strong> ${project.construction_size}</p>
                 <p><strong>Características Principales de la Vivienda:</strong> ${project.house_info}</p>
-                <p><strong>Características del Fraccionamiento:</strong> ${project.additional_info}</p>
-
+                <p><strong>Características del Conjunto Habitacional:</strong> ${project.additional_info}</p>
             </div>
         </div>
+    </div>
+    `;
+    return detailsSection;
+}
+
+function createContactInfoSection(project) {
+    return `
+    <div class="row">
         <div class="col-12 col-md-6">
-                <div class="contact-info mt-4 mb-4">
-                    <h3>Contáctanos</h3>
-                    <p><strong>Teléfono:</strong> <a href="tel:${project.phone}">${project.phone}</a></p>
-                    <div class="contact-icons">
-                        <a href="https://wa.me/${project.phone.replace(/\s/g, '')}?text=Quiero%20informes%20de%20${encodeURIComponent(project.name)}" target="_blank"><i class="bi bi-whatsapp"></i></a>
-                        <a href="${project.link}" target="_blank"><i class="bi bi-facebook"></i></a>
-                    </div>
+            <div class="contact-info mt-4 mb-4">
+                <h3>Contáctanos</h3>
+                <p><strong>Teléfono:</strong> <a href="tel:${project.phone}">${project.phone}</a></p>
+                <div class="contact-icons">
+                    <a href="https://wa.me/${project.phone.replace(/\s/g, '')}?text=Quiero%20informes%20de%20${encodeURIComponent(project.name)}" target="_blank">
+                        <span class="icon-text"><i class="bi bi-whatsapp"></i> WhatsApp</span>
+                    </a>
+                    <a href="${project.link}" target="_blank">
+                        <span class="icon-text"><i class="bi bi-facebook"></i> Facebook</span>
+                    </a>
                 </div>
+            </div>
             <p><strong>Ubicación:</strong> ${project.location}</p>
             ${project.mapEmbed}
         </div>
     </div>
     `;
-
-    projectsContainer.innerHTML = topSection + carouselSection; //Add te top and image carousel to the html
-
-    if (project.virtual_tour){
-        const virtual_tourSection =`
-        <div class="container my-2">
-            <div class="row justify-content-center">
-                   ${project.virtual_tour}
-                   <p>Tour Virutal</p>
-            </div>
-        </div>
-        `;
-        projectsContainer.innerHTML += virtual_tourSection; //Add the virtual section after the images if it exists;
-    }
-
- //Seccion para añadir planta arquitectonica si esta se encuentra como atributo del proyecto seleccionado
-    if (project.floor_plan) {
-        let floor_planSection;
-
-        if (project.floor_plan.length === 1) { //Una sola imagen de planta
-            floor_planSection = `
-        <div class="container my-2">
-            <div class="row floor-plan-section justify-content-center">
-                <div class="col-12 col-md-6 text-center">
-                    <img src="${project.floor_plan[0]}" alt="${project.name} Planta Arquitectónica">
-                    <p>Planta Arquitectónica</p>
-                </div>
-            </div>
-        </div>
-        `;
-        } else { //Dos imagenes o dos plantas
-            floor_planSection = `
-        <div class="container my-2">
-            <div class="row floor-plan-section">
-                <div class="col-12 col-md-6">
-                    <img src="${project.floor_plan[0]}" alt="${project.name} Planta Baja">
-                    <p>Planta Baja</p>
-                </div>
-                <div class="col-12 col-md-6">
-                    <img src="${project.floor_plan[1]}" alt="${project.name} Planta Alta">
-                    <p>Planta Alta</p>
-                </div>
-            </div>
-        </div>
-        `;
-        }
-
-        projectsContainer.innerHTML += floor_planSection; //Add the floor plan section if it exists to the hthml
-
-    }
-
-    projectsContainer.innerHTML += detailsSection; //Add the detail section to the end always in the html
-
-
-
-
-
 }
+
+function createModelCarousel(images, model) {
+    const sanitizedModel = model.replace(/\s+/g, '-');
+    return `
+        <div id="carousel-${sanitizedModel}" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                ${images.map((image, index) =>
+        `<button type="button" data-bs-target="#carousel-${sanitizedModel}" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${index + 1}"></button>`
+    ).join('')}
+            </div>
+            <div class="carousel-inner">
+                ${images.map((image, index) =>
+        `<div class="carousel-item ${index === 0 ? 'active' : ''}">
+                        <img src="${image}" class="d-block w-100" alt="${model} Image ${index + 1}">
+                    </div>`
+    ).join('')}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-${sanitizedModel}" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carousel-${sanitizedModel}" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    `;
+}
+
+function createAccordionNavigation(project) {
+    const models = Object.keys(project.models);
+    let accordion = `
+        <div class="accordion" id="modelAccordion">
+    `;
+
+    models.forEach((model, index) => {
+        const sanitizedModel = model.replace(/\s+/g, '-');
+        accordion += `
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="heading-${sanitizedModel}">
+                    <button class="accordion-button ${index === 0 ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${sanitizedModel}" aria-expanded="${index === 0}" aria-controls="collapse-${sanitizedModel}">
+                        ${model}
+                    </button>
+                </h2>
+                <div id="collapse-${sanitizedModel}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" aria-labelledby="heading-${sanitizedModel}" data-bs-parent="#modelAccordion">
+                    <div class="accordion-body">
+                        ${createModelDetails(project.models[model], model)}
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    accordion += '</div>';
+    return accordion;
+}
+
+
