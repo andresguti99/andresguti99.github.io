@@ -83,7 +83,6 @@ strong {
     position: relative;
 }
 
-
 .project-overlay-1 {
     animation: foldDown 1.5s ease-out forwards;
     position: absolute;
@@ -538,20 +537,5 @@ strong {
 }
 
 
-.contact-icons a {
-    display: inline-flex;
-    align-items: center;
-    margin-right: 10px;
-    text-decoration: none;
-}
-
-.contact-icons .icon-text {
-    display: inline-flex;
-    align-items: center;
-}
-
-.contact-icons .icon-text i {
-    margin-right: 5px;
-}
 
 

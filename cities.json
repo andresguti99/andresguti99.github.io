@@ -10,7 +10,7 @@
             "year": "2021",
             "description": "Vivienda de 3 Recamaras <br>Entrega Inmediata <br>Sin Costo de Apartado<br>Fraccionamiento Totalmente Cerrado<br>Visita La Casa Muestra",
             "link": "https://www.facebook.com/NuevaSiennaResidencial/",
-            "price": "ÚLTIMAS $899,000.00",
+            "price": "ÚLTIMAS $870,375.00",
             "floors": "2",
             "bedrooms": "3 con Área de Guardado (2 en Planta Alta, 1 en Planta Baja)",
             "bathrooms": "2 Completos, Uno en Cada Planta",
@@ -39,72 +39,6 @@
         "position": {
             "x": "45.5",
             "y": "77"
-        },
-        "PuertoInternacional": {
-            "name": "Puerto Internacional",
-            "short_name": "PuertoInternacional",
-            "year": "2024",
-            "description": "El mejor Conjunto Habitacional de Lázaro Cárdenas para tu familia <br> 6 Modelos de Vivienda <br> Vivienda de 3 Recamaras <br> Conjunto Totalmente Cerrado<br>Parque Lineal de 1KM",
-            "price": "DESDE $880,675.00",
-            "phone": "+52 753 136 3839",
-            "link": "https://www.facebook.com/PuertoInternacional/",
-            "location": "Lázaro Cárdenas \nMichoacán\n",
-            "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60726.82530985026!2d-102.1876598!3d17.9588798!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315c6e5fce0357%3A0x580e1b634308e622!2sCdad.%20L%C3%A1zaro%20C%C3%A1rdenas%2C%20Mich.!5e0!3m2!1ses!2smx!4v1716605453935!5m2!1ses!2smx\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
-            "logo": "images/Ciudades/Lazaro/PuertoInternacional/Logo_Puerto_Internacional.png",
-            "images": [
-                "images/Ciudades/Lazaro/PuertoInternacional/R1_Portico.jpg",
-                "images/Ciudades/Lazaro/PuertoInternacional/R2_Area_Juegos.jpg",
-                "images/Ciudades/Lazaro/PuertoInternacional/R3_Parque_Lineal.jpg",
-                "images/Ciudades/Lazaro/PuertoInternacional/R4_Parque_Lineal.jpg",
-                "images/Ciudades/Lazaro/PuertoInternacional/R5_Paso_Peatonal.jpg",
-                "images/Ciudades/Lazaro/PuertoInternacional/Velero/R3_Velero.jpg",
-                "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/R2_Velero_Plus.jpg"
-            ],
-            "models": {
-                "Velero": {
-                    "price": "PREVENTA $880,675.00",
-                    "floors": "2",
-                    "bedrooms": "3",
-                    "bathrooms": "1 1/2",
-                    "size": "96 m2",
-                    "construction_size": "90.52 m2",
-                    "house_info": "<ul><li>Casas Solas</li><li>Muros Independientes</li><li>Mas Altas</li><li>Ventilación Cruzada</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Áreas Verdes Equipadas</li><li>Ecotencias (Inodoros de Bajo Consumo, LLaves Ahorradoras de Agua, Calentador de Rapida Recuperacion, 6 lamparas LED)</li><li>Aislante Térmico en Azotea de Espuma de Poliestireno Estruido (Temperatura MAS Bajas en Interiores Todo el Año)</li><li>Arquitectura Contemporánea</li></ul>",
-                    "additional_info": "<ul><li>Totalmente Cerrado</li><li>Barda Perimetral con Cerco Electrificado</li><li>Acceso Controlado Independiente y Reja Automatizada</li><li>Régimen de Propiedad en Condominio</li><li>Áreas Verdes Equipadas</li><li>Parque Lineal Equipado:<ul><li>Ciclovia</li><li>Bancas</li><li>Juegos Infantiles</li><li>Jardinería</li></ul></li></ul>",
-                    "floor_plan": [
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/Velero_Planta_Baja.png",
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/Velero_Planta_Alta.png"
-                    ],
-                    "images": [
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/R1_Velero.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/R2_Velero.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/R3_Velero.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/R4_Velero.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/R5_Velero.jpg"
-                    ]
-                },
-                "Velero Plus": {
-                    "price": "PREVENTA $999,500.00",
-                    "floors": "2",
-                    "bedrooms": "3",
-                    "bathrooms": "2 1/2",
-                    "size": "96 m2",
-                    "construction_size": "94.69 m2",
-                    "house_info": "<ul><li>Cocina Integral Equipada con (Parrilla, Campana, Tarja y Barra de Desayunador)</li><li>Mayor Superfice Construida (Contra Velero)</li><li>Un Baño Completo Más</li><li>Protecciones en Todo el Frente de la Casa</li><li>Cochera para Dos Vehiculos</li><li>Casas Solas</li><li>Muros Independientes</li><li>Mas Altas</li><li>Ventilación Cruzada</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Áreas Verdes Equipadas</li><li>Ecotencias (Inodoros de Bajo Consumo, LLaves Ahorradoras de Agua, Calentador de Rapida Recuperacion, 6 lamparas LED)</li><li>Aislante Térmico en Azotea de Espuma de Poliestireno Estruido (Temperatura MAS Bajas en Interiores Todo el Año)</li><li>Arquitectura Contemporánea</li></ul>",
-                    "additional_info": "<ul><li>Totalmente Cerrado</li><li>Barda Perimetral con Cerco Electrificado</li><li>Acceso Controlado Independiente y Reja Automatizada</li><li>Régimen de Propiedad en Condominio</li><li>Áreas Verdes Equipadas</li><li>Parque Lineal Equipado:<ul><li>Ciclovia</li><li>Bancas</li><li>Juegos Infantiles</li><li>Jardinería</li></ul></li></ul>",
-                    "floor_plan": [
-                        "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/Velero_Plus_Planta_Baja.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/Velero_Plus_Planta_Alta.jpg"
-                    ],
-                    "images": [
-                        "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/R1_Velero_Plus.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/R2_Velero_Plus.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/R3_Velero_Plus.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/R4_Velero_Plus.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/R4_Velero.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/R5_Velero.jpg"
-                    ]
-                }
-            }
         },
         "Bassols": {
             "name": "Bassols",
@@ -241,7 +175,6 @@
             "floors": "1",
             "house_info": "<ul><li>Dos modelos de viviendas</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas con Muros Independientes</li></ul>"
         }
-
     },
     "Ixtapa": {
         "position": {
