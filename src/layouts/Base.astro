@@ -5,19 +5,47 @@ import '../styles/global.css';
 import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
+import AvisoCookies from '../components/AvisoCookies.astro';
 
 interface Props {
   titulo: string;
   descripcion?: string;
   /** Mensaje prellenado del botón flotante de WhatsApp. */
   mensajeWhatsApp?: string;
+  /** Imagen para las tarjetas al compartir en WhatsApp/Facebook (ruta del sitio). */
+  imagenSocial?: string;
 }
 
 const {
   titulo,
   descripcion = 'Descubre tu hogar ideal con UREPPSA. Más de 20 municipios. Más de 30 años de experiencia. Más de 5,000 casas entregadas.',
   mensajeWhatsApp,
+  imagenSocial = '/UP_logo.png',
 } = Astro.props;
+
+const urlCanonica = new URL(Astro.url.pathname, Astro.site);
+const urlImagenSocial = new URL(imagenSocial, Astro.site);
+
+// Datos estructurados de la empresa para buscadores
+const organizacion = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'UREPPSA',
+  legalName: 'Urbanización Edificación y Proyectos Profesionales S.A. de C.V.',
+  url: 'https://www.ureppsa.com',
+  logo: 'https://www.ureppsa.com/UP_logo.png',
+  slogan: 'Cada Vivienda un Compromiso',
+  telephone: '+52 443 324 2601',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Casa Mata #300, Col. Chapultepec Sur',
+    postalCode: '58260',
+    addressLocality: 'Morelia',
+    addressRegion: 'Michoacán',
+    addressCountry: 'MX',
+  },
+  sameAs: ['https://www.facebook.com/ureppsa.mx/'],
+};
 ---
 
 <!doctype html>
@@ -28,7 +56,67 @@ const {
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={urlCanonica} />
+
+    <!-- Tarjetas al compartir en WhatsApp, Facebook y demás redes -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="UREPPSA" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:url" content={urlCanonica} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:image" content={urlImagenSocial} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(organizacion)} />
+
+    {
+      import.meta.env.PROD && (
+        <>
+          {/* Google Analytics (gtag.js) */}
+          <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-E1002VD8TF" />
+          <script is:inline>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', 'G-E1002VD8TF');
+          </script>
+
+          {/* Meta Pixel */}
+          <script is:inline>
+            !(function (f, b, e, v, n, t, s) {
+              if (f.fbq) return;
+              n = f.fbq = function () {
+                n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+              };
+              if (!f._fbq) f._fbq = n;
+              n.push = n;
+              n.loaded = !0;
+              n.version = '2.0';
+              n.queue = [];
+              t = b.createElement(e);
+              t.async = !0;
+              t.src = v;
+              s = b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t, s);
+            })(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1266444027381098');
+            fbq('track', 'PageView');
+          </script>
+          <noscript>
+            <img
+              height="1"
+              width="1"
+              style="display:none"
+              src="https://www.facebook.com/tr?id=1266444027381098&ev=PageView&noscript=1"
+              alt=""
+            />
+          </noscript>
+        </>
+      )
+    }
   </head>
   <body>
     <Navbar />
@@ -37,6 +125,7 @@ const {
     </main>
     <Footer />
     <WhatsAppFlotante mensaje={mensajeWhatsApp} />
+    <AvisoCookies />
     <script>
       // Revelado suave de secciones al entrar al viewport
       const observador = new IntersectionObserver(

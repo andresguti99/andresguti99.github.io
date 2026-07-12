@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import MapaMexico from '../components/MapaMexico.astro';
 import TarjetaDesarrollo from '../components/TarjetaDesarrollo.astro';
@@ -18,6 +18,11 @@ const destacados = desarrollos.filter((d) => d.data.disponible);
 
 // Logos para la marquesina de trayectoria.
 const conLogo = desarrollos.filter((d) => d.data.logo);
+
+// Imagen para la tarjeta al compartir el sitio en redes.
+const imagenSocial = destacados.length
+  ? (await getImage({ src: destacados[0].data.imagenes[0], width: 1200 })).src
+  : undefined;
 
 const estadisticas = [
   { valor: 30, texto: 'años de experiencia' },
@@ -44,7 +49,7 @@ const financiamiento = [
 ];
 ---
 
-<Base titulo="UREPPSA | Cada Vivienda, Un Compromiso">
+<Base titulo="UREPPSA | Cada Vivienda, Un Compromiso" imagenSocial={imagenSocial}>
   <!-- Héroe -->
   <section class="heroe">
     <div class="contenedor heroe-interno">

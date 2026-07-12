@@ -66,6 +66,9 @@ const etiquetaPlano = (total: number, i: number) => {
   return i === 0 ? 'Planta baja' : i === 1 ? 'Planta alta' : `Planta ${i + 1}`;
 };
 
+// Imagen para la tarjeta al compartir el proyecto en WhatsApp/Facebook.
+const imagenSocial = (await getImage({ src: d.imagenes[0], width: 1200 })).src;
+
 // Filas del comparador de modelos (solo las que algún modelo tiene).
 const filasComparador = (
   [
@@ -91,6 +94,7 @@ const secciones = [
   titulo={`${d.nombre} | UREPPSA`}
   descripcion={`${d.nombre} en ${lugar}. ${d.precio}. Desarrollo habitacional de UREPPSA.`}
   mensajeWhatsApp={mensajeWA}
+  imagenSocial={imagenSocial}
 >
   <!-- ══ Héroe ══ -->
   <section class="heroe-desarrollo">
@@ -146,8 +150,13 @@ const secciones = [
   </section>
 
   <!-- ══ Navegación interna pegajosa ══ -->
+  <div data-subnav-sentinela></div>
   <nav class="subnav" aria-label="Secciones del desarrollo" data-subnav>
     <div class="contenedor subnav-interno">
+      <a href="#" class="subnav-identidad" aria-label={`Volver al inicio de ${d.nombre}`}>
+        {d.logo && <Image src={d.logo} alt="" width={30} height={30} densities={[1, 2]} loading="eager" />}
+        <span>{d.nombre}</span>
+      </a>
       <div class="subnav-enlaces">
         {secciones.map((s) => (
           <a href={s.href}>{s.texto}</a>
@@ -487,6 +496,14 @@ const secciones = [
   medirBarra();
   window.addEventListener('resize', medirBarra);
 
+  // ── Identidad del proyecto en la subnav: aparece cuando la barra se pega ──
+  const subnavEl = document.querySelector<HTMLElement>('[data-subnav]')!;
+  const sentinela = document.querySelector('[data-subnav-sentinela]')!;
+  new IntersectionObserver(
+    ([entrada]) => subnavEl.classList.toggle('pegada', !entrada.isIntersecting),
+    { rootMargin: `-${(barra?.offsetHeight ?? 72) + 1}px 0px 0px 0px` }
+  ).observe(sentinela);
+
   // ── Scrollspy: resalta la sección visible en la subnav ──
   const enlacesSubnav = [...document.querySelectorAll<HTMLAnchorElement>('.subnav-enlaces a')];
   const espia = new IntersectionObserver(
@@ -735,6 +752,48 @@ const secciones = [
     justify-content: space-between;
     gap: 1rem;
     padding-block: 0.5rem;
+  }
+
+  /* Identidad del proyecto: visible solo cuando la subnav está pegada,
+     para saber de un vistazo qué desarrollo se está viendo. */
+  .subnav-identidad {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--tinta);
+    font-family: var(--titulos);
+    font-weight: 800;
+    font-size: 0.95rem;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    pointer-events: none;
+    min-width: 0;
+  }
+
+  .subnav-identidad img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain;
+    border-radius: 8px;
+    background: var(--blanco);
+    padding: 2px;
+    box-shadow: var(--sombra);
+    flex-shrink: 0;
+  }
+
+  .subnav-identidad span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: clamp(88px, 22vw, 240px);
+  }
+
+  .subnav.pegada .subnav-identidad {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
   }
 
   .subnav-enlaces {

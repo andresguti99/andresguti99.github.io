@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>UREPPSA | Desarrollos</title>
+    <!-- Redirección de las URLs del sitio anterior (desarrollos.html?project=X)
+         a las nuevas páginas por proyecto, para que los enlaces publicados en
+         Facebook y WhatsApp sigan funcionando. -->
+    <script>
+      var params = new URLSearchParams(location.search);
+      var kebab = function (s) {
+        return s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+      };
+      var proyecto = params.get('project');
+      location.replace(proyecto ? '/desarrollos/' + kebab(proyecto) + '/' : '/#desarrollos');
+    </script>
+    <meta http-equiv="refresh" content="0;url=/#desarrollos" />
+  </head>
+  <body>
+    <p>Redirigiendo… <a href="/#desarrollos">Ver nuestros desarrollos</a></p>
+  </body>
+</html>

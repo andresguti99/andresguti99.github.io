@@ -10,6 +10,7 @@
     "migrar": "node scripts/migrate.mjs"
   },
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.3",
     "@fontsource-variable/figtree": "^5.2.0",
     "@fontsource-variable/nunito": "^5.2.0",
     "astro": "^5.0.0",

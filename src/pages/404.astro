@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base titulo="Página no encontrada | UREPPSA" descripcion="No encontramos la página que buscas.">
+  <section class="no-encontrada">
+    <div class="contenedor">
+      <span class="etiqueta">Error 404</span>
+      <h1>Esta página se nos perdió</h1>
+      <p>
+        Puede que el enlace haya cambiado con el nuevo sitio. Lo importante sigue aquí:
+        nuestras casas te están esperando.
+      </p>
+      <div class="acciones">
+        <a href="/" class="btn btn-primario">Ir al inicio</a>
+        <a href="/#desarrollos" class="btn btn-secundario">Ver desarrollos</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .no-encontrada {
+    padding-block: clamp(4rem, 12vw, 8rem);
+    text-align: center;
+    background:
+      radial-gradient(60% 80% at 85% 20%, var(--verde-claro) 0%, transparent 70%),
+      radial-gradient(50% 70% at 10% 90%, var(--terracota-claro) 0%, transparent 70%);
+  }
+
+  .no-encontrada h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+
+  .no-encontrada p {
+    color: var(--tinta-suave);
+    max-width: 32rem;
+    margin-inline: auto;
+  }
+
+  .acciones {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+  }
+</style>
