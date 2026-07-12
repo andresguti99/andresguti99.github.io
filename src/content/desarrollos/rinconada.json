@@ -1,0 +1,31 @@
+{
+  "nombre": "Rinconada del Balsas",
+  "ciudad": "lazaro",
+  "anio": 2017,
+  "descripcion": "Todas nuestras viviendas cuentan con eco-tecnologías, que se traducen en ahorro para tu economía.",
+  "disponible": false,
+  "telefono": "+52 753 120 0721",
+  "facebook": "https://www.facebook.com/ureppsa.mx/",
+  "ubicacion": "Arroyo Guacamayas,Lazaro Cardenas, Michoacan<br>Estamos ubicados sobre el canal que se ubica atrás del aeropuerto a un lado del Campo del Pato.",
+  "mapa": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1207.6964119592456!2d-102.21640395489209!3d18.000193606065483!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315d05ca744269%3A0x95e1dc0863f22c5a!2sFraccionamiento%20Rinconada%20Del%20Balsas!5e0!3m2!1ses-419!2smx!4v1685561512407!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+  "logo": "../../assets/desarrollos/rinconada/Logo_Rinconada_del_Balsas.jpg",
+  "precio": "VENDIDO",
+  "plantas": "2",
+  "recamaras": "3 con Área de Guardado",
+  "banos": "2 1/2",
+  "superficie": "229.76 m2",
+  "construccion": "136.20 m2",
+  "caracteristicasVivienda": "<ul><li>Contamos Con 3 Modelos De Viviendas: Goleta, Fragata y Corbeta</li><li>Doble Cochera y Protecciones en Todo el Frente de la Casa</li><li>Cocina Integral Equipada (Con Parrilla, Campana y Barra Desayunadora)</li><li>Aire Acondicionado Inverter en Recámara Principal</li><li>Ecotencias (Baños Bajo Consumo, 6 lamparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rapido)</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas con Muros Independientes</li></ul>",
+  "caracteristicasConjunto": "<ul><li>269 Viviendas</li><li>Regimen de Propiedad en Condominio</li><li>Áreas Verdes Equipadas</li></ul>",
+  "planos": [
+    "../../assets/desarrollos/rinconada/Plantas_Rinconada.png"
+  ],
+  "imagenes": [
+    "../../assets/desarrollos/rinconada/Rinconada.jpg",
+    "../../assets/desarrollos/rinconada/Modelo_Corbeta.jpg",
+    "../../assets/desarrollos/rinconada/Modelo_Fragata.jpg",
+    "../../assets/desarrollos/rinconada/Modelo_Goleta.jpg",
+    "../../assets/desarrollos/rinconada/Multiple.jpg",
+    "../../assets/desarrollos/rinconada/Muestra.jpg"
+  ]
+}

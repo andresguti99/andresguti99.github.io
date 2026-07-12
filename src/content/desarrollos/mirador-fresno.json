@@ -1,0 +1,23 @@
+{
+  "nombre": "Mirador Del Fresno",
+  "ciudad": "zitacuaro",
+  "anio": 2008,
+  "descripcion": "MIRADOR DEL FRESNO EN ZITÁCUARO, MICHOACÁN",
+  "disponible": false,
+  "telefono": "+52 753 120 0721",
+  "facebook": "https://www.facebook.com/ureppsa.mx/",
+  "ubicacion": "Checar Map Las Jacarandas, 61512 Zitácuaro, Mich.",
+  "mapa": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3762.5696325088084!2d-100.3756826541817!3d19.430992294091723!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d2a56d08bab02f%3A0x8e6ef93892cdfd2e!2sMirador%20del%20Fresno%20III!5e0!3m2!1ses-419!2smx!4v1685654998906!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+  "logo": "../../assets/desarrollos/mirador-fresno/mirador-del-fresno.jpg",
+  "precio": "VENDIDO",
+  "plantas": "2",
+  "recamaras": "3",
+  "banos": "1 1/2",
+  "superficie": "90 m2",
+  "construccion": "84.14 m2",
+  "caracteristicasVivienda": "<ul><li>Casas con Muros Independientes</li></ul>",
+  "caracteristicasConjunto": "<ul><li>132 Viviendas</li><li>Regimen de Propiedad en Condominio</li><li>Áreas Verdes Equipadas</li></ul>",
+  "imagenes": [
+    "../../assets/desarrollos/mirador-fresno/PANORAMICA MZ r.jpg"
+  ]
+}

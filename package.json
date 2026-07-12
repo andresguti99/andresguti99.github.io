@@ -1,0 +1,17 @@
+{
+  "name": "ureppsa",
+  "type": "module",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "migrar": "node scripts/migrate.mjs"
+  },
+  "dependencies": {
+    "@fontsource-variable/figtree": "^5.2.0",
+    "@fontsource-variable/nunito": "^5.2.0",
+    "astro": "^5.0.0"
+  }
+}

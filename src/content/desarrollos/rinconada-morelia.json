@@ -1,0 +1,27 @@
+{
+  "nombre": "Rinconada De Morelia",
+  "ciudad": "morelia",
+  "anio": 2015,
+  "descripcion": "ESTRENA CASA : DOS PLANTAS: 2 RECAMARAS, SALA-COMEDOR, COCINA, PATIO DE SERVICIO, 1 1/2 BAÑOS, CAJÓN DE ESTACIONAMIENTO.",
+  "disponible": false,
+  "telefono": "+52 753 120 0721",
+  "facebook": "https://www.facebook.com/ureppsa.mx/",
+  "ubicacion": "CALLE VILLALONGIN FRACC. RINCONADA DE MORELIA (POR AVENIDA TORREÓN NUEVO)",
+  "mapa": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3755.315900349612!2d-101.21928358915483!3d19.741728730659304!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842d0f031e3e75ef%3A0x59202f3e6048d0ce!2sVillalong%C3%ADn%2C%2058116%20Morelia%2C%20Mich.!5e0!3m2!1ses-419!2smx!4v1685651142870!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+  "logo": "../../assets/desarrollos/rinconada-morelia/logo_rinconada_morelia.png",
+  "precio": "VENDIDO",
+  "plantas": "2",
+  "recamaras": "2",
+  "banos": "1 1/2",
+  "superficie": "67.5 m2",
+  "construccion": "62.28 m2",
+  "caracteristicasVivienda": "<ul><li>Sala-Comedor</li><li>Patio de Servicio</li><li>Cajon de Estacionamiento</li><li>Ecotencias (Baños Bajo Consumo, 6 lamparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rapido)</li></ul>",
+  "caracteristicasConjunto": "<ul><li>10 Viviendas</li><li>Regimen de Propiedas en Condominio</li><li>Áreas Verdes Equipadas</li></ul>",
+  "imagenes": [
+    "../../assets/desarrollos/rinconada-morelia/22Conjunto_D_430_pm.png",
+    "../../assets/desarrollos/rinconada-morelia/ejemplo.png",
+    "../../assets/desarrollos/rinconada-morelia/1-Planta_baja.png",
+    "../../assets/desarrollos/rinconada-morelia/2-Planta_alta.png",
+    "../../assets/desarrollos/rinconada-morelia/3-Fachadas.png"
+  ]
+}

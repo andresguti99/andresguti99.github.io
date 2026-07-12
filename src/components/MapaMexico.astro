@@ -1,0 +1,114 @@
+---
+import { getCollection } from 'astro:content';
+import mapa from '../../images/mexico-map.svg';
+
+// Los pines viven dentro del sistema de coordenadas del propio SVG (viewBox
+// 0 0 1024 696), así que escalan con el mapa y no pueden desalinearse jamás.
+const ANCHO = 1024;
+const ALTO = 696;
+
+const ciudades = (await getCollection('ciudades')).sort((a, b) =>
+  a.data.nombre.localeCompare(b.data.nombre)
+);
+---
+
+<div class="mapa tarjeta">
+  <div class="mapa-lienzo">
+    <img src={mapa.src} alt="" width={ANCHO} height={ALTO} />
+    <svg viewBox={`0 0 ${ANCHO} ${ALTO}`} role="list" aria-label="Ciudades con desarrollos UREPPSA">
+      {ciudades.map((ciudad) => (
+        <a href="/#desarrollos" role="listitem">
+          <g
+            class="pin"
+            transform={`translate(${(ciudad.data.x / 100) * ANCHO} ${(ciudad.data.y / 100) * ALTO})`}
+          >
+            <text class="pin-nombre" y="-42" text-anchor="middle">{ciudad.data.nombre}</text>
+            <path class="pin-marca" d="M0 0C-9-13-15-20-15-27a15 15 0 1 1 30 0c0 7-6 14-15 27Z" />
+            <circle cx="0" cy="-27" r="6" fill="var(--blanco)" />
+          </g>
+        </a>
+      ))}
+    </svg>
+  </div>
+  <ul class="mapa-leyenda">
+    {ciudades.map((ciudad) => (
+      <li>
+        <strong>{ciudad.data.nombre}</strong>
+        {ciudad.data.estado && <span>, {ciudad.data.estado}</span>}
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .mapa {
+    padding: clamp(1rem, 3vw, 2rem);
+  }
+
+  .mapa-lienzo {
+    position: relative;
+  }
+
+  .mapa-lienzo img {
+    width: 100%;
+    height: auto;
+  }
+
+  .mapa-lienzo svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .pin-marca {
+    fill: var(--terracota);
+    stroke: var(--blanco);
+    stroke-width: 2.5;
+  }
+
+  .pin-nombre {
+    font-family: var(--titulos);
+    font-weight: 800;
+    font-size: 22px;
+    fill: var(--tinta);
+    paint-order: stroke;
+    stroke: var(--crema);
+    stroke-width: 6;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .pin {
+    cursor: pointer;
+  }
+
+  a:hover .pin-marca,
+  a:focus .pin-marca {
+    fill: var(--verde);
+  }
+
+  a:hover .pin-nombre,
+  a:focus .pin-nombre {
+    opacity: 1;
+  }
+
+  .mapa-leyenda {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    padding: 1rem 0 0;
+    margin: 0;
+    border-top: 1px solid rgba(43, 38, 32, 0.08);
+    color: var(--tinta-suave);
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 600px) {
+    .pin-nombre {
+      opacity: 1;
+      font-size: 30px;
+    }
+  }
+</style>

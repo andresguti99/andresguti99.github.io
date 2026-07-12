@@ -1,0 +1,31 @@
+{
+  "nombre": "Nueva Sienna Residencial",
+  "ciudad": "celaya",
+  "anio": 2021,
+  "descripcion": "Vivienda de 3 Recamaras <br>Entrega Inmediata <br>Sin Costo de Apartado<br>Fraccionamiento Totalmente Cerrado<br>Visita La Casa Muestra",
+  "disponible": true,
+  "telefono": "+52 461 377 7723",
+  "facebook": "https://www.facebook.com/NuevaSiennaResidencial/",
+  "ubicacion": "Lima 101, Celaya, Guanajuato<br>Estamos Ubicados Entrando por la Universidad de Guanajuato y el Hospital Materno de Celaya. <br> A Dos Cuadras del Libramiento Juan Pablo II",
+  "mapa": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.4289339979!2d-100.83731052488231!3d20.488635406110934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842cbb5aa8b05997%3A0xa1fbac46d3468000!2sNueva%20Sienna%20Residencial!5e0!3m2!1ses-419!2smx!4v1682039781244!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+  "tourVirtual": "<iframe width='853' height='480' src='https://my.matterport.com/show/?m=FpY393z8LWj' frameborder='0' allowfullscreen allow='xr-spatial-tracking'></iframe>",
+  "logo": "../../assets/desarrollos/sienna/Logo_Sienna.png",
+  "precio": "ÚLTIMAS $899,000.00",
+  "plantas": "2",
+  "recamaras": "3 con Área de Guardado (2 en Planta Alta, 1 en Planta Baja)",
+  "banos": "2 Completos, Uno en Cada Planta",
+  "superficie": "4.6 x 16.5 (75.9) m2",
+  "construccion": "77.16 m2",
+  "caracteristicasVivienda": "<ul>\n<li>Iluminación Natural todo el día </li> <li>Patio de Servicio con Lavadero e Instalaciones de Lavadora </li> <li> Ecotencias (Inodoros de Bajo Consumo, 6 lamparas LED, LLaves Ahorradoras de Agua, Calentador Paso Rapido)</li> <li> Aislante Térmico de Espuma Poliestireno Estruido XPS de 1.25” de Espesor (Mejor Temperatura Interior en Todas las Temporadas)</li> <li>Cristales con Sol-Lite (Capas de Control Solar y Filtros UV, Mayor Privacidad)</li> </ul>",
+  "caracteristicasConjunto": "<ul> <li> 150 Viviendas en Primera Etapa</li> <li>Régimen de Propiedad en Condominio</li><li>Pórtico de Accesso Controlado con Caseta de Vigilancia</li>\n<li>Circuito Cerrado</li>\n<li>Barda Perimetral con Cerco Electrificado</li>\n<li>Áreas Verdes Equipadas</li>\n<li>Área Especial de Recolección de Residuos</li></ul>",
+  "planos": [
+    "../../assets/desarrollos/sienna/Planta_Baja_Color.png",
+    "../../assets/desarrollos/sienna/Planta_Alta_Color.png"
+  ],
+  "imagenes": [
+    "../../assets/desarrollos/sienna/Sienna.jpg",
+    "../../assets/desarrollos/sienna/Sala.jpg",
+    "../../assets/desarrollos/sienna/Cocina.jpg",
+    "../../assets/desarrollos/sienna/IMG_4063.JPG"
+  ]
+}

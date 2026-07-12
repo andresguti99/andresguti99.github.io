@@ -1,0 +1,119 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  desarrollo: CollectionEntry<'desarrollos'>;
+  nombreCiudad: string;
+  /** La primera tarjeta visible carga su imagen de inmediato. */
+  prioridad?: boolean;
+}
+
+const { desarrollo, nombreCiudad, prioridad = false } = Astro.props;
+const { nombre, precio, disponible, imagenes, logo, modelos } = desarrollo.data;
+---
+
+<article class="tarjeta tarjeta-desarrollo">
+  <a href={`/desarrollos/${desarrollo.id}/`} class="tarjeta-enlace">
+    <div class="tarjeta-foto">
+      <Image
+        src={imagenes[0]}
+        alt={`Fotografía de ${nombre}`}
+        widths={[420, 640, 840]}
+        sizes="(max-width: 720px) 100vw, 33vw"
+        loading={prioridad ? 'eager' : 'lazy'}
+      />
+      <span class={`pildora ${disponible ? 'pildora-disponible' : 'pildora-vendido'}`}>
+        {disponible ? 'Disponible' : 'Vendido'}
+      </span>
+    </div>
+    <div class="tarjeta-cuerpo">
+      {logo && (
+        <Image class="tarjeta-logo" src={logo} alt="" width={56} height={56} densities={[1, 2]} loading="lazy" />
+      )}
+      <div>
+        <h3>{nombre}</h3>
+        <p class="tarjeta-ciudad">{nombreCiudad}</p>
+        <p class="tarjeta-precio">{precio}</p>
+        {modelos && <p class="tarjeta-modelos">{modelos.length} modelos de vivienda</p>}
+      </div>
+    </div>
+  </a>
+</article>
+
+<style>
+  .tarjeta-desarrollo {
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .tarjeta-desarrollo:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-alta);
+  }
+
+  .tarjeta-enlace {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .tarjeta-foto {
+    position: relative;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+  }
+
+  .tarjeta-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tarjeta-foto .pildora {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    box-shadow: var(--sombra);
+  }
+
+  .tarjeta-cuerpo {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    padding: 1.1rem 1.25rem 1.3rem;
+  }
+
+  .tarjeta-logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    border-radius: var(--radio-chico);
+    background: var(--crema);
+    padding: 4px;
+    flex-shrink: 0;
+  }
+
+  h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.1rem;
+  }
+
+  .tarjeta-ciudad {
+    color: var(--tinta-suave);
+    font-size: 0.92rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .tarjeta-precio {
+    font-family: var(--titulos);
+    font-weight: 800;
+    color: var(--terracota);
+    margin-bottom: 0;
+  }
+
+  .tarjeta-modelos {
+    font-size: 0.85rem;
+    color: var(--verde-oscuro);
+    margin: 0.2rem 0 0;
+  }
+</style>

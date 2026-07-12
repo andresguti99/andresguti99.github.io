@@ -1,0 +1,360 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import MapaMexico from '../components/MapaMexico.astro';
+import TarjetaDesarrollo from '../components/TarjetaDesarrollo.astro';
+import IconoWhatsApp from '../components/IconoWhatsApp.astro';
+import { CELULAR_VENTAS, enlaceWhatsApp } from '../lib/contacto';
+import fotoHero from '../assets/desarrollos/puerto-internacional/R2_Area_Juegos.jpg';
+
+const ciudades = await getCollection('ciudades');
+const nombreCiudad = (id: string) => ciudades.find((c) => c.id === id)?.data.nombre ?? id;
+
+const desarrollos = (await getCollection('desarrollos')).sort((a, b) => b.data.anio - a.data.anio);
+const testimonios = await getCollection('testimonios');
+
+const estadisticas = [
+  { cifra: '30+', texto: 'años de experiencia' },
+  { cifra: '5,000+', texto: 'casas entregadas' },
+  { cifra: '20+', texto: 'municipios en México' },
+];
+
+const financiamiento = [
+  {
+    titulo: 'Crédito Infonavit',
+    texto: 'Usa tus puntos Infonavit para estrenar casa. Te acompañamos en todo el trámite, sin letras chiquitas.',
+  },
+  {
+    titulo: 'Crédito bancario',
+    texto: 'Trabajamos con los principales bancos para que consigas la mejor tasa según tu perfil.',
+  },
+  {
+    titulo: 'Compra directa',
+    texto: 'Plan de pagos directo con nosotros, con apartado sencillo y trato de persona a persona.',
+  },
+];
+---
+
+<Base titulo="UREPPSA | Cada Vivienda, Un Compromiso">
+  <!-- Héroe -->
+  <section class="heroe">
+    <div class="contenedor heroe-interno">
+      <div class="heroe-texto">
+        <span class="etiqueta">Desarrollos habitacionales</span>
+        <h1>Cada vivienda, <em>un compromiso</em>.</h1>
+        <p>
+          Construimos fraccionamientos seguros y llenos de vida para familias mexicanas,
+          con más de 30 años de experiencia y más de 5,000 hogares entregados.
+        </p>
+        <div class="heroe-acciones">
+          <a href="#desarrollos" class="btn btn-primario">Explora nuestros desarrollos</a>
+          <a
+            href={enlaceWhatsApp(CELULAR_VENTAS, 'Hola, quiero informes de los desarrollos de UREPPSA')}
+            class="btn btn-whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <IconoWhatsApp /> Escríbenos
+          </a>
+        </div>
+      </div>
+      <div class="heroe-visual">
+        <Image
+          src={fotoHero}
+          alt="Área de juegos infantiles en Puerto Internacional, Lázaro Cárdenas"
+          widths={[480, 720, 1040]}
+          sizes="(max-width: 900px) 100vw, 50vw"
+          loading="eager"
+        />
+        <div class="heroe-insignia">
+          <strong>Puerto Internacional</strong>
+          <span>Nuevo en Lázaro Cárdenas</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cifras -->
+  <section class="cifras">
+    <div class="contenedor cifras-interno">
+      {estadisticas.map((e) => (
+        <div class="cifra">
+          <strong>{e.cifra}</strong>
+          <span>{e.texto}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Mapa -->
+  <section class="seccion" id="mapa">
+    <div class="contenedor">
+      <div class="seccion-encabezado">
+        <span class="etiqueta">Presencia</span>
+        <h2>¿Dónde construimos?</h2>
+        <p>De la costa del Pacífico al Bajío: elige tu ciudad y encuentra tu próximo hogar.</p>
+      </div>
+      <MapaMexico />
+    </div>
+  </section>
+
+  <!-- Desarrollos -->
+  <section class="seccion" id="desarrollos">
+    <div class="contenedor">
+      <div class="seccion-encabezado">
+        <span class="etiqueta">Catálogo</span>
+        <h2>Nuestros desarrollos</h2>
+        <p>Del más reciente al más querido: cada uno cuenta la historia de cientos de familias.</p>
+      </div>
+      <div class="rejilla-desarrollos">
+        {desarrollos.map((d, i) => (
+          <TarjetaDesarrollo desarrollo={d} nombreCiudad={nombreCiudad(d.data.ciudad.id)} prioridad={i < 3} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonios -->
+  <section class="seccion" id="testimonios">
+    <div class="contenedor">
+      <div class="seccion-encabezado">
+        <span class="etiqueta">Testimonios</span>
+        <h2>Familias que ya están en casa</h2>
+        <p>Reseñas reales de Google y Facebook.</p>
+      </div>
+      <div class="rejilla-testimonios">
+        {testimonios.map((t) => (
+          <figure class="tarjeta testimonio">
+            <div class="estrellas" aria-label={`${t.data.estrellas} de 5 estrellas`}>
+              {'★'.repeat(t.data.estrellas)}
+            </div>
+            <blockquote>{t.data.texto}</blockquote>
+            <figcaption>
+              <strong>{t.data.autor}</strong>
+              <span>
+                {t.data.proyecto}
+                {t.data.enlace && (
+                  <>
+                    {' · '}
+                    <a href={t.data.enlace} target="_blank" rel="noopener noreferrer">ver reseña</a>
+                  </>
+                )}
+              </span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Financiamiento -->
+  <section class="seccion" id="financiamiento">
+    <div class="contenedor">
+      <div class="seccion-encabezado">
+        <span class="etiqueta">Financiamiento</span>
+        <h2>Tu casa, a tu manera</h2>
+        <p>Hay más de un camino para llegar a tu hogar. Te ayudamos a encontrar el tuyo.</p>
+      </div>
+      <div class="rejilla-financiamiento">
+        {financiamiento.map((f) => (
+          <div class="tarjeta opcion-financiamiento">
+            <h3>{f.titulo}</h3>
+            <p>{f.texto}</p>
+          </div>
+        ))}
+      </div>
+      <div class="financiamiento-cta">
+        <a
+          href={enlaceWhatsApp(CELULAR_VENTAS, 'Hola, quiero saber qué opciones de financiamiento tengo para una casa UREPPSA')}
+          class="btn btn-whatsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconoWhatsApp /> Pregunta por tu crédito
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Héroe */
+  .heroe {
+    padding-block: clamp(2.5rem, 6vw, 5rem);
+    background:
+      radial-gradient(60% 80% at 85% 20%, var(--verde-claro) 0%, transparent 70%),
+      radial-gradient(50% 70% at 10% 90%, var(--terracota-claro) 0%, transparent 70%);
+  }
+
+  .heroe-interno {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    align-items: center;
+    gap: clamp(2rem, 5vw, 4rem);
+  }
+
+  .heroe h1 {
+    font-size: clamp(2.3rem, 5.5vw, 3.6rem);
+  }
+
+  .heroe h1 em {
+    font-style: normal;
+    color: var(--verde);
+    position: relative;
+  }
+
+  .heroe-texto p {
+    font-size: 1.2rem;
+    color: var(--tinta-suave);
+    max-width: 34rem;
+  }
+
+  .heroe-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.6rem;
+  }
+
+  .heroe-visual {
+    position: relative;
+  }
+
+  .heroe-visual img {
+    border-radius: 32px 120px 32px 32px;
+    box-shadow: var(--sombra-alta);
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+  }
+
+  .heroe-insignia {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    background: var(--blanco);
+    border-radius: var(--radio-chico);
+    box-shadow: var(--sombra);
+    padding: 0.6rem 1rem;
+    display: grid;
+  }
+
+  .heroe-insignia strong {
+    font-family: var(--titulos);
+  }
+
+  .heroe-insignia span {
+    font-size: 0.85rem;
+    color: var(--terracota);
+  }
+
+  /* Cifras */
+  .cifras {
+    background: var(--verde-oscuro);
+    color: var(--blanco);
+    padding-block: 1.75rem;
+  }
+
+  .cifras-interno {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    text-align: center;
+  }
+
+  .cifra strong {
+    display: block;
+    font-family: var(--titulos);
+    font-weight: 800;
+    font-size: clamp(1.7rem, 4vw, 2.4rem);
+    color: var(--amarillo);
+  }
+
+  .cifra span {
+    font-size: 0.95rem;
+    opacity: 0.9;
+  }
+
+  /* Rejillas */
+  .rejilla-desarrollos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .rejilla-testimonios {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testimonio {
+    margin: 0;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .estrellas {
+    color: var(--amarillo);
+    letter-spacing: 2px;
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .testimonio blockquote {
+    margin: 0 0 1rem;
+    color: var(--tinta-suave);
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .testimonio figcaption strong {
+    display: block;
+    font-family: var(--titulos);
+  }
+
+  .testimonio figcaption span {
+    font-size: 0.9rem;
+    color: var(--tinta-suave);
+  }
+
+  .rejilla-financiamiento {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .opcion-financiamiento {
+    padding: 1.6rem;
+    border-top: 5px solid var(--verde);
+  }
+
+  .opcion-financiamiento h3 {
+    font-size: 1.15rem;
+  }
+
+  .opcion-financiamiento p {
+    color: var(--tinta-suave);
+    margin: 0;
+  }
+
+  .financiamiento-cta {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  @media (max-width: 900px) {
+    .heroe-interno {
+      grid-template-columns: 1fr;
+    }
+    .cifras-interno {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+</style>

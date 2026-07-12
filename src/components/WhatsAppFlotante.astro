@@ -1,0 +1,55 @@
+---
+import IconoWhatsApp from './IconoWhatsApp.astro';
+import { CELULAR_VENTAS, enlaceWhatsApp } from '../lib/contacto';
+
+interface Props {
+  mensaje?: string;
+}
+
+const { mensaje = 'Hola, quiero informes de los desarrollos de UREPPSA' } = Astro.props;
+---
+
+<a
+  class="wa-flotante"
+  href={enlaceWhatsApp(CELULAR_VENTAS, mensaje)}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Escríbenos por WhatsApp"
+>
+  <IconoWhatsApp tamano={26} />
+  <span>WhatsApp</span>
+</a>
+
+<style>
+  .wa-flotante {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 60;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #25d366;
+    color: #073b1a;
+    font-family: var(--titulos);
+    font-weight: 800;
+    text-decoration: none;
+    padding: 0.75rem 1.2rem;
+    border-radius: 999px;
+    box-shadow: 0 12px 28px rgba(7, 59, 26, 0.35);
+    transition: transform 0.15s ease;
+  }
+
+  .wa-flotante:hover {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 600px) {
+    .wa-flotante span {
+      display: none;
+    }
+    .wa-flotante {
+      padding: 0.85rem;
+    }
+  }
+</style>

@@ -1,0 +1,7 @@
+# Dependencias y artefactos de build
+node_modules/
+dist/
+.astro/
+
+# Sistema
+.DS_Store

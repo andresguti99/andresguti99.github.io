@@ -1,0 +1,27 @@
+{
+  "nombre": "Mirador  De San Francisco",
+  "ciudad": "zitacuaro",
+  "anio": 2005,
+  "descripcion": "MIRADOR DE SAN FRANCISCO EN ZITÁCUARO, MICHOACÁN",
+  "disponible": false,
+  "telefono": "+52 753 120 0721",
+  "facebook": "https://www.facebook.com/ureppsa.mx/",
+  "ubicacion": "Checar Mapa -- Sin nombre No. 320 8, La Cuesta, 61510 Zitácuaro, Mich.",
+  "mapa": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15050.275764056229!2d-100.37310040574174!3d19.431022143983352!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d2a53dde05b307%3A0xcbdcc9131a7329d4!2sFraccionamiento%20San%20Francisco!5e0!3m2!1ses-419!2smx!4v1685662796434!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
+  "logo": "../../assets/desarrollos/mirador-san-francisco/mirador-de-san-francisco.jpg",
+  "precio": "VENDIDO",
+  "plantas": "2",
+  "recamaras": "3",
+  "banos": "2 1/2",
+  "superficie": "112.2 m2",
+  "construccion": "111.56 m2",
+  "caracteristicasVivienda": "<ul><li>Muros Independientes</li></ul>",
+  "caracteristicasConjunto": "<ul><li>40 Viviendas</li><li>Regimen de Propiedas en Condominio</li><li>Áreas Verdes Equipadas</li></ul>",
+  "planos": [
+    "../../assets/desarrollos/mirador-san-francisco/Plantas_MiradorFrancisco.jpeg"
+  ],
+  "imagenes": [
+    "../../assets/desarrollos/mirador-san-francisco/DSC07623 r.jpg",
+    "../../assets/desarrollos/mirador-san-francisco/DSC07624 r.jpg"
+  ]
+}

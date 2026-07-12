@@ -1,0 +1,543 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import IconoWhatsApp from '../../components/IconoWhatsApp.astro';
+import { enlaceWhatsApp } from '../../lib/contacto';
+
+export async function getStaticPaths() {
+  const desarrollos = await getCollection('desarrollos');
+  return desarrollos.map((d) => ({ params: { slug: d.id }, props: { desarrollo: d } }));
+}
+
+const { desarrollo } = Astro.props;
+const d = desarrollo.data;
+const ciudad = await getEntry(d.ciudad);
+const lugar = `${ciudad.data.nombre}${ciudad.data.estado ? `, ${ciudad.data.estado}` : ''}`;
+const mensajeWA = `Quiero informes de ${d.nombre}`;
+
+// Pares etiqueta/valor de la ficha técnica; solo se muestran los presentes.
+const ficha = (v: typeof d) =>
+  [
+    ['Plantas', v.plantas],
+    ['Recámaras', v.recamaras],
+    ['Baños', v.banos],
+    ['Terreno', v.superficie],
+    ['Construcción', v.construccion],
+  ].filter(([, valor]) => valor) as [string, string][];
+
+const etiquetaPlano = (total: number, i: number) => {
+  if (total === 1) return 'Planta arquitectónica';
+  return i === 0 ? 'Planta baja' : i === 1 ? 'Planta alta' : `Planta ${i + 1}`;
+};
+---
+
+<Base
+  titulo={`${d.nombre} | UREPPSA`}
+  descripcion={`${d.nombre} en ${lugar}. ${d.precio}. Desarrollo habitacional de UREPPSA.`}
+  mensajeWhatsApp={mensajeWA}
+>
+  <!-- Héroe del desarrollo -->
+  <section class="heroe-desarrollo">
+    <Image
+      class="heroe-fondo"
+      src={d.imagenes[0]}
+      alt=""
+      widths={[768, 1280, 1920]}
+      sizes="100vw"
+      loading="eager"
+    />
+    <div class="heroe-velo"></div>
+    <div class="contenedor heroe-contenido">
+      <nav class="miga"><a href="/#desarrollos">← Todos los desarrollos</a></nav>
+      <div class="heroe-datos">
+        {d.logo && <Image class="heroe-logo" src={d.logo} alt="" width={96} densities={[1, 2]} />}
+        <div>
+          <h1>{d.nombre}</h1>
+          <p class="heroe-lugar">{lugar}</p>
+          <div class="heroe-precio-fila">
+            <span class={`pildora ${d.disponible ? 'pildora-disponible' : 'pildora-vendido'}`}>
+              {d.disponible ? 'Disponible' : 'Vendido'}
+            </span>
+            <span class="heroe-precio">{d.precio}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="contenedor">
+    <!-- Descripción -->
+    <section class="seccion seccion-compacta">
+      <div class="descripcion prosa" set:html={d.descripcion} />
+      {d.disponible && (
+        <a
+          href={enlaceWhatsApp(d.telefono, mensajeWA)}
+          class="btn btn-whatsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconoWhatsApp /> Quiero informes
+        </a>
+      )}
+    </section>
+
+    <!-- Galería -->
+    <section class="seccion seccion-compacta">
+      <h2>Galería</h2>
+      <div class="galeria">
+        {d.imagenes.slice(1, 7).map((img, i) => (
+          <Image
+            src={img}
+            alt={`${d.nombre}, fotografía ${i + 2}`}
+            widths={[420, 640, 960]}
+            sizes="(max-width: 720px) 100vw, 33vw"
+            loading="lazy"
+          />
+        ))}
+      </div>
+    </section>
+
+    <!-- Tour virtual -->
+    {d.tourVirtual && (
+      <section class="seccion seccion-compacta">
+        <h2>Recorre la casa muestra</h2>
+        <div class="marco marco-tour" set:html={d.tourVirtual} />
+      </section>
+    )}
+
+    <!-- Modelos de vivienda -->
+    {d.modelos && (
+      <section class="seccion seccion-compacta" id="modelos">
+        <h2>Modelos de vivienda</h2>
+        <div class="modelos">
+          {d.modelos.map((m) => (
+            <article class="tarjeta modelo">
+              <header class="modelo-encabezado">
+                <h3>{m.nombre}</h3>
+                <span class="modelo-precio">{m.precio}</span>
+              </header>
+              <div class="modelo-galeria">
+                {m.imagenes.slice(0, 3).map((img, i) => (
+                  <Image
+                    src={img}
+                    alt={`Modelo ${m.nombre}, fotografía ${i + 1}`}
+                    widths={[360, 560]}
+                    sizes="(max-width: 720px) 100vw, 30vw"
+                    loading="lazy"
+                  />
+                ))}
+              </div>
+              <dl class="ficha">
+                {ficha(m).map(([etiqueta, valor]) => (
+                  <div>
+                    <dt>{etiqueta}</dt>
+                    <dd>{valor}</dd>
+                  </div>
+                ))}
+              </dl>
+              {m.planos && (
+                <div class="planos">
+                  {m.planos.map((plano, i) => (
+                    <figure>
+                      <Image
+                        src={plano}
+                        alt={`${m.nombre}: ${etiquetaPlano(m.planos!.length, i)}`}
+                        widths={[420, 640]}
+                        sizes="(max-width: 720px) 100vw, 45vw"
+                        loading="lazy"
+                      />
+                      <figcaption>{etiquetaPlano(m.planos!.length, i)}</figcaption>
+                    </figure>
+                  ))}
+                </div>
+              )}
+              {(m.caracteristicasVivienda || m.caracteristicasConjunto) && (
+                <details class="caracteristicas">
+                  <summary>Ver todas las características</summary>
+                  {m.caracteristicasVivienda && (
+                    <>
+                      <h4>La vivienda</h4>
+                      <div class="prosa" set:html={m.caracteristicasVivienda} />
+                    </>
+                  )}
+                  {m.caracteristicasConjunto && (
+                    <>
+                      <h4>El conjunto</h4>
+                      <div class="prosa" set:html={m.caracteristicasConjunto} />
+                    </>
+                  )}
+                </details>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- Ficha técnica del desarrollo sin modelos -->
+    {!d.modelos && (
+      <section class="seccion seccion-compacta">
+        <h2>La vivienda</h2>
+        <dl class="ficha">
+          {ficha(d).map(([etiqueta, valor]) => (
+            <div>
+              <dt>{etiqueta}</dt>
+              <dd>{valor}</dd>
+            </div>
+          ))}
+        </dl>
+        {d.planos && (
+          <div class="planos">
+            {d.planos.map((plano, i) => (
+              <figure>
+                <Image
+                  src={plano}
+                  alt={`${d.nombre}: ${etiquetaPlano(d.planos!.length, i)}`}
+                  widths={[420, 640]}
+                  sizes="(max-width: 720px) 100vw, 45vw"
+                  loading="lazy"
+                />
+                <figcaption>{etiquetaPlano(d.planos!.length, i)}</figcaption>
+              </figure>
+            ))}
+          </div>
+        )}
+        {(d.caracteristicasVivienda || d.caracteristicasConjunto) && (
+          <div class="columnas-caracteristicas">
+            {d.caracteristicasVivienda && (
+              <div>
+                <h3>La vivienda</h3>
+                <div class="prosa" set:html={d.caracteristicasVivienda} />
+              </div>
+            )}
+            {d.caracteristicasConjunto && (
+              <div>
+                <h3>El conjunto</h3>
+                <div class="prosa" set:html={d.caracteristicasConjunto} />
+              </div>
+            )}
+          </div>
+        )}
+      </section>
+    )}
+
+    <!-- Ubicación y contacto -->
+    <section class="seccion seccion-compacta" id="ubicacion">
+      <div class="ubicacion-contacto">
+        <div>
+          <h2>Ubicación</h2>
+          {d.ubicacion && <div class="prosa" set:html={d.ubicacion} />}
+          {d.mapa && <div class="marco marco-mapa" set:html={d.mapa} />}
+        </div>
+        <aside class="tarjeta contacto-panel">
+          <h2>¿Te interesa {d.nombre}?</h2>
+          <p>Escríbenos y con gusto te damos informes, sin compromiso.</p>
+          <a
+            href={enlaceWhatsApp(d.telefono, mensajeWA)}
+            class="btn btn-whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <IconoWhatsApp /> WhatsApp
+          </a>
+          <a href={`tel:${d.telefono.replace(/\s/g, '')}`} class="btn btn-secundario">
+            Llámanos: {d.telefono}
+          </a>
+          {d.facebook && (
+            <a href={d.facebook} target="_blank" rel="noopener noreferrer" class="contacto-facebook">
+              Síguenos en Facebook
+            </a>
+          )}
+        </aside>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .heroe-desarrollo {
+    position: relative;
+    min-height: 62vh;
+    display: flex;
+    align-items: flex-end;
+    color: var(--blanco);
+  }
+
+  .heroe-fondo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .heroe-velo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(23, 20, 16, 0.85) 0%, rgba(23, 20, 16, 0.25) 45%, rgba(23, 20, 16, 0.15) 100%);
+  }
+
+  .heroe-contenido {
+    position: relative;
+    padding-block: 1.5rem 2.5rem;
+    width: 100%;
+  }
+
+  .miga {
+    margin-bottom: 1.25rem;
+  }
+
+  .miga a {
+    color: var(--blanco);
+    text-decoration: none;
+    font-family: var(--titulos);
+    font-weight: 700;
+    opacity: 0.9;
+  }
+
+  .miga a:hover {
+    opacity: 1;
+  }
+
+  .heroe-datos {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .heroe-logo {
+    width: 96px;
+    height: 96px;
+    object-fit: contain;
+    background: var(--blanco);
+    border-radius: var(--radio-chico);
+    padding: 8px;
+    flex-shrink: 0;
+  }
+
+  .heroe-desarrollo h1 {
+    font-size: clamp(2rem, 5vw, 3rem);
+    margin-bottom: 0.1em;
+  }
+
+  .heroe-lugar {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    margin-bottom: 0.6rem;
+  }
+
+  .heroe-precio-fila {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+  }
+
+  .heroe-precio {
+    font-family: var(--titulos);
+    font-weight: 800;
+    font-size: 1.35rem;
+    color: var(--amarillo);
+  }
+
+  .seccion-compacta {
+    padding-block: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .descripcion {
+    font-size: 1.15rem;
+    max-width: 46rem;
+    margin-bottom: 1.25rem;
+  }
+
+  /* Galería */
+  .galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .galeria img {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radio);
+  }
+
+  /* Tour y mapa responsivos */
+  .marco-tour :global(iframe) {
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
+
+  .marco-mapa :global(iframe) {
+    aspect-ratio: 4 / 3;
+    height: auto;
+  }
+
+  /* Modelos */
+  .modelos {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  .modelo {
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+
+  .modelo-encabezado {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .modelo-encabezado h3 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  .modelo-precio {
+    font-family: var(--titulos);
+    font-weight: 800;
+    color: var(--terracota);
+    font-size: 1.15rem;
+  }
+
+  .modelo-galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .modelo-galeria img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: var(--radio-chico);
+  }
+
+  /* Ficha técnica */
+  .ficha {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 0.75rem;
+    margin: 0 0 1.25rem;
+  }
+
+  .ficha > div {
+    background: var(--crema);
+    border-radius: var(--radio-chico);
+    padding: 0.7rem 0.9rem;
+  }
+
+  .ficha dt {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--tinta-suave);
+  }
+
+  .ficha dd {
+    margin: 0;
+    font-family: var(--titulos);
+    font-weight: 800;
+  }
+
+  /* Planos */
+  .planos {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .planos figure {
+    margin: 0;
+    text-align: center;
+  }
+
+  .planos img {
+    border-radius: var(--radio-chico);
+    background: var(--blanco);
+  }
+
+  .planos figcaption {
+    font-family: var(--titulos);
+    font-weight: 700;
+    color: var(--tinta-suave);
+    margin-top: 0.4rem;
+  }
+
+  /* Características plegables */
+  .caracteristicas {
+    border-top: 1px solid rgba(43, 38, 32, 0.08);
+    padding-top: 1rem;
+  }
+
+  .caracteristicas summary {
+    cursor: pointer;
+    font-family: var(--titulos);
+    font-weight: 800;
+    color: var(--verde-oscuro);
+  }
+
+  .caracteristicas h4 {
+    margin-top: 1rem;
+  }
+
+  .columnas-caracteristicas {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* Ubicación + contacto */
+  .ubicacion-contacto {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  .contacto-panel {
+    padding: 1.75rem;
+    display: grid;
+    gap: 0.9rem;
+    position: sticky;
+    top: 6rem;
+  }
+
+  .contacto-panel h2 {
+    font-size: 1.35rem;
+    margin: 0;
+  }
+
+  .contacto-panel p {
+    color: var(--tinta-suave);
+    margin: 0;
+  }
+
+  .contacto-panel .btn {
+    justify-content: center;
+  }
+
+  .contacto-facebook {
+    text-align: center;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 860px) {
+    .ubicacion-contacto {
+      grid-template-columns: 1fr;
+    }
+    .contacto-panel {
+      position: static;
+    }
+  }
+</style>

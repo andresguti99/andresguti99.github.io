@@ -1,0 +1,92 @@
+---
+import { TELEFONO_OFICINA, CELULAR_VENTAS, CORREO_VENTAS, FACEBOOK_UREPPSA } from '../lib/contacto';
+const anio = new Date().getFullYear();
+---
+
+<footer class="pie" id="contacto">
+  <div class="contenedor pie-interno">
+    <div>
+      <p class="pie-marca">UREPPSA</p>
+      <p class="pie-lema">Cada vivienda, un compromiso.</p>
+      <p class="pie-texto">
+        Casa Mata #300, Col. Chapultepec Sur,<br />
+        C.P. 58260, Morelia, Michoacán
+      </p>
+    </div>
+    <div>
+      <h3>Contacto</h3>
+      <p class="pie-texto">
+        Teléfono: <a href="tel:+524433242601">{TELEFONO_OFICINA}</a><br />
+        Celular: <a href="tel:+527531200721">{CELULAR_VENTAS}</a><br />
+        Correo: <a href={`mailto:${CORREO_VENTAS}`}>{CORREO_VENTAS}</a>
+      </p>
+    </div>
+    <div>
+      <h3>Síguenos</h3>
+      <p class="pie-texto">
+        <a href={FACEBOOK_UREPPSA} target="_blank" rel="noopener noreferrer">Facebook</a><br />
+        <a href="https://www.ureppsa.com/privacy.html">Aviso de Privacidad</a>
+      </p>
+    </div>
+  </div>
+  <div class="contenedor pie-legal">
+    <p>© {anio} UREPPSA. Todos los derechos reservados.</p>
+  </div>
+</footer>
+
+<style>
+  .pie {
+    background: var(--tinta);
+    color: #e9e2d6;
+    padding-block: 3rem 1.5rem;
+    margin-top: 4rem;
+  }
+
+  .pie-interno {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+  }
+
+  .pie-marca {
+    font-family: var(--titulos);
+    font-weight: 800;
+    font-size: 1.5rem;
+    margin-bottom: 0.2rem;
+    color: var(--blanco);
+  }
+
+  .pie-lema {
+    color: var(--amarillo);
+    font-family: var(--titulos);
+    font-weight: 700;
+  }
+
+  .pie h3 {
+    font-size: 1rem;
+    color: var(--blanco);
+    margin-bottom: 0.6rem;
+  }
+
+  .pie-texto {
+    font-size: 0.95rem;
+    line-height: 1.9;
+  }
+
+  .pie a {
+    color: #e9e2d6;
+    text-decoration-color: rgba(233, 226, 214, 0.4);
+  }
+
+  .pie a:hover {
+    color: var(--blanco);
+  }
+
+  .pie-legal {
+    border-top: 1px solid rgba(233, 226, 214, 0.15);
+    margin-top: 2.5rem;
+    padding-top: 1.25rem;
+    font-size: 0.85rem;
+    color: rgba(233, 226, 214, 0.7);
+  }
+</style>
