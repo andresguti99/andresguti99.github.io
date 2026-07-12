@@ -233,11 +233,31 @@ img {
   border: 0;
 }
 
+/* Revelado al hacer scroll ---------------------------------------------------
+   Añade class="revelar" a cualquier elemento; el observador de Base.astro le
+   pone .visible cuando entra al viewport. Escalona con style="--retraso: 120ms". */
+
+.revelar {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.65s ease var(--retraso, 0ms), transform 0.65s ease var(--retraso, 0ms);
+}
+
+.revelar.visible {
+  opacity: 1;
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
   .btn:hover {
     transform: none;
+  }
+  .revelar {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

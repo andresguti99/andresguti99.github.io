@@ -37,5 +37,20 @@ const {
     </main>
     <Footer />
     <WhatsAppFlotante mensaje={mensajeWhatsApp} />
+    <script>
+      // Revelado suave de secciones al entrar al viewport
+      const observador = new IntersectionObserver(
+        (entradas) => {
+          entradas.forEach((entrada) => {
+            if (entrada.isIntersecting) {
+              entrada.target.classList.add('visible');
+              observador.unobserve(entrada.target);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+      document.querySelectorAll('.revelar').forEach((el) => observador.observe(el));
+    </script>
   </body>
 </html>

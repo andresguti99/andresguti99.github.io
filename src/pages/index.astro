@@ -13,27 +13,31 @@ const nombreCiudad = (id: string) => ciudades.find((c) => c.id === id)?.data.nom
 const desarrollos = (await getCollection('desarrollos')).sort((a, b) => b.data.anio - a.data.anio);
 const testimonios = await getCollection('testimonios');
 
-// Escaparate del héroe: primero los disponibles, después los más recientes.
-const destacados = [...desarrollos]
-  .sort((a, b) => Number(b.data.disponible) - Number(a.data.disponible) || b.data.anio - a.data.anio)
-  .slice(0, 4);
+// Escaparate del héroe: únicamente los proyectos disponibles hoy.
+const destacados = desarrollos.filter((d) => d.data.disponible);
+
+// Logos para la marquesina de trayectoria.
+const conLogo = desarrollos.filter((d) => d.data.logo);
 
 const estadisticas = [
-  { cifra: '30+', texto: 'años de experiencia' },
-  { cifra: '5,000+', texto: 'casas entregadas' },
-  { cifra: '20+', texto: 'municipios en México' },
+  { valor: 30, texto: 'años de experiencia' },
+  { valor: 5000, texto: 'casas entregadas' },
+  { valor: 20, texto: 'municipios en México' },
 ];
 
 const financiamiento = [
   {
+    icono: 'house-heart-fill',
     titulo: 'Crédito Infonavit',
     texto: 'Usa tus puntos Infonavit para estrenar casa. Te acompañamos en todo el trámite, sin letras chiquitas.',
   },
   {
+    icono: 'bank2',
     titulo: 'Crédito bancario',
     texto: 'Trabajamos con los principales bancos para que consigas la mejor tasa según tu perfil.',
   },
   {
+    icono: 'cash-coin',
     titulo: 'Compra directa',
     texto: 'Plan de pagos directo con nosotros, con apartado sencillo y trato de persona a persona.',
   },
@@ -64,7 +68,7 @@ const financiamiento = [
         </div>
       </div>
 
-      <!-- Escaparate: rota los proyectos disponibles y más recientes -->
+      <!-- Escaparate: solo los proyectos disponibles hoy -->
       <div class="escaparate" data-escaparate>
         {destacados.map((d, i) => (
           <a
@@ -80,28 +84,22 @@ const financiamiento = [
               sizes="(max-width: 900px) 100vw, 50vw"
               loading={i === 0 ? 'eager' : 'lazy'}
             />
-            <div class="escaparate-velo"></div>
-            {d.data.logo && (
-              <Image class="escaparate-logo" src={d.data.logo} alt="" width={110} densities={[1, 2]} loading={i === 0 ? 'eager' : 'lazy'} />
-            )}
-            <div class="escaparate-panel">
-              <span class={`pildora ${d.data.disponible ? 'pildora-disponible' : 'pildora-vendido'}`}>
-                {d.data.disponible ? 'Disponible' : 'Vendido'}
-              </span>
-              <strong>{d.data.nombre}</strong>
-              <span class="escaparate-detalle">{nombreCiudad(d.data.ciudad.id)} · {d.data.precio}</span>
+            <div class="escaparate-barra">
+              <div class="escaparate-info">
+                <strong>{d.data.nombre}</strong>
+                <span>{nombreCiudad(d.data.ciudad.id)} · {d.data.precio}</span>
+              </div>
+              <span class="pildora pildora-disponible">Disponible</span>
             </div>
           </a>
         ))}
-        <div class="escaparate-puntos" role="tablist" aria-label="Proyectos destacados">
-          {destacados.map((d, i) => (
-            <button
-              class:list={[{ activo: i === 0 }]}
-              data-indice={i}
-              aria-label={`Mostrar ${d.data.nombre}`}
-            ></button>
-          ))}
-        </div>
+        {destacados.length > 1 && (
+          <div class="escaparate-puntos" role="tablist" aria-label="Proyectos disponibles">
+            {destacados.map((d, i) => (
+              <button class:list={[{ activo: i === 0 }]} data-indice={i} aria-label={`Mostrar ${d.data.nombre}`}></button>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   </section>
@@ -111,34 +109,50 @@ const financiamiento = [
     <div class="contenedor cifras-interno">
       {estadisticas.map((e) => (
         <div class="cifra">
-          <strong>{e.cifra}</strong>
+          <strong data-contar={e.valor}>0+</strong>
           <span>{e.texto}</span>
         </div>
       ))}
     </div>
   </section>
 
+  <!-- Marquesina de trayectoria -->
+  <section class="marquesina" aria-label="Nuestros fraccionamientos a lo largo de 30 años">
+    <p class="marquesina-titulo">Tres décadas de fraccionamientos que ya son hogar</p>
+    <div class="marquesina-vista">
+      <div class="marquesina-pista">
+        {[...conLogo, ...conLogo].map((d) => (
+          <a href={`/desarrollos/${d.id}/`} title={d.data.nombre}>
+            <Image src={d.data.logo!} alt={d.data.nombre} width={96} densities={[1, 2]} loading="lazy" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- Mapa -->
   <section class="seccion" id="mapa">
     <div class="contenedor">
-      <div class="seccion-encabezado">
+      <div class="seccion-encabezado revelar">
         <span class="etiqueta">Presencia</span>
         <h2>¿Dónde construimos?</h2>
         <p>De la costa del Pacífico al Bajío: elige tu ciudad para ver sus desarrollos.</p>
       </div>
-      <MapaMexico />
+      <div class="revelar" style="--retraso: 120ms">
+        <MapaMexico />
+      </div>
     </div>
   </section>
 
   <!-- Desarrollos -->
   <section class="seccion" id="desarrollos">
     <div class="contenedor">
-      <div class="seccion-encabezado">
+      <div class="seccion-encabezado revelar">
         <span class="etiqueta">Catálogo</span>
         <h2>Nuestros desarrollos</h2>
         <p>Del más reciente al más querido: cada uno cuenta la historia de cientos de familias.</p>
       </div>
-      <div class="filtros" role="group" aria-label="Filtrar por ciudad">
+      <div class="filtros revelar" role="group" aria-label="Filtrar por ciudad" style="--retraso: 80ms">
         <button class="chip activo" data-ciudad="todas">Todas las ciudades</button>
         {ciudades
           .sort((a, b) => a.data.nombre.localeCompare(b.data.nombre))
@@ -147,8 +161,10 @@ const financiamiento = [
           ))}
       </div>
       <div class="rejilla-desarrollos">
-        {desarrollos.map((d) => (
-          <TarjetaDesarrollo desarrollo={d} nombreCiudad={nombreCiudad(d.data.ciudad.id)} />
+        {desarrollos.map((d, i) => (
+          <div class="revelar" style={`--retraso: ${(i % 3) * 90}ms`}>
+            <TarjetaDesarrollo desarrollo={d} nombreCiudad={nombreCiudad(d.data.ciudad.id)} />
+          </div>
         ))}
       </div>
     </div>
@@ -157,14 +173,14 @@ const financiamiento = [
   <!-- Testimonios -->
   <section class="seccion" id="testimonios">
     <div class="contenedor">
-      <div class="seccion-encabezado">
+      <div class="seccion-encabezado revelar">
         <span class="etiqueta">Testimonios</span>
         <h2>Familias que ya están en casa</h2>
         <p>Reseñas reales de Google y Facebook.</p>
       </div>
       <div class="rejilla-testimonios">
-        {testimonios.map((t) => (
-          <figure class="tarjeta testimonio">
+        {testimonios.map((t, i) => (
+          <figure class="tarjeta testimonio revelar" style={`--retraso: ${i * 90}ms`}>
             <div class="estrellas" aria-label={`${t.data.estrellas} de 5 estrellas`}>
               {Array.from({ length: t.data.estrellas }).map(() => <Icono nombre="star-fill" tamano={16} />)}
             </div>
@@ -190,20 +206,21 @@ const financiamiento = [
   <!-- Financiamiento -->
   <section class="seccion" id="financiamiento">
     <div class="contenedor">
-      <div class="seccion-encabezado">
+      <div class="seccion-encabezado revelar">
         <span class="etiqueta">Financiamiento</span>
         <h2>Tu casa, a tu manera</h2>
         <p>Hay más de un camino para llegar a tu hogar. Te ayudamos a encontrar el tuyo.</p>
       </div>
       <div class="rejilla-financiamiento">
-        {financiamiento.map((f) => (
-          <div class="tarjeta opcion-financiamiento">
+        {financiamiento.map((f, i) => (
+          <div class="tarjeta opcion-financiamiento revelar" style={`--retraso: ${i * 90}ms`}>
+            <span class="opcion-icono"><Icono nombre={f.icono} tamano={24} /></span>
             <h3>{f.titulo}</h3>
             <p>{f.texto}</p>
           </div>
         ))}
       </div>
-      <div class="financiamiento-cta">
+      <div class="financiamiento-cta revelar">
         <a
           href={enlaceWhatsApp(CELULAR_VENTAS, 'Hola, quiero saber qué opciones de financiamiento tengo para una casa UREPPSA')}
           class="btn btn-whatsapp"
@@ -224,7 +241,7 @@ const financiamiento = [
     const laminas = [...escaparate.querySelectorAll<HTMLElement>('.escaparate-lamina')];
     const puntos = [...escaparate.querySelectorAll<HTMLButtonElement>('.escaparate-puntos button')];
     let actual = 0;
-    let temporizador: ReturnType<typeof setInterval>;
+    let temporizador: ReturnType<typeof setInterval> | undefined;
 
     const mostrar = (indice: number) => {
       actual = (indice + laminas.length) % laminas.length;
@@ -237,7 +254,9 @@ const financiamiento = [
       puntos.forEach((punto, i) => punto.classList.toggle('activo', i === actual));
     };
 
-    const iniciar = () => (temporizador = setInterval(() => mostrar(actual + 1), 5000));
+    const iniciar = () => {
+      if (laminas.length > 1) temporizador = setInterval(() => mostrar(actual + 1), 5000);
+    };
     const detener = () => clearInterval(temporizador);
 
     puntos.forEach((punto) =>
@@ -252,6 +271,40 @@ const financiamiento = [
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) iniciar();
   }
 
+  // ── Cifras que cuentan hacia arriba ──────────────────────────────────
+  const formato = new Intl.NumberFormat('es-MX');
+  const animarCifra = (el: HTMLElement) => {
+    const objetivo = Number(el.dataset.contar);
+    const duracion = 1100;
+    const inicio = performance.now();
+    const paso = (ahora: number) => {
+      const progreso = Math.min((ahora - inicio) / duracion, 1);
+      const suavizado = 1 - Math.pow(1 - progreso, 3);
+      el.textContent = `${formato.format(Math.round(objetivo * suavizado))}+`;
+      if (progreso < 1) requestAnimationFrame(paso);
+    };
+    requestAnimationFrame(paso);
+  };
+
+  const observadorCifras = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((entrada) => {
+        if (entrada.isIntersecting) {
+          animarCifra(entrada.target as HTMLElement);
+          observadorCifras.unobserve(entrada.target);
+        }
+      });
+    },
+    { threshold: 0.6 }
+  );
+  document.querySelectorAll<HTMLElement>('[data-contar]').forEach((el) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = `${formato.format(Number(el.dataset.contar))}+`;
+    } else {
+      observadorCifras.observe(el);
+    }
+  });
+
   // ── Filtro de desarrollos por ciudad ─────────────────────────────────
   const chips = [...document.querySelectorAll<HTMLButtonElement>('.filtros .chip')];
   const tarjetas = [...document.querySelectorAll<HTMLElement>('[data-ciudad-tarjeta]')];
@@ -259,7 +312,9 @@ const financiamiento = [
   const filtrar = (ciudad: string) => {
     chips.forEach((chip) => chip.classList.toggle('activo', chip.dataset.ciudad === ciudad));
     tarjetas.forEach((tarjeta) => {
-      tarjeta.hidden = ciudad !== 'todas' && tarjeta.dataset.ciudadTarjeta !== ciudad;
+      // La tarjeta vive dentro de un envoltorio .revelar: ocultamos el envoltorio
+      const envoltorio = tarjeta.closest<HTMLElement>('.revelar') ?? tarjeta;
+      envoltorio.hidden = ciudad !== 'todas' && tarjeta.dataset.ciudadTarjeta !== ciudad;
     });
   };
 
@@ -270,13 +325,26 @@ const financiamiento = [
 <style>
   /* Héroe */
   .heroe {
-    padding-block: clamp(2.5rem, 6vw, 5rem);
+    position: relative;
+    padding-block: clamp(2.5rem, 6vw, 5.5rem);
     background:
       radial-gradient(60% 80% at 85% 20%, var(--verde-claro) 0%, transparent 70%),
       radial-gradient(50% 70% at 10% 90%, var(--terracota-claro) 0%, transparent 70%);
   }
 
+  /* Retícula de puntos, sello de las páginas modernas */
+  .heroe::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(43, 38, 32, 0.1) 1.2px, transparent 1.2px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(65% 70% at 35% 40%, black, transparent);
+    pointer-events: none;
+  }
+
   .heroe-interno {
+    position: relative;
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
     align-items: center;
@@ -284,12 +352,26 @@ const financiamiento = [
   }
 
   .heroe h1 {
-    font-size: clamp(2.3rem, 5.5vw, 3.6rem);
+    font-size: clamp(2.3rem, 5.5vw, 3.7rem);
   }
 
   .heroe h1 em {
     font-style: normal;
-    color: var(--verde);
+    background: linear-gradient(90deg, var(--verde), #6cb26f 45%, var(--terracota));
+    background-size: 200% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: flujoGradiente 7s ease-in-out infinite alternate;
+  }
+
+  @keyframes flujoGradiente {
+    from {
+      background-position: 0% 0;
+    }
+    to {
+      background-position: 100% 0;
+    }
   }
 
   .heroe-texto p {
@@ -309,9 +391,10 @@ const financiamiento = [
   .escaparate {
     position: relative;
     aspect-ratio: 4 / 3;
-    border-radius: 32px 120px 32px 32px;
+    border-radius: 28px;
     overflow: hidden;
     box-shadow: var(--sombra-alta);
+    border: 1px solid rgba(43, 38, 32, 0.1);
   }
 
   .escaparate-lamina {
@@ -336,103 +419,88 @@ const financiamiento = [
     object-fit: cover;
   }
 
-  .escaparate-velo {
+  .escaparate-barra {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(to top, rgba(23, 20, 16, 0.8) 0%, transparent 55%);
-  }
-
-  .escaparate-logo {
-    position: absolute;
-    top: 1.1rem;
-    left: 1.1rem;
-    width: clamp(70px, 8vw, 110px);
-    height: auto;
-    background: rgba(255, 255, 255, 0.94);
-    border-radius: var(--radio-chico);
-    padding: 8px;
+    left: 0.9rem;
+    right: 0.9rem;
+    bottom: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1.1rem;
+    border-radius: 18px;
+    background: rgba(21, 18, 14, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
     opacity: 0;
-    transform: scale(0.6);
+    transform: translateY(20px);
   }
 
-  .escaparate-lamina.activa .escaparate-logo {
-    animation: aparecerLogo 0.6s 0.25s ease both;
+  .escaparate-lamina.activa .escaparate-barra {
+    animation: subirBarra 0.6s 0.15s ease both;
   }
 
-  .escaparate-panel {
-    position: absolute;
-    left: 1.25rem;
-    right: 1.25rem;
-    bottom: 1.25rem;
+  @keyframes subirBarra {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .escaparate-info {
     display: grid;
-    gap: 0.3rem;
-    justify-items: start;
-    opacity: 0;
-    transform: translateY(24px);
+    gap: 0.1rem;
+    min-width: 0;
   }
 
-  .escaparate-lamina.activa .escaparate-panel {
-    animation: subirPanel 0.65s 0.15s ease both;
-  }
-
-  .escaparate-panel strong {
+  .escaparate-info strong {
     font-family: var(--titulos);
     font-weight: 800;
-    font-size: clamp(1.3rem, 2.6vw, 1.9rem);
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  .escaparate-detalle {
+  .escaparate-info span {
+    font-size: 0.92rem;
+    color: var(--amarillo);
     font-family: var(--titulos);
     font-weight: 700;
-    color: var(--amarillo);
-    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .escaparate-barra .pildora {
+    flex-shrink: 0;
   }
 
   .escaparate-puntos {
     position: absolute;
-    right: 1.25rem;
-    bottom: 1.25rem;
+    top: 1rem;
+    right: 1rem;
     display: flex;
-    gap: 0.45rem;
+    gap: 0.4rem;
+    padding: 0.4rem 0.55rem;
+    border-radius: 999px;
+    background: rgba(21, 18, 14, 0.4);
+    backdrop-filter: blur(8px);
     z-index: 2;
   }
 
   .escaparate-puntos button {
-    width: 0.7rem;
-    height: 0.7rem;
+    width: 0.6rem;
+    height: 0.6rem;
     border-radius: 50%;
     border: 0;
-    background: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.45);
     cursor: pointer;
     transition: background 0.2s ease, transform 0.2s ease;
   }
 
   .escaparate-puntos button.activo {
     background: #fff;
-    transform: scale(1.25);
-  }
-
-  @keyframes aparecerLogo {
-    from {
-      opacity: 0;
-      transform: scale(0.6);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
-  }
-
-  @keyframes subirPanel {
-    from {
-      opacity: 0;
-      transform: translateY(24px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    transform: scale(1.2);
   }
 
   /* Cifras */
@@ -455,11 +523,73 @@ const financiamiento = [
     font-weight: 800;
     font-size: clamp(1.7rem, 4vw, 2.4rem);
     color: var(--amarillo);
+    font-variant-numeric: tabular-nums;
   }
 
   .cifra span {
     font-size: 0.95rem;
     opacity: 0.9;
+  }
+
+  /* Marquesina */
+  .marquesina {
+    padding-block: 1.75rem 0.5rem;
+  }
+
+  .marquesina-titulo {
+    text-align: center;
+    font-family: var(--titulos);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--tinta-suave);
+    margin-bottom: 1rem;
+  }
+
+  .marquesina-vista {
+    overflow: hidden;
+    mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  }
+
+  .marquesina-pista {
+    display: flex;
+    align-items: center;
+    gap: clamp(2.5rem, 6vw, 4.5rem);
+    width: max-content;
+    animation: desplazar 35s linear infinite;
+  }
+
+  .marquesina-vista:hover .marquesina-pista {
+    animation-play-state: paused;
+  }
+
+  .marquesina-pista img {
+    height: 56px;
+    width: auto;
+    object-fit: contain;
+    opacity: 0.75;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .marquesina-pista a:hover img {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+
+  @keyframes desplazar {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .marquesina-pista {
+      animation: none;
+    }
+    .heroe h1 em {
+      animation: none;
+    }
   }
 
   /* Filtros */
@@ -547,7 +677,17 @@ const financiamiento = [
 
   .opcion-financiamiento {
     padding: 1.6rem;
-    border-top: 5px solid var(--verde);
+  }
+
+  .opcion-icono {
+    display: inline-grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 14px;
+    background: var(--verde-claro);
+    color: var(--verde-oscuro);
+    margin-bottom: 0.9rem;
   }
 
   .opcion-financiamiento h3 {

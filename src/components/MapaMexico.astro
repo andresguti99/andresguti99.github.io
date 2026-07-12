@@ -8,38 +8,60 @@ import mapa from '../../images/mexico-map.svg';
 const ANCHO = 1024;
 const ALTO = 696;
 
-const ciudades = (await getCollection('ciudades')).sort((a, b) =>
-  a.data.nombre.localeCompare(b.data.nombre)
-);
+const ciudades = (await getCollection('ciudades'))
+  .sort((a, b) => a.data.nombre.localeCompare(b.data.nombre))
+  .map((ciudad) => ({
+    id: ciudad.id,
+    nombre: ciudad.data.nombre,
+    estado: ciudad.data.estado,
+    px: (ciudad.data.x / 100) * ANCHO,
+    py: (ciudad.data.y / 100) * ALTO,
+  }));
 ---
 
 <div class="mapa tarjeta">
   <div class="mapa-lienzo">
     <Image src={mapa} alt="Mapa de México" />
-    <svg viewBox={`0 0 ${ANCHO} ${ALTO}`} aria-hidden="false" role="list" aria-label="Ciudades con desarrollos UREPPSA">
-      {ciudades.map((ciudad) => (
-        <a
-          class="pin-enlace"
-          href="/#desarrollos"
-          data-ciudad={ciudad.id}
-          role="listitem"
-          aria-label={`Ver desarrollos en ${ciudad.data.nombre}`}
-        >
-          <g transform={`translate(${(ciudad.data.x / 100) * ANCHO} ${(ciudad.data.y / 100) * ALTO})`}>
-            <text class="pin-nombre" y="-42" text-anchor="middle">{ciudad.data.nombre}</text>
+    <svg viewBox={`0 0 ${ANCHO} ${ALTO}`}>
+      <!-- Capa 1: pines -->
+      <g>
+        {ciudades.map((ciudad) => (
+          <g
+            class="pin"
+            data-ciudad={ciudad.id}
+            tabindex="0"
+            role="button"
+            aria-label={`Ver desarrollos en ${ciudad.nombre}`}
+            transform={`translate(${ciudad.px} ${ciudad.py})`}
+          >
             <path class="pin-marca" d="M0 0C-9-13-15-20-15-27a15 15 0 1 1 30 0c0 7-6 14-15 27Z" />
             <circle cx="0" cy="-27" r="6" fill="var(--blanco)" />
           </g>
-        </a>
-      ))}
+        ))}
+      </g>
+      <!-- Capa 2: etiquetas. Van después de TODOS los pines para pintarse
+           siempre por encima de ellos. -->
+      <g aria-hidden="true">
+        {ciudades.map((ciudad) => (
+          <text
+            class="pin-nombre"
+            data-etiqueta={ciudad.id}
+            x={ciudad.px}
+            y={ciudad.py - 42}
+            text-anchor="middle"
+          >
+            {ciudad.nombre}
+          </text>
+        ))}
+      </g>
     </svg>
   </div>
   <ul class="mapa-leyenda">
     {ciudades.map((ciudad) => (
       <li>
         <button class="leyenda-boton" data-ciudad={ciudad.id}>
-          <strong>{ciudad.data.nombre}</strong>
-          {ciudad.data.estado && <span>, {ciudad.data.estado}</span>}
+          <strong>{ciudad.nombre}</strong>
+          {ciudad.estado && <span>, {ciudad.estado}</span>}
         </button>
       </li>
     ))}
@@ -47,23 +69,34 @@ const ciudades = (await getCollection('ciudades')).sort((a, b) =>
 </div>
 
 <script>
-  document.querySelectorAll<HTMLElement>('.pin-enlace').forEach((pin) => {
-    // Al pasar el cursor, el pin se mueve al final del SVG para que su
-    // etiqueta se pinte por encima de los demás pines (el orden del documento
-    // define el orden de pintado en SVG).
-    pin.addEventListener('mouseenter', () => pin.parentElement?.appendChild(pin));
-    pin.addEventListener('focus', () => pin.parentElement?.appendChild(pin));
+  const filtrarYNavegar = (ciudad?: string) => {
+    if (!ciudad) return;
+    window.dispatchEvent(new CustomEvent('filtrar-ciudad', { detail: ciudad }));
+    document.querySelector('#desarrollos')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-    pin.addEventListener('click', () => {
-      window.dispatchEvent(new CustomEvent('filtrar-ciudad', { detail: pin.dataset.ciudad }));
+  document.querySelectorAll<SVGGElement>('.pin').forEach((pin) => {
+    const etiqueta = document.querySelector(`[data-etiqueta="${pin.dataset.ciudad}"]`);
+
+    const mostrar = () => etiqueta?.classList.add('visible');
+    const ocultar = () => etiqueta?.classList.remove('visible');
+
+    pin.addEventListener('mouseenter', mostrar);
+    pin.addEventListener('mouseleave', ocultar);
+    pin.addEventListener('focus', mostrar);
+    pin.addEventListener('blur', ocultar);
+
+    pin.addEventListener('click', () => filtrarYNavegar(pin.dataset.ciudad));
+    pin.addEventListener('keydown', (evento) => {
+      if (evento.key === 'Enter' || evento.key === ' ') {
+        evento.preventDefault();
+        filtrarYNavegar(pin.dataset.ciudad);
+      }
     });
   });
 
-  document.querySelectorAll<HTMLElement>('.leyenda-boton').forEach((boton) => {
-    boton.addEventListener('click', () => {
-      window.dispatchEvent(new CustomEvent('filtrar-ciudad', { detail: boton.dataset.ciudad }));
-      document.querySelector('#desarrollos')?.scrollIntoView({ behavior: 'smooth' });
-    });
+  document.querySelectorAll<HTMLButtonElement>('.leyenda-boton').forEach((boton) => {
+    boton.addEventListener('click', () => filtrarYNavegar(boton.dataset.ciudad));
   });
 </script>
 
@@ -88,6 +121,11 @@ const ciudades = (await getCollection('ciudades')).sort((a, b) =>
     height: 100%;
   }
 
+  .pin {
+    cursor: pointer;
+    outline: none;
+  }
+
   .pin-marca {
     fill: var(--terracota);
     stroke: var(--blanco);
@@ -95,30 +133,25 @@ const ciudades = (await getCollection('ciudades')).sort((a, b) =>
     transition: fill 0.15s ease;
   }
 
+  .pin:hover .pin-marca,
+  .pin:focus .pin-marca {
+    fill: var(--verde);
+  }
+
   .pin-nombre {
     font-family: var(--titulos);
     font-weight: 800;
-    font-size: 24px;
+    font-size: 26px;
     fill: var(--tinta);
     paint-order: stroke;
     stroke: var(--blanco);
-    stroke-width: 7;
+    stroke-width: 8;
     opacity: 0;
     transition: opacity 0.15s ease;
     pointer-events: none;
   }
 
-  .pin-enlace {
-    cursor: pointer;
-  }
-
-  .pin-enlace:hover .pin-marca,
-  .pin-enlace:focus .pin-marca {
-    fill: var(--verde);
-  }
-
-  .pin-enlace:hover .pin-nombre,
-  .pin-enlace:focus .pin-nombre {
+  .pin-nombre.visible {
     opacity: 1;
   }
 
@@ -149,12 +182,5 @@ const ciudades = (await getCollection('ciudades')).sort((a, b) =>
   .leyenda-boton strong {
     color: var(--tinta);
     transition: color 0.15s ease;
-  }
-
-  @media (max-width: 600px) {
-    .pin-nombre {
-      opacity: 1;
-      font-size: 30px;
-    }
   }
 </style>

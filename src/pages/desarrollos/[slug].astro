@@ -490,6 +490,24 @@ const etiquetaPlano = (total: number, i: number) => {
     gap: 1rem;
   }
 
+  /* En móvil la galería es una tira horizontal con scroll-snap: compacta y
+     deslizable con el pulgar, en lugar de una columna interminable. */
+  @media (max-width: 720px) {
+    .galeria {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 0.75rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .galeria .galeria-item {
+      flex: 0 0 74%;
+      scroll-snap-align: start;
+    }
+  }
+
   .galeria-item {
     padding: 0;
     border: 0;
