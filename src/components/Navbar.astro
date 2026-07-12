@@ -1,85 +1,145 @@
 ---
 import { Image } from 'astro:assets';
+import Icono from './Icono.astro';
 import logo from '../../images/UREPPSA/UP_logo.png';
 ---
 
 <header class="barra">
-  <div class="contenedor barra-interna">
-    <a href="/" class="marca">
-      <Image src={logo} alt="UREPPSA" width={120} densities={[1, 2]} />
-      <span class="lema">Cada vivienda, un compromiso</span>
+  <div class="barra-interna">
+    <a href="/" class="marca" aria-label="UREPPSA, inicio">
+      <Image src={logo} alt="UREPPSA" width={112} densities={[1, 2]} loading="eager" />
     </a>
-    <nav aria-label="Navegación principal">
-      <a href="/#desarrollos">Desarrollos</a>
-      <a href="/#financiamiento">Financiamiento</a>
-      <a href="/#contacto" class="btn btn-primario btn-nav">Contacto</a>
+    <p class="lema">Cada Vivienda un Compromiso</p>
+    <button class="menu-boton" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menú">
+      <Icono nombre="list" tamano={32} />
+    </button>
+    <nav id="menu-principal" class="menu" aria-label="Navegación principal">
+      <a href="/#desarrollos"><Icono nombre="houses-fill" tamano={18} /> Desarrollos</a>
+      <a href="/#financiamiento"><Icono nombre="piggy-bank-fill" tamano={18} /> Financiamiento</a>
+      <a href="/#contacto" class="btn btn-primario btn-nav"><Icono nombre="telephone-fill" tamano={16} /> Contacto</a>
     </nav>
   </div>
 </header>
+
+<script>
+  const boton = document.querySelector('.menu-boton')!;
+  const menu = document.querySelector('#menu-principal')!;
+
+  boton.addEventListener('click', () => {
+    const abierto = menu.classList.toggle('abierto');
+    boton.setAttribute('aria-expanded', String(abierto));
+  });
+
+  // Cierra el menú al elegir una opción (navegación por anclas en la misma página)
+  menu.querySelectorAll('a').forEach((enlace) =>
+    enlace.addEventListener('click', () => {
+      menu.classList.remove('abierto');
+      boton.setAttribute('aria-expanded', 'false');
+    })
+  );
+</script>
 
 <style>
   .barra {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in srgb, var(--crema) 88%, transparent);
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(43, 38, 32, 0.07);
+    background: #211d18;
+    border-bottom: 3px solid var(--verde);
   }
 
   .barra-interna {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 1rem;
-    padding-block: 0.6rem;
+    padding: 0.55rem clamp(1rem, 3vw, 2rem);
   }
 
   .marca {
-    display: flex;
-    align-items: center;
-    gap: 0.9rem;
-    text-decoration: none;
-    color: var(--tinta);
+    flex-shrink: 0;
+    display: block;
   }
 
   .marca img {
-    width: clamp(70px, 9vw, 96px);
+    width: clamp(76px, 8vw, 104px);
     height: auto;
   }
 
   .lema {
+    flex: 1;
+    margin: 0;
+    text-align: center;
     font-family: var(--titulos);
-    font-weight: 800;
-    font-size: 0.9rem;
-    color: var(--verde-oscuro);
+    font-style: italic;
+    font-weight: 700;
+    font-size: clamp(0.95rem, 2.2vw, 1.25rem);
+    color: #fff;
   }
 
-  nav {
+  .menu {
     display: flex;
     align-items: center;
-    gap: clamp(0.8rem, 2.5vw, 1.6rem);
+    gap: clamp(1rem, 2.5vw, 1.75rem);
   }
 
-  nav a:not(.btn) {
+  .menu a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
     font-family: var(--titulos);
     font-weight: 700;
+    font-size: 1.05rem;
     text-decoration: none;
-    color: var(--tinta);
+    color: #f3ede2;
   }
 
-  nav a:not(.btn):hover {
-    color: var(--verde);
+  .menu a:not(.btn):hover {
+    color: var(--amarillo);
   }
 
   .btn-nav {
-    padding: 0.5rem 1.1rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 1.2rem;
+    font-size: 0.95rem;
   }
 
-  @media (max-width: 720px) {
-    .lema {
+  .menu-boton {
+    display: none;
+    background: none;
+    border: 0;
+    color: #fff;
+    cursor: pointer;
+    padding: 0.25rem;
+  }
+
+  @media (max-width: 860px) {
+    .menu-boton {
+      display: block;
+    }
+
+    .menu {
       display: none;
+    }
+
+    .menu.abierto {
+      display: grid;
+      gap: 0.25rem;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: #211d18;
+      border-bottom: 3px solid var(--verde);
+      padding: 0.75rem 1.25rem 1.25rem;
+    }
+
+    .menu.abierto a {
+      padding: 0.65rem 0;
+      font-size: 1.15rem;
+    }
+
+    .menu.abierto .btn-nav {
+      justify-content: center;
+      margin-top: 0.5rem;
     }
   }
 </style>

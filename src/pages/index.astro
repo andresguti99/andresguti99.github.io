@@ -4,15 +4,19 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import MapaMexico from '../components/MapaMexico.astro';
 import TarjetaDesarrollo from '../components/TarjetaDesarrollo.astro';
-import IconoWhatsApp from '../components/IconoWhatsApp.astro';
+import Icono from '../components/Icono.astro';
 import { CELULAR_VENTAS, enlaceWhatsApp } from '../lib/contacto';
-import fotoHero from '../assets/desarrollos/puerto-internacional/R2_Area_Juegos.jpg';
 
 const ciudades = await getCollection('ciudades');
 const nombreCiudad = (id: string) => ciudades.find((c) => c.id === id)?.data.nombre ?? id;
 
 const desarrollos = (await getCollection('desarrollos')).sort((a, b) => b.data.anio - a.data.anio);
 const testimonios = await getCollection('testimonios');
+
+// Escaparate del héroe: primero los disponibles, después los más recientes.
+const destacados = [...desarrollos]
+  .sort((a, b) => Number(b.data.disponible) - Number(a.data.disponible) || b.data.anio - a.data.anio)
+  .slice(0, 4);
 
 const estadisticas = [
   { cifra: '30+', texto: 'años de experiencia' },
@@ -55,21 +59,48 @@ const financiamiento = [
             target="_blank"
             rel="noopener noreferrer"
           >
-            <IconoWhatsApp /> Escríbenos
+            <Icono nombre="whatsapp" /> Escríbenos
           </a>
         </div>
       </div>
-      <div class="heroe-visual">
-        <Image
-          src={fotoHero}
-          alt="Área de juegos infantiles en Puerto Internacional, Lázaro Cárdenas"
-          widths={[480, 720, 1040]}
-          sizes="(max-width: 900px) 100vw, 50vw"
-          loading="eager"
-        />
-        <div class="heroe-insignia">
-          <strong>Puerto Internacional</strong>
-          <span>Nuevo en Lázaro Cárdenas</span>
+
+      <!-- Escaparate: rota los proyectos disponibles y más recientes -->
+      <div class="escaparate" data-escaparate>
+        {destacados.map((d, i) => (
+          <a
+            class:list={['escaparate-lamina', { activa: i === 0 }]}
+            href={`/desarrollos/${d.id}/`}
+            aria-hidden={i === 0 ? 'false' : 'true'}
+            tabindex={i === 0 ? 0 : -1}
+          >
+            <Image
+              src={d.data.imagenes[0]}
+              alt={`Fotografía de ${d.data.nombre}`}
+              widths={[480, 720, 1040]}
+              sizes="(max-width: 900px) 100vw, 50vw"
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+            <div class="escaparate-velo"></div>
+            {d.data.logo && (
+              <Image class="escaparate-logo" src={d.data.logo} alt="" width={110} densities={[1, 2]} loading={i === 0 ? 'eager' : 'lazy'} />
+            )}
+            <div class="escaparate-panel">
+              <span class={`pildora ${d.data.disponible ? 'pildora-disponible' : 'pildora-vendido'}`}>
+                {d.data.disponible ? 'Disponible' : 'Vendido'}
+              </span>
+              <strong>{d.data.nombre}</strong>
+              <span class="escaparate-detalle">{nombreCiudad(d.data.ciudad.id)} · {d.data.precio}</span>
+            </div>
+          </a>
+        ))}
+        <div class="escaparate-puntos" role="tablist" aria-label="Proyectos destacados">
+          {destacados.map((d, i) => (
+            <button
+              class:list={[{ activo: i === 0 }]}
+              data-indice={i}
+              aria-label={`Mostrar ${d.data.nombre}`}
+            ></button>
+          ))}
         </div>
       </div>
     </div>
@@ -93,7 +124,7 @@ const financiamiento = [
       <div class="seccion-encabezado">
         <span class="etiqueta">Presencia</span>
         <h2>¿Dónde construimos?</h2>
-        <p>De la costa del Pacífico al Bajío: elige tu ciudad y encuentra tu próximo hogar.</p>
+        <p>De la costa del Pacífico al Bajío: elige tu ciudad para ver sus desarrollos.</p>
       </div>
       <MapaMexico />
     </div>
@@ -107,9 +138,17 @@ const financiamiento = [
         <h2>Nuestros desarrollos</h2>
         <p>Del más reciente al más querido: cada uno cuenta la historia de cientos de familias.</p>
       </div>
+      <div class="filtros" role="group" aria-label="Filtrar por ciudad">
+        <button class="chip activo" data-ciudad="todas">Todas las ciudades</button>
+        {ciudades
+          .sort((a, b) => a.data.nombre.localeCompare(b.data.nombre))
+          .map((c) => (
+            <button class="chip" data-ciudad={c.id}>{c.data.nombre}</button>
+          ))}
+      </div>
       <div class="rejilla-desarrollos">
-        {desarrollos.map((d, i) => (
-          <TarjetaDesarrollo desarrollo={d} nombreCiudad={nombreCiudad(d.data.ciudad.id)} prioridad={i < 3} />
+        {desarrollos.map((d) => (
+          <TarjetaDesarrollo desarrollo={d} nombreCiudad={nombreCiudad(d.data.ciudad.id)} />
         ))}
       </div>
     </div>
@@ -127,7 +166,7 @@ const financiamiento = [
         {testimonios.map((t) => (
           <figure class="tarjeta testimonio">
             <div class="estrellas" aria-label={`${t.data.estrellas} de 5 estrellas`}>
-              {'★'.repeat(t.data.estrellas)}
+              {Array.from({ length: t.data.estrellas }).map(() => <Icono nombre="star-fill" tamano={16} />)}
             </div>
             <blockquote>{t.data.texto}</blockquote>
             <figcaption>
@@ -171,12 +210,62 @@ const financiamiento = [
           target="_blank"
           rel="noopener noreferrer"
         >
-          <IconoWhatsApp /> Pregunta por tu crédito
+          <Icono nombre="whatsapp" /> Pregunta por tu crédito
         </a>
       </div>
     </div>
   </section>
 </Base>
+
+<script>
+  // ── Escaparate del héroe ─────────────────────────────────────────────
+  const escaparate = document.querySelector('[data-escaparate]');
+  if (escaparate) {
+    const laminas = [...escaparate.querySelectorAll<HTMLElement>('.escaparate-lamina')];
+    const puntos = [...escaparate.querySelectorAll<HTMLButtonElement>('.escaparate-puntos button')];
+    let actual = 0;
+    let temporizador: ReturnType<typeof setInterval>;
+
+    const mostrar = (indice: number) => {
+      actual = (indice + laminas.length) % laminas.length;
+      laminas.forEach((lamina, i) => {
+        const activa = i === actual;
+        lamina.classList.toggle('activa', activa);
+        lamina.setAttribute('aria-hidden', String(!activa));
+        lamina.tabIndex = activa ? 0 : -1;
+      });
+      puntos.forEach((punto, i) => punto.classList.toggle('activo', i === actual));
+    };
+
+    const iniciar = () => (temporizador = setInterval(() => mostrar(actual + 1), 5000));
+    const detener = () => clearInterval(temporizador);
+
+    puntos.forEach((punto) =>
+      punto.addEventListener('click', () => {
+        detener();
+        mostrar(Number(punto.dataset.indice));
+        iniciar();
+      })
+    );
+    escaparate.addEventListener('mouseenter', detener);
+    escaparate.addEventListener('mouseleave', iniciar);
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) iniciar();
+  }
+
+  // ── Filtro de desarrollos por ciudad ─────────────────────────────────
+  const chips = [...document.querySelectorAll<HTMLButtonElement>('.filtros .chip')];
+  const tarjetas = [...document.querySelectorAll<HTMLElement>('[data-ciudad-tarjeta]')];
+
+  const filtrar = (ciudad: string) => {
+    chips.forEach((chip) => chip.classList.toggle('activo', chip.dataset.ciudad === ciudad));
+    tarjetas.forEach((tarjeta) => {
+      tarjeta.hidden = ciudad !== 'todas' && tarjeta.dataset.ciudadTarjeta !== ciudad;
+    });
+  };
+
+  chips.forEach((chip) => chip.addEventListener('click', () => filtrar(chip.dataset.ciudad!)));
+  window.addEventListener('filtrar-ciudad', (evento) => filtrar((evento as CustomEvent<string>).detail));
+</script>
 
 <style>
   /* Héroe */
@@ -201,7 +290,6 @@ const financiamiento = [
   .heroe h1 em {
     font-style: normal;
     color: var(--verde);
-    position: relative;
   }
 
   .heroe-texto p {
@@ -217,37 +305,134 @@ const financiamiento = [
     margin-top: 1.6rem;
   }
 
-  .heroe-visual {
+  /* Escaparate */
+  .escaparate {
     position: relative;
-  }
-
-  .heroe-visual img {
-    border-radius: 32px 120px 32px 32px;
-    box-shadow: var(--sombra-alta);
-    width: 100%;
-    height: auto;
-    object-fit: cover;
     aspect-ratio: 4 / 3;
+    border-radius: 32px 120px 32px 32px;
+    overflow: hidden;
+    box-shadow: var(--sombra-alta);
   }
 
-  .heroe-insignia {
+  .escaparate-lamina {
     position: absolute;
-    left: 1rem;
-    bottom: 1rem;
-    background: var(--blanco);
+    inset: 0;
+    display: block;
+    text-decoration: none;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    pointer-events: none;
+  }
+
+  .escaparate-lamina.activa {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .escaparate-lamina > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .escaparate-velo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(23, 20, 16, 0.8) 0%, transparent 55%);
+  }
+
+  .escaparate-logo {
+    position: absolute;
+    top: 1.1rem;
+    left: 1.1rem;
+    width: clamp(70px, 8vw, 110px);
+    height: auto;
+    background: rgba(255, 255, 255, 0.94);
     border-radius: var(--radio-chico);
-    box-shadow: var(--sombra);
-    padding: 0.6rem 1rem;
+    padding: 8px;
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  .escaparate-lamina.activa .escaparate-logo {
+    animation: aparecerLogo 0.6s 0.25s ease both;
+  }
+
+  .escaparate-panel {
+    position: absolute;
+    left: 1.25rem;
+    right: 1.25rem;
+    bottom: 1.25rem;
     display: grid;
+    gap: 0.3rem;
+    justify-items: start;
+    opacity: 0;
+    transform: translateY(24px);
   }
 
-  .heroe-insignia strong {
+  .escaparate-lamina.activa .escaparate-panel {
+    animation: subirPanel 0.65s 0.15s ease both;
+  }
+
+  .escaparate-panel strong {
     font-family: var(--titulos);
+    font-weight: 800;
+    font-size: clamp(1.3rem, 2.6vw, 1.9rem);
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.45);
   }
 
-  .heroe-insignia span {
-    font-size: 0.85rem;
-    color: var(--terracota);
+  .escaparate-detalle {
+    font-family: var(--titulos);
+    font-weight: 700;
+    color: var(--amarillo);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .escaparate-puntos {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    display: flex;
+    gap: 0.45rem;
+    z-index: 2;
+  }
+
+  .escaparate-puntos button {
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    border: 0;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .escaparate-puntos button.activo {
+    background: #fff;
+    transform: scale(1.25);
+  }
+
+  @keyframes aparecerLogo {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes subirPanel {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   /* Cifras */
@@ -277,6 +462,37 @@ const financiamiento = [
     opacity: 0.9;
   }
 
+  /* Filtros */
+  .filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .chip {
+    font-family: var(--titulos);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--tinta);
+    background: var(--blanco);
+    border: 2px solid rgba(43, 38, 32, 0.12);
+    border-radius: 999px;
+    padding: 0.45rem 1.1rem;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .chip:hover {
+    border-color: var(--verde);
+  }
+
+  .chip.activo {
+    background: var(--verde);
+    border-color: var(--verde);
+    color: #fff;
+  }
+
   /* Rejillas */
   .rejilla-desarrollos {
     display: grid;
@@ -298,10 +514,10 @@ const financiamiento = [
   }
 
   .estrellas {
+    display: flex;
+    gap: 0.25rem;
     color: var(--amarillo);
-    letter-spacing: 2px;
-    font-size: 1.1rem;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.8rem;
   }
 
   .testimonio blockquote {

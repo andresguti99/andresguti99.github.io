@@ -12,6 +12,7 @@
   "dependencies": {
     "@fontsource-variable/figtree": "^5.2.0",
     "@fontsource-variable/nunito": "^5.2.0",
-    "astro": "^5.0.0"
+    "astro": "^5.0.0",
+    "bootstrap-icons": "^1.13.1"
   }
 }

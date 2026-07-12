@@ -1,8 +1,8 @@
 ---
 import { getCollection, getEntry } from 'astro:content';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
-import IconoWhatsApp from '../../components/IconoWhatsApp.astro';
+import Icono from '../../components/Icono.astro';
 import { enlaceWhatsApp } from '../../lib/contacto';
 
 export async function getStaticPaths() {
@@ -16,8 +16,24 @@ const ciudad = await getEntry(d.ciudad);
 const lugar = `${ciudad.data.nombre}${ciudad.data.estado ? `, ${ciudad.data.estado}` : ''}`;
 const mensajeWA = `Quiero informes de ${d.nombre}`;
 
+// Versión grande de cada imagen para el visor de pantalla completa.
+const ampliar = (img: ImageMetadata) => getImage({ src: img, width: 1600 });
+const galeria = await Promise.all(
+  d.imagenes.map(async (img) => ({ img, grande: await ampliar(img) }))
+);
+const modelos = await Promise.all(
+  (d.modelos ?? []).map(async (m) => ({
+    ...m,
+    galeria: await Promise.all(m.imagenes.map(async (img) => ({ img, grande: await ampliar(img) }))),
+    planosGrandes: await Promise.all((m.planos ?? []).map(async (img) => ({ img, grande: await ampliar(img) }))),
+  }))
+);
+const planosProyecto = await Promise.all(
+  (d.planos ?? []).map(async (img) => ({ img, grande: await ampliar(img) }))
+);
+
 // Pares etiqueta/valor de la ficha técnica; solo se muestran los presentes.
-const ficha = (v: typeof d) =>
+const ficha = (v: { plantas?: string; recamaras?: string; banos?: string; superficie?: string; construccion?: string }) =>
   [
     ['Plantas', v.plantas],
     ['Recámaras', v.recamaras],
@@ -51,7 +67,7 @@ const etiquetaPlano = (total: number, i: number) => {
     <div class="contenedor heroe-contenido">
       <nav class="miga"><a href="/#desarrollos">← Todos los desarrollos</a></nav>
       <div class="heroe-datos">
-        {d.logo && <Image class="heroe-logo" src={d.logo} alt="" width={96} densities={[1, 2]} />}
+        {d.logo && <Image class="heroe-logo" src={d.logo} alt="" width={96} densities={[1, 2]} loading="eager" />}
         <div>
           <h1>{d.nombre}</h1>
           <p class="heroe-lugar">{lugar}</p>
@@ -77,7 +93,7 @@ const etiquetaPlano = (total: number, i: number) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <IconoWhatsApp /> Quiero informes
+          <Icono nombre="whatsapp" /> Quiero informes
         </a>
       )}
     </section>
@@ -86,14 +102,16 @@ const etiquetaPlano = (total: number, i: number) => {
     <section class="seccion seccion-compacta">
       <h2>Galería</h2>
       <div class="galeria">
-        {d.imagenes.slice(1, 7).map((img, i) => (
-          <Image
-            src={img}
-            alt={`${d.nombre}, fotografía ${i + 2}`}
-            widths={[420, 640, 960]}
-            sizes="(max-width: 720px) 100vw, 33vw"
-            loading="lazy"
-          />
+        {galeria.map((g, i) => (
+          <button class="galeria-item" data-visor={g.grande.src} aria-label={`Ampliar fotografía ${i + 1} de ${d.nombre}`}>
+            <Image
+              src={g.img}
+              alt={`${d.nombre}, fotografía ${i + 1}`}
+              widths={[420, 640, 960]}
+              sizes="(max-width: 720px) 50vw, 33vw"
+              loading={i < 3 ? 'eager' : 'lazy'}
+            />
+          </button>
         ))}
       </div>
     </section>
@@ -107,68 +125,32 @@ const etiquetaPlano = (total: number, i: number) => {
     )}
 
     <!-- Modelos de vivienda -->
-    {d.modelos && (
+    {modelos.length > 0 && (
       <section class="seccion seccion-compacta" id="modelos">
         <h2>Modelos de vivienda</h2>
-        <div class="modelos">
-          {d.modelos.map((m) => (
-            <article class="tarjeta modelo">
-              <header class="modelo-encabezado">
-                <h3>{m.nombre}</h3>
-                <span class="modelo-precio">{m.precio}</span>
-              </header>
-              <div class="modelo-galeria">
-                {m.imagenes.slice(0, 3).map((img, i) => (
-                  <Image
-                    src={img}
-                    alt={`Modelo ${m.nombre}, fotografía ${i + 1}`}
-                    widths={[360, 560]}
-                    sizes="(max-width: 720px) 100vw, 30vw"
-                    loading="lazy"
-                  />
-                ))}
+        <p class="seccion-nota">Elige un modelo para ver sus fotos, planos y características completas.</p>
+        <div class="rejilla-modelos">
+          {modelos.map((m, i) => (
+            <article class="tarjeta modelo-tarjeta">
+              <div class="modelo-foto">
+                <Image
+                  src={m.imagenes[0]}
+                  alt={`Modelo ${m.nombre}`}
+                  widths={[420, 640]}
+                  sizes="(max-width: 720px) 100vw, 33vw"
+                  loading="lazy"
+                />
               </div>
-              <dl class="ficha">
-                {ficha(m).map(([etiqueta, valor]) => (
-                  <div>
-                    <dt>{etiqueta}</dt>
-                    <dd>{valor}</dd>
-                  </div>
-                ))}
-              </dl>
-              {m.planos && (
-                <div class="planos">
-                  {m.planos.map((plano, i) => (
-                    <figure>
-                      <Image
-                        src={plano}
-                        alt={`${m.nombre}: ${etiquetaPlano(m.planos!.length, i)}`}
-                        widths={[420, 640]}
-                        sizes="(max-width: 720px) 100vw, 45vw"
-                        loading="lazy"
-                      />
-                      <figcaption>{etiquetaPlano(m.planos!.length, i)}</figcaption>
-                    </figure>
-                  ))}
-                </div>
-              )}
-              {(m.caracteristicasVivienda || m.caracteristicasConjunto) && (
-                <details class="caracteristicas">
-                  <summary>Ver todas las características</summary>
-                  {m.caracteristicasVivienda && (
-                    <>
-                      <h4>La vivienda</h4>
-                      <div class="prosa" set:html={m.caracteristicasVivienda} />
-                    </>
-                  )}
-                  {m.caracteristicasConjunto && (
-                    <>
-                      <h4>El conjunto</h4>
-                      <div class="prosa" set:html={m.caracteristicasConjunto} />
-                    </>
-                  )}
-                </details>
-              )}
+              <div class="modelo-cuerpo">
+                <h3>{m.nombre}</h3>
+                <p class="modelo-precio">{m.precio}</p>
+                <ul class="modelo-datos">
+                  {m.recamaras && <li><Icono nombre="door-open-fill" tamano={15} /> {m.recamaras} rec.</li>}
+                  {m.banos && <li><Icono nombre="droplet-fill" tamano={15} /> {m.banos} baños</li>}
+                  {m.plantas && <li><Icono nombre="building-fill" tamano={15} /> {m.plantas} plantas</li>}
+                </ul>
+                <button class="btn btn-primario modelo-abrir" data-abrir-modelo={i}>Ver modelo</button>
+              </div>
             </article>
           ))}
         </div>
@@ -176,7 +158,7 @@ const etiquetaPlano = (total: number, i: number) => {
     )}
 
     <!-- Ficha técnica del desarrollo sin modelos -->
-    {!d.modelos && (
+    {modelos.length === 0 && (
       <section class="seccion seccion-compacta">
         <h2>La vivienda</h2>
         <dl class="ficha">
@@ -187,18 +169,20 @@ const etiquetaPlano = (total: number, i: number) => {
             </div>
           ))}
         </dl>
-        {d.planos && (
+        {planosProyecto.length > 0 && (
           <div class="planos">
-            {d.planos.map((plano, i) => (
+            {planosProyecto.map((p, i) => (
               <figure>
-                <Image
-                  src={plano}
-                  alt={`${d.nombre}: ${etiquetaPlano(d.planos!.length, i)}`}
-                  widths={[420, 640]}
-                  sizes="(max-width: 720px) 100vw, 45vw"
-                  loading="lazy"
-                />
-                <figcaption>{etiquetaPlano(d.planos!.length, i)}</figcaption>
+                <button class="galeria-item" data-visor={p.grande.src} aria-label={`Ampliar ${etiquetaPlano(planosProyecto.length, i)}`}>
+                  <Image
+                    src={p.img}
+                    alt={`${d.nombre}: ${etiquetaPlano(planosProyecto.length, i)}`}
+                    widths={[420, 640]}
+                    sizes="(max-width: 720px) 100vw, 45vw"
+                    loading="lazy"
+                  />
+                </button>
+                <figcaption>{etiquetaPlano(planosProyecto.length, i)}</figcaption>
               </figure>
             ))}
           </div>
@@ -239,26 +223,168 @@ const etiquetaPlano = (total: number, i: number) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            <IconoWhatsApp /> WhatsApp
+            <Icono nombre="whatsapp" /> WhatsApp
           </a>
           <a href={`tel:${d.telefono.replace(/\s/g, '')}`} class="btn btn-secundario">
-            Llámanos: {d.telefono}
+            <Icono nombre="telephone-fill" tamano={16} /> {d.telefono}
           </a>
           {d.facebook && (
             <a href={d.facebook} target="_blank" rel="noopener noreferrer" class="contacto-facebook">
-              Síguenos en Facebook
+              <Icono nombre="facebook" tamano={17} /> Síguenos en Facebook
             </a>
           )}
         </aside>
       </div>
     </section>
   </div>
+
+  <!-- Diálogo por modelo -->
+  {modelos.map((m, i) => (
+    <dialog class="modal-modelo" data-modelo={i} aria-label={`Modelo ${m.nombre}`}>
+      <header class="modal-encabezado">
+        <div>
+          <h3>{m.nombre}</h3>
+          <p class="modelo-precio">{m.precio}</p>
+        </div>
+        <button class="modal-cerrar" data-cerrar aria-label="Cerrar">
+          <Icono nombre="x-lg" tamano={22} />
+        </button>
+      </header>
+      <div class="modal-galeria">
+        {m.galeria.map((g, j) => (
+          <button class="galeria-item" data-visor={g.grande.src} aria-label={`Ampliar fotografía ${j + 1} del modelo ${m.nombre}`}>
+            <Image
+              src={g.img}
+              alt={`Modelo ${m.nombre}, fotografía ${j + 1}`}
+              widths={[360, 560]}
+              sizes="(max-width: 720px) 50vw, 25vw"
+              loading="lazy"
+            />
+          </button>
+        ))}
+      </div>
+      <dl class="ficha">
+        {ficha(m).map(([etiqueta, valor]) => (
+          <div>
+            <dt>{etiqueta}</dt>
+            <dd>{valor}</dd>
+          </div>
+        ))}
+      </dl>
+      {m.planosGrandes.length > 0 && (
+        <>
+          <h4>Planos</h4>
+          <div class="planos">
+            {m.planosGrandes.map((p, j) => (
+              <figure>
+                <button class="galeria-item" data-visor={p.grande.src} aria-label={`Ampliar ${etiquetaPlano(m.planosGrandes.length, j)}`}>
+                  <Image
+                    src={p.img}
+                    alt={`${m.nombre}: ${etiquetaPlano(m.planosGrandes.length, j)}`}
+                    widths={[420, 640]}
+                    sizes="(max-width: 720px) 100vw, 40vw"
+                    loading="lazy"
+                  />
+                </button>
+                <figcaption>{etiquetaPlano(m.planosGrandes.length, j)}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </>
+      )}
+      <div class="columnas-caracteristicas">
+        {m.caracteristicasVivienda && (
+          <div>
+            <h4>La vivienda</h4>
+            <div class="prosa" set:html={m.caracteristicasVivienda} />
+          </div>
+        )}
+        {m.caracteristicasConjunto && (
+          <div>
+            <h4>El conjunto</h4>
+            <div class="prosa" set:html={m.caracteristicasConjunto} />
+          </div>
+        )}
+      </div>
+      {d.disponible && (
+        <a
+          href={enlaceWhatsApp(d.telefono, `Quiero informes del modelo ${m.nombre} en ${d.nombre}`)}
+          class="btn btn-whatsapp"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <Icono nombre="whatsapp" /> Informes del modelo {m.nombre}
+        </a>
+      )}
+    </dialog>
+  ))}
+
+  <!-- Visor de imágenes en pantalla completa -->
+  <dialog class="visor" data-visor-dialogo aria-label="Visor de fotografías">
+    <button class="visor-boton visor-cerrar" data-cerrar aria-label="Cerrar">
+      <Icono nombre="x-lg" tamano={24} />
+    </button>
+    <button class="visor-boton visor-prev" aria-label="Fotografía anterior">
+      <Icono nombre="chevron-left" tamano={28} />
+    </button>
+    <img alt="Fotografía ampliada" />
+    <button class="visor-boton visor-sig" aria-label="Fotografía siguiente">
+      <Icono nombre="chevron-right" tamano={28} />
+    </button>
+    <p class="visor-contador"></p>
+  </dialog>
 </Base>
+
+<script>
+  // ── Diálogos de modelos ───────────────────────────────────────────────
+  document.querySelectorAll<HTMLButtonElement>('[data-abrir-modelo]').forEach((boton) => {
+    boton.addEventListener('click', () => {
+      document
+        .querySelector<HTMLDialogElement>(`dialog[data-modelo="${boton.dataset.abrirModelo}"]`)
+        ?.showModal();
+    });
+  });
+
+  document.querySelectorAll<HTMLDialogElement>('dialog').forEach((dialogo) => {
+    dialogo.querySelector('[data-cerrar]')?.addEventListener('click', () => dialogo.close());
+    // Clic en el fondo oscuro = cerrar
+    dialogo.addEventListener('click', (evento) => {
+      if (evento.target === dialogo) dialogo.close();
+    });
+  });
+
+  // ── Visor de pantalla completa ────────────────────────────────────────
+  const visor = document.querySelector<HTMLDialogElement>('[data-visor-dialogo]')!;
+  const visorImg = visor.querySelector('img')!;
+  const contador = visor.querySelector('.visor-contador')!;
+  const disparadores = [...document.querySelectorAll<HTMLElement>('[data-visor]')];
+  let indiceActual = 0;
+
+  const mostrarFoto = (indice: number) => {
+    indiceActual = (indice + disparadores.length) % disparadores.length;
+    visorImg.src = disparadores[indiceActual].dataset.visor!;
+    contador.textContent = `${indiceActual + 1} / ${disparadores.length}`;
+  };
+
+  disparadores.forEach((disparador, i) => {
+    disparador.addEventListener('click', () => {
+      mostrarFoto(i);
+      visor.showModal();
+    });
+  });
+
+  visor.querySelector('.visor-prev')!.addEventListener('click', () => mostrarFoto(indiceActual - 1));
+  visor.querySelector('.visor-sig')!.addEventListener('click', () => mostrarFoto(indiceActual + 1));
+  visor.addEventListener('keydown', (evento) => {
+    if (evento.key === 'ArrowLeft') mostrarFoto(indiceActual - 1);
+    if (evento.key === 'ArrowRight') mostrarFoto(indiceActual + 1);
+  });
+</script>
 
 <style>
   .heroe-desarrollo {
     position: relative;
-    min-height: 62vh;
+    min-height: min(62vh, 560px);
     display: flex;
     align-items: flex-end;
     color: var(--blanco);
@@ -345,6 +471,12 @@ const etiquetaPlano = (total: number, i: number) => {
     padding-block: clamp(1.75rem, 4vw, 3rem);
   }
 
+  .seccion-nota {
+    color: var(--tinta-suave);
+    margin-top: -0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
   .descripcion {
     font-size: 1.15rem;
     max-width: 46rem;
@@ -354,16 +486,30 @@ const etiquetaPlano = (total: number, i: number) => {
   /* Galería */
   .galeria {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
     gap: 1rem;
   }
 
-  .galeria img {
+  .galeria-item {
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+    border-radius: var(--radio);
+    overflow: hidden;
+    transition: transform 0.15s ease;
+  }
+
+  .galeria-item:hover {
+    transform: scale(1.02);
+  }
+
+  .galeria-item img {
     width: 100%;
     height: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: var(--radio);
+    display: block;
   }
 
   /* Tour y mapa responsivos */
@@ -377,27 +523,33 @@ const etiquetaPlano = (total: number, i: number) => {
     height: auto;
   }
 
-  /* Modelos */
-  .modelos {
+  /* Tarjetas de modelos */
+  .rejilla-modelos {
     display: grid;
-    gap: 1.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
   }
 
-  .modelo {
-    padding: clamp(1.25rem, 3vw, 2rem);
-  }
-
-  .modelo-encabezado {
+  .modelo-tarjeta {
     display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
+    flex-direction: column;
   }
 
-  .modelo-encabezado h3 {
-    font-size: 1.5rem;
+  .modelo-foto img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .modelo-cuerpo {
+    padding: 1.2rem 1.3rem 1.4rem;
+    display: grid;
+    gap: 0.5rem;
+    justify-items: start;
+  }
+
+  .modelo-cuerpo h3 {
+    font-size: 1.3rem;
     margin: 0;
   }
 
@@ -405,21 +557,28 @@ const etiquetaPlano = (total: number, i: number) => {
     font-family: var(--titulos);
     font-weight: 800;
     color: var(--terracota);
-    font-size: 1.15rem;
+    margin: 0;
   }
 
-  .modelo-galeria {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 0.75rem;
-    margin-bottom: 1.25rem;
+  .modelo-datos {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1rem;
+    padding: 0;
+    margin: 0;
+    color: var(--tinta-suave);
+    font-size: 0.95rem;
   }
 
-  .modelo-galeria img {
-    width: 100%;
-    aspect-ratio: 4 / 3;
-    object-fit: cover;
-    border-radius: var(--radio-chico);
+  .modelo-datos li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .modelo-abrir {
+    margin-top: 0.5rem;
   }
 
   /* Ficha técnica */
@@ -463,7 +622,8 @@ const etiquetaPlano = (total: number, i: number) => {
   }
 
   .planos img {
-    border-radius: var(--radio-chico);
+    aspect-ratio: auto;
+    object-fit: contain;
     background: var(--blanco);
   }
 
@@ -474,27 +634,11 @@ const etiquetaPlano = (total: number, i: number) => {
     margin-top: 0.4rem;
   }
 
-  /* Características plegables */
-  .caracteristicas {
-    border-top: 1px solid rgba(43, 38, 32, 0.08);
-    padding-top: 1rem;
-  }
-
-  .caracteristicas summary {
-    cursor: pointer;
-    font-family: var(--titulos);
-    font-weight: 800;
-    color: var(--verde-oscuro);
-  }
-
-  .caracteristicas h4 {
-    margin-top: 1rem;
-  }
-
   .columnas-caracteristicas {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   /* Ubicación + contacto */
@@ -510,7 +654,7 @@ const etiquetaPlano = (total: number, i: number) => {
     display: grid;
     gap: 0.9rem;
     position: sticky;
-    top: 6rem;
+    top: 7rem;
   }
 
   .contacto-panel h2 {
@@ -528,8 +672,141 @@ const etiquetaPlano = (total: number, i: number) => {
   }
 
   .contacto-facebook {
-    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    justify-content: center;
     font-size: 0.95rem;
+  }
+
+  /* Diálogos de modelo */
+  .modal-modelo {
+    width: min(860px, calc(100vw - 2rem));
+    max-height: calc(100vh - 3rem);
+    border: 0;
+    border-radius: var(--radio);
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: var(--blanco);
+    color: var(--tinta);
+  }
+
+  .modal-modelo::backdrop {
+    background: rgba(23, 20, 16, 0.65);
+    backdrop-filter: blur(3px);
+  }
+
+  .modal-encabezado {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .modal-encabezado h3 {
+    font-size: 1.6rem;
+    margin: 0;
+  }
+
+  .modal-cerrar {
+    background: var(--crema);
+    border: 0;
+    border-radius: 50%;
+    width: 2.6rem;
+    height: 2.6rem;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .modal-galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .modal-galeria img {
+    aspect-ratio: 4 / 3;
+  }
+
+  .modal-modelo h4 {
+    margin-top: 0.5rem;
+  }
+
+  .modal-modelo .btn {
+    margin-top: 0.5rem;
+  }
+
+  /* Visor de pantalla completa */
+  .visor {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    max-width: 100vw;
+    max-height: 100vh;
+    outline: none;
+  }
+
+  .visor::backdrop {
+    background: rgba(12, 10, 8, 0.92);
+  }
+
+  .visor img {
+    max-width: min(92vw, 1400px);
+    max-height: 86vh;
+    object-fit: contain;
+    border-radius: var(--radio-chico);
+    display: block;
+    margin: auto;
+  }
+
+  .visor-boton {
+    position: fixed;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+
+  .visor-boton:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .visor-cerrar {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .visor-prev {
+    left: 1rem;
+    top: 50%;
+    translate: 0 -50%;
+  }
+
+  .visor-sig {
+    right: 1rem;
+    top: 50%;
+    translate: 0 -50%;
+  }
+
+  .visor-contador {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    translate: -50% 0;
+    color: #fff;
+    font-family: var(--titulos);
+    font-weight: 700;
+    margin: 0;
   }
 
   @media (max-width: 860px) {

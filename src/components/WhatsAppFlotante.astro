@@ -1,5 +1,5 @@
 ---
-import IconoWhatsApp from './IconoWhatsApp.astro';
+import Icono from './Icono.astro';
 import { CELULAR_VENTAS, enlaceWhatsApp } from '../lib/contacto';
 
 interface Props {
@@ -16,7 +16,7 @@ const { mensaje = 'Hola, quiero informes de los desarrollos de UREPPSA' } = Astr
   rel="noopener noreferrer"
   aria-label="Escríbenos por WhatsApp"
 >
-  <IconoWhatsApp tamano={26} />
+  <Icono nombre="whatsapp" tamano={26} />
   <span>WhatsApp</span>
 </a>
 

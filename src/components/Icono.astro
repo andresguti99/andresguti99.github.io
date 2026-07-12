@@ -1,0 +1,27 @@
+---
+/**
+ * Ícono oficial de Bootstrap Icons, inyectado como SVG en línea.
+ * Uso: <Icono nombre="whatsapp" tamano={22} />
+ */
+const modulos = import.meta.glob<string>('/node_modules/bootstrap-icons/icons/*.svg', {
+  query: '?raw',
+  import: 'default',
+});
+
+interface Props {
+  nombre: string;
+  tamano?: number;
+}
+
+const { nombre, tamano = 20 } = Astro.props;
+const ruta = `/node_modules/bootstrap-icons/icons/${nombre}.svg`;
+if (!(ruta in modulos)) {
+  throw new Error(`Ícono de Bootstrap desconocido: "${nombre}"`);
+}
+const svg = (await modulos[ruta]()).replace(
+  'width="16" height="16"',
+  `width="${tamano}" height="${tamano}" aria-hidden="true"`
+);
+---
+
+<Fragment set:html={svg} />

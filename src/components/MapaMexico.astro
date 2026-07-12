@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import mapa from '../../images/mexico-map.svg';
 
@@ -14,14 +15,17 @@ const ciudades = (await getCollection('ciudades')).sort((a, b) =>
 
 <div class="mapa tarjeta">
   <div class="mapa-lienzo">
-    <img src={mapa.src} alt="" width={ANCHO} height={ALTO} />
-    <svg viewBox={`0 0 ${ANCHO} ${ALTO}`} role="list" aria-label="Ciudades con desarrollos UREPPSA">
+    <Image src={mapa} alt="Mapa de México" />
+    <svg viewBox={`0 0 ${ANCHO} ${ALTO}`} aria-hidden="false" role="list" aria-label="Ciudades con desarrollos UREPPSA">
       {ciudades.map((ciudad) => (
-        <a href="/#desarrollos" role="listitem">
-          <g
-            class="pin"
-            transform={`translate(${(ciudad.data.x / 100) * ANCHO} ${(ciudad.data.y / 100) * ALTO})`}
-          >
+        <a
+          class="pin-enlace"
+          href="/#desarrollos"
+          data-ciudad={ciudad.id}
+          role="listitem"
+          aria-label={`Ver desarrollos en ${ciudad.data.nombre}`}
+        >
+          <g transform={`translate(${(ciudad.data.x / 100) * ANCHO} ${(ciudad.data.y / 100) * ALTO})`}>
             <text class="pin-nombre" y="-42" text-anchor="middle">{ciudad.data.nombre}</text>
             <path class="pin-marca" d="M0 0C-9-13-15-20-15-27a15 15 0 1 1 30 0c0 7-6 14-15 27Z" />
             <circle cx="0" cy="-27" r="6" fill="var(--blanco)" />
@@ -33,12 +37,35 @@ const ciudades = (await getCollection('ciudades')).sort((a, b) =>
   <ul class="mapa-leyenda">
     {ciudades.map((ciudad) => (
       <li>
-        <strong>{ciudad.data.nombre}</strong>
-        {ciudad.data.estado && <span>, {ciudad.data.estado}</span>}
+        <button class="leyenda-boton" data-ciudad={ciudad.id}>
+          <strong>{ciudad.data.nombre}</strong>
+          {ciudad.data.estado && <span>, {ciudad.data.estado}</span>}
+        </button>
       </li>
     ))}
   </ul>
 </div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.pin-enlace').forEach((pin) => {
+    // Al pasar el cursor, el pin se mueve al final del SVG para que su
+    // etiqueta se pinte por encima de los demás pines (el orden del documento
+    // define el orden de pintado en SVG).
+    pin.addEventListener('mouseenter', () => pin.parentElement?.appendChild(pin));
+    pin.addEventListener('focus', () => pin.parentElement?.appendChild(pin));
+
+    pin.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('filtrar-ciudad', { detail: pin.dataset.ciudad }));
+    });
+  });
+
+  document.querySelectorAll<HTMLElement>('.leyenda-boton').forEach((boton) => {
+    boton.addEventListener('click', () => {
+      window.dispatchEvent(new CustomEvent('filtrar-ciudad', { detail: boton.dataset.ciudad }));
+      document.querySelector('#desarrollos')?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
 
 <style>
   .mapa {
@@ -65,31 +92,33 @@ const ciudades = (await getCollection('ciudades')).sort((a, b) =>
     fill: var(--terracota);
     stroke: var(--blanco);
     stroke-width: 2.5;
+    transition: fill 0.15s ease;
   }
 
   .pin-nombre {
     font-family: var(--titulos);
     font-weight: 800;
-    font-size: 22px;
+    font-size: 24px;
     fill: var(--tinta);
     paint-order: stroke;
-    stroke: var(--crema);
-    stroke-width: 6;
+    stroke: var(--blanco);
+    stroke-width: 7;
     opacity: 0;
     transition: opacity 0.15s ease;
+    pointer-events: none;
   }
 
-  .pin {
+  .pin-enlace {
     cursor: pointer;
   }
 
-  a:hover .pin-marca,
-  a:focus .pin-marca {
+  .pin-enlace:hover .pin-marca,
+  .pin-enlace:focus .pin-marca {
     fill: var(--verde);
   }
 
-  a:hover .pin-nombre,
-  a:focus .pin-nombre {
+  .pin-enlace:hover .pin-nombre,
+  .pin-enlace:focus .pin-nombre {
     opacity: 1;
   }
 
@@ -97,12 +126,29 @@ const ciudades = (await getCollection('ciudades')).sort((a, b) =>
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem 1.5rem;
+    gap: 0.4rem 1.25rem;
     padding: 1rem 0 0;
     margin: 0;
     border-top: 1px solid rgba(43, 38, 32, 0.08);
-    color: var(--tinta-suave);
+  }
+
+  .leyenda-boton {
+    background: none;
+    border: 0;
+    padding: 0.2rem 0;
+    cursor: pointer;
+    font-family: var(--texto);
     font-size: 0.95rem;
+    color: var(--tinta-suave);
+  }
+
+  .leyenda-boton:hover strong {
+    color: var(--verde);
+  }
+
+  .leyenda-boton strong {
+    color: var(--tinta);
+    transition: color 0.15s ease;
   }
 
   @media (max-width: 600px) {
