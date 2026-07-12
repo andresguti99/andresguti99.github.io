@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
 import AvisoCookies from '../components/AvisoCookies.astro';
+import SelectorPaleta from '../components/SelectorPaleta.astro';
 
 interface Props {
   titulo: string;
@@ -57,6 +58,16 @@ const organizacion = {
     <meta name="description" content={descripcion} />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="canonical" href={urlCanonica} />
+
+    <!-- ⚠️ SOLO PRUEBAS: aplica la paleta/esquema guardados antes del primer pintado -->
+    <script is:inline>
+      try {
+        var paleta = localStorage.getItem('paleta-prueba');
+        if (paleta) document.documentElement.dataset.paleta = paleta;
+        var esquema = localStorage.getItem('esquema-prueba');
+        if (esquema) document.documentElement.dataset.esquema = esquema;
+      } catch (e) {}
+    </script>
 
     <!-- Tarjetas al compartir en WhatsApp, Facebook y demás redes -->
     <meta property="og:type" content="website" />
@@ -126,6 +137,8 @@ const organizacion = {
     <Footer />
     <WhatsAppFlotante mensaje={mensajeWhatsApp} />
     <AvisoCookies />
+    {/* ⚠️ SOLO PRUEBAS DE DISEÑO: quitar antes del lanzamiento */}
+    <SelectorPaleta />
     <script>
       // Revelado suave de secciones al entrar al viewport
       const observador = new IntersectionObserver(

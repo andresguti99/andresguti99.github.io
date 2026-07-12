@@ -1,7 +1,7 @@
 /** Datos de contacto generales de la empresa. */
 export const TELEFONO_OFICINA = '443 324 2601';
 export const CELULAR_VENTAS = '753 120 0721';
-export const CORREO_VENTAS = 'enieto@ureppsa.mx';
+export const CORREO_VENTAS = 'lgarza@ureppsa.com';
 export const FACEBOOK_UREPPSA = 'https://www.facebook.com/ureppsa.mx/';
 
 /**
