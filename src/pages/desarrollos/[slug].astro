@@ -3,6 +3,7 @@ import { getCollection, getEntry } from 'astro:content';
 import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Icono from '../../components/Icono.astro';
+import TarjetaDesarrollo from '../../components/TarjetaDesarrollo.astro';
 import { enlaceWhatsApp } from '../../lib/contacto';
 
 export async function getStaticPaths() {
@@ -32,20 +33,58 @@ const planosProyecto = await Promise.all(
   (d.planos ?? []).map(async (img) => ({ img, grande: await ampliar(img) }))
 );
 
-// Pares etiqueta/valor de la ficha técnica; solo se muestran los presentes.
-const ficha = (v: { plantas?: string; recamaras?: string; banos?: string; superficie?: string; construccion?: string }) =>
-  [
-    ['Plantas', v.plantas],
-    ['Recámaras', v.recamaras],
-    ['Baños', v.banos],
-    ['Terreno', v.superficie],
-    ['Construcción', v.construccion],
-  ].filter(([, valor]) => valor) as [string, string][];
+// Otros desarrollos para seguir explorando: primero los de la misma ciudad.
+const todos = (await getCollection('desarrollos')).sort((a, b) => b.data.anio - a.data.anio);
+const ciudades = await getCollection('ciudades');
+const nombreCiudad = (id: string) => ciudades.find((c) => c.id === id)?.data.nombre ?? id;
+const otros = [
+  ...todos.filter((o) => o.id !== desarrollo.id && o.data.ciudad.id === d.ciudad.id),
+  ...todos.filter((o) => o.id !== desarrollo.id && o.data.ciudad.id !== d.ciudad.id),
+].slice(0, 3);
+
+// Ficha técnica: etiqueta, valor e ícono; solo se muestran los presentes.
+type Vivienda = {
+  plantas?: string;
+  recamaras?: string;
+  banos?: string;
+  superficie?: string;
+  construccion?: string;
+};
+const ficha = (v: Vivienda) =>
+  (
+    [
+      ['Plantas', v.plantas, 'building-fill'],
+      ['Recámaras', v.recamaras, 'door-open-fill'],
+      ['Baños', v.banos, 'droplet-fill'],
+      ['Terreno', v.superficie, 'arrows-angle-expand'],
+      ['Construcción', v.construccion, 'bricks'],
+    ] as const
+  ).filter(([, valor]) => valor) as [string, string, string][];
 
 const etiquetaPlano = (total: number, i: number) => {
   if (total === 1) return 'Planta arquitectónica';
   return i === 0 ? 'Planta baja' : i === 1 ? 'Planta alta' : `Planta ${i + 1}`;
 };
+
+// Filas del comparador de modelos (solo las que algún modelo tiene).
+const filasComparador = (
+  [
+    ['Precio', (m: (typeof modelos)[number]) => m.precio],
+    ['Plantas', (m) => m.plantas],
+    ['Recámaras', (m) => m.recamaras],
+    ['Baños', (m) => m.banos],
+    ['Terreno', (m) => m.superficie],
+    ['Construcción', (m) => m.construccion],
+  ] as [string, (m: (typeof modelos)[number]) => string | undefined][]
+).filter(([, valor]) => modelos.some((m) => valor(m)));
+
+// Navegación interna de la página
+const secciones = [
+  { href: '#galeria', texto: 'Galería' },
+  ...(d.tourVirtual ? [{ href: '#tour', texto: 'Recorrido' }] : []),
+  ...(modelos.length > 0 ? [{ href: '#modelos', texto: 'Modelos' }] : [{ href: '#vivienda', texto: 'La vivienda' }]),
+  { href: '#ubicacion', texto: 'Ubicación' },
+];
 ---
 
 <Base
@@ -53,134 +92,215 @@ const etiquetaPlano = (total: number, i: number) => {
   descripcion={`${d.nombre} en ${lugar}. ${d.precio}. Desarrollo habitacional de UREPPSA.`}
   mensajeWhatsApp={mensajeWA}
 >
-  <!-- Héroe del desarrollo -->
+  <!-- ══ Héroe ══ -->
   <section class="heroe-desarrollo">
     <Image
       class="heroe-fondo"
       src={d.imagenes[0]}
       alt=""
+      width={1920}
       widths={[768, 1280, 1920]}
       sizes="100vw"
       loading="eager"
+      fetchpriority="high"
     />
     <div class="heroe-velo"></div>
     <div class="contenedor heroe-contenido">
-      <nav class="miga"><a href="/#desarrollos">← Todos los desarrollos</a></nav>
-      <div class="heroe-datos">
-        {d.logo && <Image class="heroe-logo" src={d.logo} alt="" width={96} densities={[1, 2]} loading="eager" />}
-        <div>
+      <nav class="miga">
+        <a href="/#desarrollos" class="miga-chip">
+          <Icono nombre="chevron-left" tamano={14} /> Todos los desarrollos
+        </a>
+      </nav>
+      <div class="heroe-panel">
+        {d.logo && (
+          <Image class="heroe-logo" src={d.logo} alt="" width={96} densities={[1, 2]} loading="eager" />
+        )}
+        <div class="heroe-datos">
           <h1>{d.nombre}</h1>
-          <p class="heroe-lugar">{lugar}</p>
+          <p class="heroe-lugar"><Icono nombre="geo-alt-fill" tamano={15} /> {lugar}</p>
           <div class="heroe-precio-fila">
             <span class={`pildora ${d.disponible ? 'pildora-disponible' : 'pildora-vendido'}`}>
               {d.disponible ? 'Disponible' : 'Vendido'}
             </span>
             <span class="heroe-precio">{d.precio}</span>
+            {modelos.length > 0 && (
+              <span class="heroe-chip"><Icono nombre="houses-fill" tamano={14} /> {modelos.length} modelos de vivienda</span>
+            )}
+            {d.tourVirtual && (
+              <span class="heroe-chip"><Icono nombre="badge-vr" tamano={16} /> Recorrido virtual</span>
+            )}
           </div>
         </div>
+        {d.disponible && (
+          <a
+            class="btn btn-whatsapp heroe-cta"
+            href={enlaceWhatsApp(d.telefono, mensajeWA)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icono nombre="whatsapp" /> Quiero informes
+          </a>
+        )}
       </div>
     </div>
   </section>
 
+  <!-- ══ Navegación interna pegajosa ══ -->
+  <nav class="subnav" aria-label="Secciones del desarrollo" data-subnav>
+    <div class="contenedor subnav-interno">
+      <div class="subnav-enlaces">
+        {secciones.map((s) => (
+          <a href={s.href}>{s.texto}</a>
+        ))}
+      </div>
+      <a
+        class="btn btn-whatsapp subnav-cta"
+        href={enlaceWhatsApp(d.telefono, mensajeWA)}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <Icono nombre="whatsapp" tamano={16} /> <span>Informes</span>
+      </a>
+    </div>
+  </nav>
+
   <div class="contenedor">
-    <!-- Descripción -->
+    <!-- ══ Descripción ══ -->
     <section class="seccion seccion-compacta">
-      <div class="descripcion prosa" set:html={d.descripcion} />
-      {d.disponible && (
-        <a
-          href={enlaceWhatsApp(d.telefono, mensajeWA)}
-          class="btn btn-whatsapp"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Icono nombre="whatsapp" /> Quiero informes
-        </a>
-      )}
+      <div class="descripcion prosa revelar" set:html={d.descripcion} />
     </section>
 
-    <!-- Galería -->
-    <section class="seccion seccion-compacta">
-      <h2>Galería</h2>
-      <div class="galeria">
+    <!-- ══ Galería (mosaico bento) ══ -->
+    <section class="seccion seccion-compacta" id="galeria">
+      <div class="seccion-encabezado revelar">
+        <span class="etiqueta">Galería</span>
+        <h2>Conócelo en imágenes</h2>
+      </div>
+      <div class="galeria revelar" style="--retraso: 100ms">
         {galeria.map((g, i) => (
-          <button class="galeria-item" data-visor={g.grande.src} aria-label={`Ampliar fotografía ${i + 1} de ${d.nombre}`}>
+          <button
+            class="galeria-item"
+            data-visor={g.grande.src}
+            aria-label={`Ampliar fotografía ${i + 1} de ${d.nombre}`}
+          >
             <Image
               src={g.img}
               alt={`${d.nombre}, fotografía ${i + 1}`}
+              width={960}
               widths={[420, 640, 960]}
-              sizes="(max-width: 720px) 50vw, 33vw"
+              sizes="(max-width: 720px) 74vw, (min-width: 721px) 40vw"
               loading={i < 3 ? 'eager' : 'lazy'}
             />
+            <span class="galeria-lupa" aria-hidden="true"><Icono nombre="arrows-fullscreen" tamano={18} /></span>
           </button>
         ))}
       </div>
     </section>
 
-    <!-- Tour virtual -->
+    <!-- ══ Tour virtual ══ -->
     {d.tourVirtual && (
-      <section class="seccion seccion-compacta">
-        <h2>Recorre la casa muestra</h2>
-        <div class="marco marco-tour" set:html={d.tourVirtual} />
+      <section class="seccion seccion-compacta" id="tour">
+        <div class="seccion-encabezado revelar">
+          <span class="etiqueta">Recorrido 360°</span>
+          <h2>Camina la casa muestra</h2>
+          <p>Explórala a tu ritmo, como si ya estuvieras ahí.</p>
+        </div>
+        <div class="marco marco-tour tarjeta revelar" style="--retraso: 100ms" set:html={d.tourVirtual} />
       </section>
     )}
 
-    <!-- Modelos de vivienda -->
+    <!-- ══ Modelos de vivienda ══ -->
     {modelos.length > 0 && (
       <section class="seccion seccion-compacta" id="modelos">
-        <h2>Modelos de vivienda</h2>
-        <p class="seccion-nota">Elige un modelo para ver sus fotos, planos y características completas.</p>
+        <div class="seccion-encabezado revelar">
+          <span class="etiqueta">Modelos</span>
+          <h2>Elige el modelo para tu familia</h2>
+          <p>Cada modelo con sus fotos, planos y características completas.</p>
+        </div>
         <div class="rejilla-modelos">
           {modelos.map((m, i) => (
-            <article class="tarjeta modelo-tarjeta">
+            <article class="tarjeta modelo-tarjeta revelar" style={`--retraso: ${i * 90}ms`}>
               <div class="modelo-foto">
                 <Image
                   src={m.imagenes[0]}
                   alt={`Modelo ${m.nombre}`}
+                  width={640}
                   widths={[420, 640]}
                   sizes="(max-width: 720px) 100vw, 33vw"
                   loading="lazy"
                 />
+                <span class="modelo-precio-chip">{m.precio}</span>
               </div>
               <div class="modelo-cuerpo">
                 <h3>{m.nombre}</h3>
-                <p class="modelo-precio">{m.precio}</p>
                 <ul class="modelo-datos">
                   {m.recamaras && <li><Icono nombre="door-open-fill" tamano={15} /> {m.recamaras} rec.</li>}
                   {m.banos && <li><Icono nombre="droplet-fill" tamano={15} /> {m.banos} baños</li>}
                   {m.plantas && <li><Icono nombre="building-fill" tamano={15} /> {m.plantas} plantas</li>}
                 </ul>
-                <button class="btn btn-primario modelo-abrir" data-abrir-modelo={i}>Ver modelo</button>
+                <button class="btn btn-primario modelo-abrir" data-abrir-modelo={i}>
+                  Ver modelo <Icono nombre="chevron-right" tamano={16} />
+                </button>
               </div>
             </article>
           ))}
         </div>
+
+        {modelos.length > 1 && (
+          <div class="comparador tarjeta revelar">
+            <h3>Compara los modelos</h3>
+            <div class="comparador-tabla">
+              <table>
+                <thead>
+                  <tr>
+                    <th scope="col"><span class="solo-lector">Característica</span></th>
+                    {modelos.map((m) => <th scope="col">{m.nombre}</th>)}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filasComparador.map(([etiqueta, valor]) => (
+                    <tr class={etiqueta === 'Precio' ? 'fila-precio' : ''}>
+                      <th scope="row">{etiqueta}</th>
+                      {modelos.map((m) => <td>{valor(m) ?? '—'}</td>)}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </section>
     )}
 
-    <!-- Ficha técnica del desarrollo sin modelos -->
+    <!-- ══ Ficha del desarrollo sin modelos ══ -->
     {modelos.length === 0 && (
-      <section class="seccion seccion-compacta">
-        <h2>La vivienda</h2>
-        <dl class="ficha">
-          {ficha(d).map(([etiqueta, valor]) => (
+      <section class="seccion seccion-compacta" id="vivienda">
+        <div class="seccion-encabezado revelar">
+          <span class="etiqueta">La vivienda</span>
+          <h2>Así es tu futura casa</h2>
+        </div>
+        <dl class="ficha revelar">
+          {ficha(d).map(([etiqueta, valor, icono]) => (
             <div>
-              <dt>{etiqueta}</dt>
+              <dt><Icono nombre={icono} tamano={16} /> {etiqueta}</dt>
               <dd>{valor}</dd>
             </div>
           ))}
         </dl>
         {planosProyecto.length > 0 && (
-          <div class="planos">
+          <div class="planos revelar" style="--retraso: 80ms">
             {planosProyecto.map((p, i) => (
               <figure>
                 <button class="galeria-item" data-visor={p.grande.src} aria-label={`Ampliar ${etiquetaPlano(planosProyecto.length, i)}`}>
                   <Image
                     src={p.img}
                     alt={`${d.nombre}: ${etiquetaPlano(planosProyecto.length, i)}`}
+                    width={640}
                     widths={[420, 640]}
                     sizes="(max-width: 720px) 100vw, 45vw"
                     loading="lazy"
                   />
+                  <span class="galeria-lupa" aria-hidden="true"><Icono nombre="arrows-fullscreen" tamano={18} /></span>
                 </button>
                 <figcaption>{etiquetaPlano(planosProyecto.length, i)}</figcaption>
               </figure>
@@ -188,7 +308,7 @@ const etiquetaPlano = (total: number, i: number) => {
           </div>
         )}
         {(d.caracteristicasVivienda || d.caracteristicasConjunto) && (
-          <div class="columnas-caracteristicas">
+          <div class="columnas-caracteristicas revelar" style="--retraso: 120ms">
             {d.caracteristicasVivienda && (
               <div>
                 <h3>La vivienda</h3>
@@ -206,15 +326,18 @@ const etiquetaPlano = (total: number, i: number) => {
       </section>
     )}
 
-    <!-- Ubicación y contacto -->
+    <!-- ══ Ubicación y contacto ══ -->
     <section class="seccion seccion-compacta" id="ubicacion">
+      <div class="seccion-encabezado revelar">
+        <span class="etiqueta">Ubicación</span>
+        <h2>¿Dónde está {d.nombre}?</h2>
+      </div>
       <div class="ubicacion-contacto">
-        <div>
-          <h2>Ubicación</h2>
+        <div class="revelar">
           {d.ubicacion && <div class="prosa" set:html={d.ubicacion} />}
           {d.mapa && <div class="marco marco-mapa" set:html={d.mapa} />}
         </div>
-        <aside class="tarjeta contacto-panel">
+        <aside class="contacto-panel revelar" style="--retraso: 120ms">
           <h2>¿Te interesa {d.nombre}?</h2>
           <p>Escríbenos y con gusto te damos informes, sin compromiso.</p>
           <a
@@ -225,7 +348,7 @@ const etiquetaPlano = (total: number, i: number) => {
           >
             <Icono nombre="whatsapp" /> WhatsApp
           </a>
-          <a href={`tel:${d.telefono.replace(/\s/g, '')}`} class="btn btn-secundario">
+          <a href={`tel:${d.telefono.replace(/\s/g, '')}`} class="btn btn-claro">
             <Icono nombre="telephone-fill" tamano={16} /> {d.telefono}
           </a>
           {d.facebook && (
@@ -236,15 +359,32 @@ const etiquetaPlano = (total: number, i: number) => {
         </aside>
       </div>
     </section>
+
+    <!-- ══ Otros desarrollos ══ -->
+    {otros.length > 0 && (
+      <section class="seccion seccion-compacta">
+        <div class="seccion-encabezado revelar">
+          <span class="etiqueta">Sigue explorando</span>
+          <h2>Otros desarrollos UREPPSA</h2>
+        </div>
+        <div class="rejilla-otros">
+          {otros.map((o, i) => (
+            <div class="revelar" style={`--retraso: ${i * 90}ms`}>
+              <TarjetaDesarrollo desarrollo={o} nombreCiudad={nombreCiudad(o.data.ciudad.id)} />
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
   </div>
 
-  <!-- Diálogo por modelo -->
+  <!-- ══ Diálogo por modelo ══ -->
   {modelos.map((m, i) => (
     <dialog class="modal-modelo" data-modelo={i} aria-label={`Modelo ${m.nombre}`}>
       <header class="modal-encabezado">
         <div>
           <h3>{m.nombre}</h3>
-          <p class="modelo-precio">{m.precio}</p>
+          <p class="modal-precio">{m.precio}</p>
         </div>
         <button class="modal-cerrar" data-cerrar aria-label="Cerrar">
           <Icono nombre="x-lg" tamano={22} />
@@ -256,17 +396,19 @@ const etiquetaPlano = (total: number, i: number) => {
             <Image
               src={g.img}
               alt={`Modelo ${m.nombre}, fotografía ${j + 1}`}
+              width={560}
               widths={[360, 560]}
               sizes="(max-width: 720px) 50vw, 25vw"
               loading="lazy"
             />
+            <span class="galeria-lupa" aria-hidden="true"><Icono nombre="arrows-fullscreen" tamano={16} /></span>
           </button>
         ))}
       </div>
       <dl class="ficha">
-        {ficha(m).map(([etiqueta, valor]) => (
+        {ficha(m).map(([etiqueta, valor, icono]) => (
           <div>
-            <dt>{etiqueta}</dt>
+            <dt><Icono nombre={icono} tamano={15} /> {etiqueta}</dt>
             <dd>{valor}</dd>
           </div>
         ))}
@@ -281,10 +423,12 @@ const etiquetaPlano = (total: number, i: number) => {
                   <Image
                     src={p.img}
                     alt={`${m.nombre}: ${etiquetaPlano(m.planosGrandes.length, j)}`}
+                    width={640}
                     widths={[420, 640]}
                     sizes="(max-width: 720px) 100vw, 40vw"
                     loading="lazy"
                   />
+                  <span class="galeria-lupa" aria-hidden="true"><Icono nombre="arrows-fullscreen" tamano={16} /></span>
                 </button>
                 <figcaption>{etiquetaPlano(m.planosGrandes.length, j)}</figcaption>
               </figure>
@@ -319,7 +463,7 @@ const etiquetaPlano = (total: number, i: number) => {
     </dialog>
   ))}
 
-  <!-- Visor de imágenes en pantalla completa -->
+  <!-- ══ Visor de imágenes en pantalla completa ══ -->
   <dialog class="visor" data-visor-dialogo aria-label="Visor de fotografías">
     <button class="visor-boton visor-cerrar" data-cerrar aria-label="Cerrar">
       <Icono nombre="x-lg" tamano={24} />
@@ -336,7 +480,33 @@ const etiquetaPlano = (total: number, i: number) => {
 </Base>
 
 <script>
-  // ── Diálogos de modelos ───────────────────────────────────────────────
+  // ── Altura real de la barra de navegación, para que la subnav se pegue justo debajo ──
+  const barra = document.querySelector<HTMLElement>('.barra');
+  const medirBarra = () =>
+    document.documentElement.style.setProperty('--alto-barra', `${barra?.offsetHeight ?? 72}px`);
+  medirBarra();
+  window.addEventListener('resize', medirBarra);
+
+  // ── Scrollspy: resalta la sección visible en la subnav ──
+  const enlacesSubnav = [...document.querySelectorAll<HTMLAnchorElement>('.subnav-enlaces a')];
+  const espia = new IntersectionObserver(
+    (entradas) => {
+      entradas.forEach((entrada) => {
+        if (entrada.isIntersecting) {
+          enlacesSubnav.forEach((enlace) =>
+            enlace.classList.toggle('activo', enlace.hash === `#${entrada.target.id}`)
+          );
+        }
+      });
+    },
+    { rootMargin: '-35% 0px -55% 0px' }
+  );
+  enlacesSubnav.forEach((enlace) => {
+    const seccion = document.querySelector(enlace.hash);
+    if (seccion) espia.observe(seccion);
+  });
+
+  // ── Diálogos de modelos ──
   document.querySelectorAll<HTMLButtonElement>('[data-abrir-modelo]').forEach((boton) => {
     boton.addEventListener('click', () => {
       document
@@ -353,7 +523,7 @@ const etiquetaPlano = (total: number, i: number) => {
     });
   });
 
-  // ── Visor de pantalla completa ────────────────────────────────────────
+  // ── Visor de pantalla completa ──
   const visor = document.querySelector<HTMLDialogElement>('[data-visor-dialogo]')!;
   const visorImg = visor.querySelector('img')!;
   const contador = visor.querySelector('.visor-contador')!;
@@ -382,12 +552,14 @@ const etiquetaPlano = (total: number, i: number) => {
 </script>
 
 <style>
+  /* ══ Héroe ══ */
   .heroe-desarrollo {
     position: relative;
-    min-height: min(62vh, 560px);
+    min-height: min(72vh, 640px);
     display: flex;
     align-items: flex-end;
     color: var(--blanco);
+    overflow: hidden;
   }
 
   .heroe-fondo {
@@ -396,144 +568,298 @@ const etiquetaPlano = (total: number, i: number) => {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    animation: kenBurns 16s ease-out forwards;
+  }
+
+  @keyframes kenBurns {
+    from {
+      transform: scale(1.08);
+    }
+    to {
+      transform: scale(1);
+    }
   }
 
   .heroe-velo {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(23, 20, 16, 0.85) 0%, rgba(23, 20, 16, 0.25) 45%, rgba(23, 20, 16, 0.15) 100%);
+    background: linear-gradient(to top, rgba(21, 18, 14, 0.72) 0%, rgba(21, 18, 14, 0.18) 45%, rgba(21, 18, 14, 0.25) 100%);
   }
 
   .heroe-contenido {
     position: relative;
-    padding-block: 1.5rem 2.5rem;
+    padding-block: 1.25rem 1.75rem;
     width: 100%;
   }
 
   .miga {
-    margin-bottom: 1.25rem;
+    margin-bottom: 1rem;
   }
 
-  .miga a {
+  .miga-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
     color: var(--blanco);
     text-decoration: none;
     font-family: var(--titulos);
     font-weight: 700;
-    opacity: 0.9;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.9rem;
+    border-radius: 999px;
+    background: rgba(21, 18, 14, 0.45);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    transition: background 0.15s ease;
+    animation: entrada 0.6s 0.1s ease both;
   }
 
-  .miga a:hover {
-    opacity: 1;
+  .miga-chip:hover {
+    background: rgba(21, 18, 14, 0.7);
   }
 
-  .heroe-datos {
+  /* Panel glass con la información del proyecto */
+  .heroe-panel {
     display: flex;
     align-items: center;
     gap: 1.25rem;
+    padding: clamp(1rem, 2.5vw, 1.5rem);
+    border-radius: 22px;
+    background: rgba(21, 18, 14, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    animation: entrada 0.65s 0.2s ease both;
+  }
+
+  @keyframes entrada {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .heroe-logo {
-    width: 96px;
-    height: 96px;
+    width: clamp(64px, 7vw, 92px);
+    height: clamp(64px, 7vw, 92px);
     object-fit: contain;
-    background: var(--blanco);
-    border-radius: var(--radio-chico);
-    padding: 8px;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 16px;
+    padding: 7px;
     flex-shrink: 0;
+    animation: aparecerLogo 0.55s 0.4s ease both;
+  }
+
+  @keyframes aparecerLogo {
+    from {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .heroe-datos {
+    min-width: 0;
+    flex: 1;
   }
 
   .heroe-desarrollo h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-    margin-bottom: 0.1em;
+    font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+    margin-bottom: 0.05em;
   }
 
   .heroe-lugar {
-    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 1.02rem;
     opacity: 0.9;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.55rem;
   }
 
   .heroe-precio-fila {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
-    gap: 0.9rem;
+    gap: 0.6rem;
   }
 
   .heroe-precio {
     font-family: var(--titulos);
     font-weight: 800;
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     color: var(--amarillo);
   }
 
+  .heroe-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--titulos);
+    font-weight: 700;
+    font-size: 0.82rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .heroe-cta {
+    flex-shrink: 0;
+    animation: entrada 0.6s 0.5s ease both;
+  }
+
+  /* ══ Subnav pegajosa ══ */
+  .subnav {
+    position: sticky;
+    top: var(--alto-barra, 72px);
+    z-index: 40;
+    background: color-mix(in srgb, var(--crema) 80%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(43, 38, 32, 0.08);
+  }
+
+  .subnav-interno {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.5rem;
+  }
+
+  .subnav-enlaces {
+    display: flex;
+    gap: 0.35rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .subnav-enlaces::-webkit-scrollbar {
+    display: none;
+  }
+
+  .subnav-enlaces a {
+    font-family: var(--titulos);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--tinta-suave);
+    text-decoration: none;
+    padding: 0.4rem 0.95rem;
+    border-radius: 999px;
+    white-space: nowrap;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .subnav-enlaces a:hover {
+    color: var(--verde-oscuro);
+  }
+
+  .subnav-enlaces a.activo {
+    background: var(--verde-claro);
+    color: var(--verde-oscuro);
+  }
+
+  .subnav-cta {
+    padding: 0.45rem 1rem;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  /* ══ Secciones ══ */
   .seccion-compacta {
     padding-block: clamp(1.75rem, 4vw, 3rem);
   }
 
-  .seccion-nota {
-    color: var(--tinta-suave);
-    margin-top: -0.5rem;
-    margin-bottom: 1.25rem;
-  }
-
   .descripcion {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     max-width: 46rem;
-    margin-bottom: 1.25rem;
+    border-left: 4px solid var(--terracota);
+    padding-left: 1.25rem;
   }
 
-  /* Galería */
+  .descripcion :global(p:last-child) {
+    margin-bottom: 0;
+  }
+
+  /* ══ Galería bento ══ */
   .galeria {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: clamp(140px, 16vw, 210px);
+    grid-auto-flow: dense;
+    gap: 0.9rem;
   }
 
-  /* En móvil la galería es una tira horizontal con scroll-snap: compacta y
-     deslizable con el pulgar, en lugar de una columna interminable. */
-  @media (max-width: 720px) {
-    .galeria {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
-      gap: 0.75rem;
-      padding-bottom: 0.5rem;
-    }
-
-    .galeria .galeria-item {
-      flex: 0 0 74%;
-      scroll-snap-align: start;
-    }
+  .galeria > .galeria-item:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
   }
 
   .galeria-item {
+    position: relative;
     padding: 0;
     border: 0;
     background: none;
     cursor: zoom-in;
     border-radius: var(--radio);
     overflow: hidden;
-    transition: transform 0.15s ease;
-  }
-
-  .galeria-item:hover {
-    transform: scale(1.02);
   }
 
   .galeria-item img {
     width: 100%;
     height: 100%;
-    aspect-ratio: 4 / 3;
     object-fit: cover;
     display: block;
+    transition: transform 0.35s ease;
   }
 
-  /* Tour y mapa responsivos */
+  .galeria-item:hover img {
+    transform: scale(1.05);
+  }
+
+  .galeria-lupa {
+    position: absolute;
+    right: 0.7rem;
+    bottom: 0.7rem;
+    display: grid;
+    place-items: center;
+    width: 2.3rem;
+    height: 2.3rem;
+    border-radius: 50%;
+    background: rgba(21, 18, 14, 0.5);
+    backdrop-filter: blur(8px);
+    color: #fff;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    pointer-events: none;
+  }
+
+  .galeria-item:hover .galeria-lupa,
+  .galeria-item:focus-visible .galeria-lupa {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ══ Tour y mapa ══ */
+  .marco-tour {
+    padding: clamp(0.6rem, 1.5vw, 1rem);
+  }
+
   .marco-tour :global(iframe) {
     aspect-ratio: 16 / 9;
     height: auto;
+    border-radius: var(--radio-chico);
   }
 
   .marco-mapa :global(iframe) {
@@ -541,7 +867,7 @@ const etiquetaPlano = (total: number, i: number) => {
     height: auto;
   }
 
-  /* Tarjetas de modelos */
+  /* ══ Modelos ══ */
   .rejilla-modelos {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -551,6 +877,16 @@ const etiquetaPlano = (total: number, i: number) => {
   .modelo-tarjeta {
     display: flex;
     flex-direction: column;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .modelo-tarjeta:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--sombra-alta);
+  }
+
+  .modelo-foto {
+    position: relative;
   }
 
   .modelo-foto img {
@@ -559,22 +895,30 @@ const etiquetaPlano = (total: number, i: number) => {
     object-fit: cover;
   }
 
+  .modelo-precio-chip {
+    position: absolute;
+    left: 0.8rem;
+    bottom: 0.8rem;
+    font-family: var(--titulos);
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: #fff;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(21, 18, 14, 0.55);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
   .modelo-cuerpo {
     padding: 1.2rem 1.3rem 1.4rem;
     display: grid;
-    gap: 0.5rem;
+    gap: 0.6rem;
     justify-items: start;
   }
 
   .modelo-cuerpo h3 {
-    font-size: 1.3rem;
-    margin: 0;
-  }
-
-  .modelo-precio {
-    font-family: var(--titulos);
-    font-weight: 800;
-    color: var(--terracota);
+    font-size: 1.35rem;
     margin: 0;
   }
 
@@ -596,28 +940,91 @@ const etiquetaPlano = (total: number, i: number) => {
   }
 
   .modelo-abrir {
-    margin-top: 0.5rem;
+    margin-top: 0.4rem;
   }
 
-  /* Ficha técnica */
+  /* Comparador */
+  .comparador {
+    margin-top: 2rem;
+    padding: clamp(1.25rem, 3vw, 1.75rem);
+  }
+
+  .comparador h3 {
+    margin-bottom: 1rem;
+  }
+
+  .comparador-tabla {
+    overflow-x: auto;
+  }
+
+  .comparador table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.98rem;
+    min-width: 480px;
+  }
+
+  .comparador th,
+  .comparador td {
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid rgba(43, 38, 32, 0.08);
+  }
+
+  .comparador thead th {
+    font-family: var(--titulos);
+    font-weight: 800;
+    font-size: 1.05rem;
+  }
+
+  .comparador tbody th {
+    font-family: var(--titulos);
+    font-weight: 700;
+    color: var(--tinta-suave);
+    white-space: nowrap;
+  }
+
+  .comparador tbody tr:last-child th,
+  .comparador tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .fila-precio td {
+    font-family: var(--titulos);
+    font-weight: 800;
+    color: var(--terracota);
+    white-space: nowrap;
+  }
+
+  /* ══ Ficha técnica ══ */
   .ficha {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 0.75rem;
     margin: 0 0 1.25rem;
   }
 
   .ficha > div {
-    background: var(--crema);
+    background: var(--blanco);
+    border: 1px solid rgba(43, 38, 32, 0.07);
     border-radius: var(--radio-chico);
-    padding: 0.7rem 0.9rem;
+    padding: 0.8rem 1rem;
+    box-shadow: var(--sombra);
   }
 
   .ficha dt {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
     font-size: 0.78rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--tinta-suave);
+    margin-bottom: 0.2rem;
+  }
+
+  .ficha dt :global(svg) {
+    color: var(--verde);
   }
 
   .ficha dd {
@@ -626,7 +1033,7 @@ const etiquetaPlano = (total: number, i: number) => {
     font-weight: 800;
   }
 
-  /* Planos */
+  /* ══ Planos ══ */
   .planos {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -659,7 +1066,7 @@ const etiquetaPlano = (total: number, i: number) => {
     margin-bottom: 1.25rem;
   }
 
-  /* Ubicación + contacto */
+  /* ══ Ubicación + contacto ══ */
   .ubicacion-contacto {
     display: grid;
     grid-template-columns: 1.2fr 0.8fr;
@@ -668,25 +1075,40 @@ const etiquetaPlano = (total: number, i: number) => {
   }
 
   .contacto-panel {
+    background: var(--verde-oscuro);
+    color: #fff;
+    border-radius: var(--radio);
+    box-shadow: var(--sombra-alta);
     padding: 1.75rem;
     display: grid;
     gap: 0.9rem;
     position: sticky;
-    top: 7rem;
+    top: calc(var(--alto-barra, 72px) + 4.5rem);
   }
 
   .contacto-panel h2 {
     font-size: 1.35rem;
     margin: 0;
+    color: #fff;
   }
 
   .contacto-panel p {
-    color: var(--tinta-suave);
+    color: rgba(255, 255, 255, 0.82);
     margin: 0;
   }
 
   .contacto-panel .btn {
     justify-content: center;
+  }
+
+  .btn-claro {
+    background: transparent;
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.55);
+  }
+
+  .btn-claro:hover {
+    background: rgba(255, 255, 255, 0.12);
   }
 
   .contacto-facebook {
@@ -695,9 +1117,18 @@ const etiquetaPlano = (total: number, i: number) => {
     gap: 0.45rem;
     justify-content: center;
     font-size: 0.95rem;
+    color: #fff;
+    text-decoration-color: rgba(255, 255, 255, 0.5);
   }
 
-  /* Diálogos de modelo */
+  /* ══ Otros desarrollos ══ */
+  .rejilla-otros {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+
+  /* ══ Diálogos ══ */
   .modal-modelo {
     width: min(860px, calc(100vw - 2rem));
     max-height: calc(100vh - 3rem);
@@ -708,8 +1139,19 @@ const etiquetaPlano = (total: number, i: number) => {
     color: var(--tinta);
   }
 
+  .modal-modelo[open] {
+    animation: aparecerModal 0.35s ease;
+  }
+
+  @keyframes aparecerModal {
+    from {
+      opacity: 0;
+      transform: translateY(26px) scale(0.98);
+    }
+  }
+
   .modal-modelo::backdrop {
-    background: rgba(23, 20, 16, 0.65);
+    background: rgba(21, 18, 14, 0.65);
     backdrop-filter: blur(3px);
   }
 
@@ -726,6 +1168,14 @@ const etiquetaPlano = (total: number, i: number) => {
     margin: 0;
   }
 
+  .modal-precio {
+    font-family: var(--titulos);
+    font-weight: 800;
+    color: var(--terracota);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
   .modal-cerrar {
     background: var(--crema);
     border: 0;
@@ -736,6 +1186,11 @@ const etiquetaPlano = (total: number, i: number) => {
     place-items: center;
     cursor: pointer;
     flex-shrink: 0;
+    transition: background 0.15s ease;
+  }
+
+  .modal-cerrar:hover {
+    background: var(--terracota-claro);
   }
 
   .modal-galeria {
@@ -757,7 +1212,7 @@ const etiquetaPlano = (total: number, i: number) => {
     margin-top: 0.5rem;
   }
 
-  /* Visor de pantalla completa */
+  /* ══ Visor ══ */
   .visor {
     border: 0;
     padding: 0;
@@ -765,6 +1220,17 @@ const etiquetaPlano = (total: number, i: number) => {
     max-width: 100vw;
     max-height: 100vh;
     outline: none;
+  }
+
+  .visor[open] {
+    animation: aparecerVisor 0.25s ease;
+  }
+
+  @keyframes aparecerVisor {
+    from {
+      opacity: 0;
+      transform: scale(0.97);
+    }
   }
 
   .visor::backdrop {
@@ -827,12 +1293,64 @@ const etiquetaPlano = (total: number, i: number) => {
     margin: 0;
   }
 
+  /* ══ Movimiento reducido ══ */
+  @media (prefers-reduced-motion: reduce) {
+    .heroe-fondo,
+    .miga-chip,
+    .heroe-panel,
+    .heroe-logo,
+    .heroe-cta {
+      animation: none;
+    }
+    .galeria-item img {
+      transition: none;
+    }
+  }
+
+  /* ══ Responsivo ══ */
   @media (max-width: 860px) {
+    .heroe-panel {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.9rem;
+    }
+
+    .heroe-cta {
+      width: 100%;
+      justify-content: center;
+    }
+
+    .subnav-cta span {
+      display: none;
+    }
+
     .ubicacion-contacto {
       grid-template-columns: 1fr;
     }
+
     .contacto-panel {
       position: static;
+    }
+  }
+
+  @media (max-width: 720px) {
+    /* Galería: tira horizontal con scroll-snap, compacta y deslizable */
+    .galeria {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      gap: 0.75rem;
+      padding-bottom: 0.5rem;
+    }
+
+    .galeria .galeria-item {
+      flex: 0 0 74%;
+      scroll-snap-align: start;
+    }
+
+    .galeria .galeria-item img {
+      aspect-ratio: 4 / 3;
     }
   }
 </style>
