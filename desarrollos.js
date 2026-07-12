@@ -33,8 +33,10 @@ function displayProjects(data, city) {
     // Initialize projects
     let projects;
 
-    console.log(city);
-    console.log(project)
+    // Fall back to all projects if the city in the URL doesn't exist in the data
+    if (city !== 'all' && !data[city]) {
+        city = 'all';
+    }
 
     // Check if city parameter is 'all'
     if (city === 'all') {
@@ -59,10 +61,9 @@ function displayProjects(data, city) {
     }
 
     // Sort the projects by year
-    const sortedProjects = Object.values(projects).sort((a, b) => b.year - a.year);
+    const sortedProjects = projects.sort((a, b) => b.year - a.year);
 
     // Get the container for the projects
-    console.log(document.querySelector('#projects-container'));
     const projectsContainer = document.querySelector('#projects-container');
 
     // Clear any previously displayed projects
@@ -80,6 +81,8 @@ function displayProjects(data, city) {
         // Add the project's image to the card
         const projectImage = document.createElement('img');
         projectImage.src = project.images[0];
+        projectImage.alt = project.name;
+        projectImage.loading = 'lazy';
         projectImage.classList.add('card-img-top');
         projectCard.appendChild(projectImage);
 
@@ -96,6 +99,7 @@ function displayProjects(data, city) {
         projectLogo.classList.add('project-logo');
         projectLogo.src = project.logo;
         projectLogo.alt = `${project.name} Logo`;
+        projectLogo.loading = 'lazy';
         projectLogo.width = 70;
         projectLogo.height = 70;
 
@@ -137,7 +141,14 @@ function displayProjects(data, city) {
 }
 
 function displayProjectDetails(data, projectName) {
-    const project = Object.values(data).find(city => city[projectName] !== undefined)[projectName];
+    // Fall back to the full project list if the project in the URL doesn't exist
+    const cityWithProject = Object.values(data).find(city => city[projectName] !== undefined);
+    if (!cityWithProject) {
+        displayProjects(data, 'all');
+        return;
+    }
+
+    const project = cityWithProject[projectName];
     const projectsContainer = document.querySelector('#projects-container');
     let combinedHTML = '';
 
@@ -169,32 +180,7 @@ function displayProjectDetails(data, projectName) {
         </div>
     `;
 
-    const carouselSection = `
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                ${project.images.map((image, index) =>
-        `<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${index + 1}"></button>`
-    ).join('')}
-            </div>
-            <div class="carousel-inner">
-                ${project.images.map((image, index) =>
-        `<div class="carousel-item ${index === 0 ? 'active' : ''}">
-                        <img src="${image}" class="d-block w-100" alt="${project.name} Image ${index + 1}">
-                    </div>`
-    ).join('')}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    `;
-
-    combinedHTML += topSection + carouselSection;
+    combinedHTML += topSection + createCarousel(project.images, project.name);
 
     if (project.virtual_tour) {
         const virtualTourSection = `
@@ -208,90 +194,96 @@ function displayProjectDetails(data, projectName) {
         combinedHTML += virtualTourSection;
     }
 
-    if (project.models) {
+    // Projects with multiple housing models get an accordion with one section per
+    // model; single-model projects show their details directly.
+    if (project.models && Object.keys(project.models).length > 0) {
         combinedHTML += `<div class="my-4"></div><h3>Modelos de Vivienda</h3>`;
         combinedHTML += createAccordionNavigation(project);
+        combinedHTML += `<div class="row">${createContactInfoSection(project)}</div>`;
     } else {
         combinedHTML += createProjectDetailsSection(project);
     }
 
-    combinedHTML += createContactInfoSection(project);
-
     projectsContainer.innerHTML = combinedHTML;
+}
+
+// HTML ids generated from names are used inside Bootstrap's data-bs-target CSS
+// selectors, so anything beyond letters, digits, hyphen or underscore breaks them.
+function sanitizeId(name) {
+    return name.replace(/[^\w-]+/g, '-');
+}
+
+// Shared list of detail fields, used for whole projects and for individual models
+function createDetailsList(item) {
+    return `
+        <p><strong>Plantas:</strong> ${item.floors}</p>
+        <p><strong>Recámaras:</strong> ${item.bedrooms}</p>
+        <p><strong>Baños:</strong> ${item.bathrooms}</p>
+        <p><strong>Superficie de Terreno:</strong> ${item.size}</p>
+        <p><strong>Superficie Construida:</strong> ${item.construction_size}</p>
+        <p><strong>Características Principales de la Vivienda:</strong> ${item.house_info}</p>
+        <p><strong>Características del Conjunto Habitacional:</strong> ${item.additional_info}</p>
+    `;
 }
 
 function createModelDetails(model, modelName) {
     return `
-        ${createModelCarousel(model.images, modelName)}
-        ${createFloorPlans(model.floor_plan)}
-        <p><strong>Precio:</strong> ${model.price}</p>
-        <p><strong>Plantas:</strong> ${model.floors}</p>
-        <p><strong>Recámaras:</strong> ${model.bedrooms}</p>
-        <p><strong>Baños:</strong> ${model.bathrooms}</p>
-        <p><strong>Superficie de Terreno:</strong> ${model.size}</p>
-        <p><strong>Superficie Construida:</strong> ${model.construction_size}</p>
-        <p><strong>Características Principales de la Vivienda:</strong> ${model.house_info}</p>
-        <p><strong>Características del Conjunto Habitacional:</strong> ${model.additional_info}</p>
+        ${createCarousel(model.images, modelName)}
+        ${createFloorPlans(model.floor_plan, modelName)}
+        <div class="project-details">
+            <p><strong>Precio:</strong> ${model.price}</p>
+            ${createDetailsList(model)}
+        </div>
     `;
 }
 
-function createFloorPlans(floorPlans) {
-    if (floorPlans.length === 1) {
-        return `
+function createFloorPlans(floorPlans, name) {
+    // Not every project or model publishes floor plans
+    if (!floorPlans || floorPlans.length === 0) {
+        return '';
+    }
+
+    const labelFor = (index) => {
+        if (floorPlans.length === 1) return 'Planta Arquitectónica';
+        if (index === 0) return 'Planta Baja';
+        if (index === 1) return 'Planta Alta';
+        return `Planta ${index + 1}`;
+    };
+
+    const columns = floorPlans.map((plan, index) => `
+                    <div class="col-12 col-md-6${floorPlans.length === 1 ? ' text-center' : ''}">
+                        <img src="${plan}" alt="${name} ${labelFor(index)}" loading="lazy">
+                        <p>${labelFor(index)}</p>
+                    </div>`
+    ).join('');
+
+    return `
             <div class="container my-2">
                 <div class="row floor-plan-section justify-content-center">
-                    <div class="col-12 col-md-6 text-center">
-                        <img src="${floorPlans[0]}" alt="Planta Arquitectónica">
-                        <p>Planta Arquitectónica</p>
-                    </div>
+                    ${columns}
                 </div>
             </div>
         `;
-    } else {
-        return `
-            <div class="container my-2">
-                <div class="row floor-plan-section">
-                    <div class="col-12 col-md-6">
-                        <img src="${floorPlans[0]}" alt="Planta Baja">
-                        <p>Planta Baja</p>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <img src="${floorPlans[1]}" alt="Planta Alta">
-                        <p>Planta Alta</p>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
 }
 
 function createProjectDetailsSection(project) {
-    let detailsSection = '';
-    if (project.floor_plan) {
-        detailsSection += createFloorPlans(project.floor_plan);
-    }
-    detailsSection += `
+    return `
+    ${createFloorPlans(project.floor_plan, project.name)}
     <div class="row project-details-section">
         <div class="col-12 col-md-6">
             <div class="project-details">
-                <p><strong>Precio:</strong> ${project.price}</p>
-                <p><strong>Plantas:</strong> ${project.floors}</p>
-                <p><strong>Recámaras:</strong> ${project.bedrooms}</p>
-                <p><strong>Baños:</strong> ${project.bathrooms}</p>
-                <p><strong>Superficie de Terreno:</strong> ${project.size}</p>
-                <p><strong>Superficie Construida:</strong> ${project.construction_size}</p>
-                <p><strong>Características Principales de la Vivienda:</strong> ${project.house_info}</p>
-                <p><strong>Características del Conjunto Habitacional:</strong> ${project.additional_info}</p>
+                ${createDetailsList(project)}
             </div>
         </div>
+        ${createContactInfoSection(project)}
     </div>
     `;
-    return detailsSection;
 }
 
+// Returns a half-width column so callers decide which row it lives in:
+// next to the details for single-model projects, in its own row after the accordion
 function createContactInfoSection(project) {
     return `
-    <div class="row">
         <div class="col-12 col-md-6">
             <div class="contact-info mt-4 mb-4">
                 <h3>Contáctanos</h3>
@@ -308,31 +300,36 @@ function createContactInfoSection(project) {
             <p><strong>Ubicación:</strong> ${project.location}</p>
             ${project.mapEmbed}
         </div>
-    </div>
     `;
 }
 
-function createModelCarousel(images, model) {
-    const sanitizedModel = model.replace(/\s+/g, '-');
+// Builds an image carousel for a whole project or for a single housing model.
+// Only the first slide loads eagerly; the rest wait until they're near the viewport.
+function createCarousel(images, name) {
+    if (!images || images.length === 0) {
+        return '';
+    }
+
+    const carouselId = `carousel-${sanitizeId(name)}`;
     return `
-        <div id="carousel-${sanitizedModel}" class="carousel slide" data-bs-ride="carousel">
+        <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-indicators">
                 ${images.map((image, index) =>
-        `<button type="button" data-bs-target="#carousel-${sanitizedModel}" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${index + 1}"></button>`
+        `<button type="button" data-bs-target="#${carouselId}" data-bs-slide-to="${index}" ${index === 0 ? 'class="active" aria-current="true"' : ''} aria-label="Slide ${index + 1}"></button>`
     ).join('')}
             </div>
             <div class="carousel-inner">
                 ${images.map((image, index) =>
         `<div class="carousel-item ${index === 0 ? 'active' : ''}">
-                        <img src="${image}" class="d-block w-100" alt="${model} Image ${index + 1}">
+                        <img src="${image}" class="d-block w-100" alt="${name} Image ${index + 1}"${index === 0 ? '' : ' loading="lazy"'}>
                     </div>`
     ).join('')}
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carousel-${sanitizedModel}" data-bs-slide="prev">
+            <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carousel-${sanitizedModel}" data-bs-slide="next">
+            <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -347,14 +344,14 @@ function createAccordionNavigation(project) {
     `;
 
     models.forEach((model, index) => {
-        const sanitizedModel = model.replace(/\s+/g, '-');
+        const sanitizedModel = sanitizeId(model);
         accordion += `
             <div class="accordion-item">
-                <h2 class="accordion-header" id="heading-${sanitizedModel}">
+                <h4 class="accordion-header" id="heading-${sanitizedModel}">
                     <button class="accordion-button ${index === 0 ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${sanitizedModel}" aria-expanded="${index === 0}" aria-controls="collapse-${sanitizedModel}">
                         ${model}
                     </button>
-                </h2>
+                </h4>
                 <div id="collapse-${sanitizedModel}" class="accordion-collapse collapse ${index === 0 ? 'show' : ''}" aria-labelledby="heading-${sanitizedModel}" data-bs-parent="#modelAccordion">
                     <div class="accordion-body">
                         ${createModelDetails(project.models[model], model)}
@@ -367,5 +364,3 @@ function createAccordionNavigation(project) {
     accordion += '</div>';
     return accordion;
 }
-
-

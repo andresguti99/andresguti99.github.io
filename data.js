@@ -2,9 +2,14 @@
 
 // Function to retrieve the information from the cities JSON
 
+// Several modules on the same page call fetchData(), so the network request is
+// shared. Each caller gets its own clone because callers mutate the result
+// (e.g. deleting the "position" property).
+let dataPromise;
+
 export async function fetchData() {
-    const response = await fetch('../cities.json');
-    return await response.json();
+    dataPromise ??= fetch('../cities.json').then(response => response.json());
+    return structuredClone(await dataPromise);
 }
 
 //Debounce used to stop a code from being executed multiple times, while its condition is true.
@@ -20,4 +25,3 @@ export function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
-

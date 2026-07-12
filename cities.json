@@ -48,7 +48,7 @@
             "price": "DESDE $880,675.00",
             "phone": "+52 753 136 3839",
             "link": "https://www.facebook.com/PuertoInternacional/",
-            "location": "Lázaro Cárdenas \nMichoacán\n",
+            "location": "Lázaro Cárdenas<br>Michoacán",
             "mapEmbed": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d60726.82530985026!2d-102.1876598!3d17.9588798!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315c6e5fce0357%3A0x580e1b634308e622!2sCdad.%20L%C3%A1zaro%20C%C3%A1rdenas%2C%20Mich.!5e0!3m2!1ses!2smx!4v1716605453935!5m2!1ses!2smx\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
             "logo": "images/Ciudades/Lazaro/PuertoInternacional/Logo_Puerto_Internacional.png",
             "images": [
@@ -99,9 +99,7 @@
                         "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/R1_Velero_Plus.jpg",
                         "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/R2_Velero_Plus.jpg",
                         "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/R3_Velero_Plus.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/R4_Velero_Plus.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/R4_Velero.jpg",
-                        "images/Ciudades/Lazaro/PuertoInternacional/Velero/R5_Velero.jpg"
+                        "images/Ciudades/Lazaro/PuertoInternacional/VeleroPlus/R4_Velero_Plus.jpg"
                     ]
                 }
             }

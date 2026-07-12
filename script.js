@@ -254,11 +254,8 @@ class PopoverManager {
         const [city, ...projectNameParts] = target.split("."); // Split the target into city and project using the dot as a separator
         const projectName = projectNameParts.join('.'); // Join the remaining parts to get the full project name
 
-        console.log('Click is registered in ' + target);
-
         // Check if city and projectName are defined and exist in the cities object
         if (city && projectName && this.cities[city] && this.cities[city][projectName]) {
-            console.log(`Project exists it is ${projectName}`);
             let icon = document.getElementById(`popover-icon-${city}`);  // Get the icon directly using document.getElementById
             this.popover.createPopover(icon, this.popover.createProjectPopoverContent(this.cities[city][projectName]), this.cities[city][projectName].name);
             setTimeout(() => this.popover.show(), 100);
@@ -295,12 +292,9 @@ class PopoverManager {
 
 // Initialize function
 async function initialize() {
-    console.log("Script Started")
-
     try {
         // Fetch data from the server
         const cities = await fetchData();
-        console.log(cities);
 
         // Create the map
         const map = new Map('map-container', 'map-overlay');
