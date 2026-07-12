@@ -1,0 +1,303 @@
+---
+import Base from '../layouts/Base.astro';
+import Icono from '../components/Icono.astro';
+import {
+  TELEFONO_OFICINA,
+  CELULAR_VENTAS,
+  CORREO_VENTAS,
+  FACEBOOK_UREPPSA,
+  enlaceWhatsApp,
+} from '../lib/contacto';
+
+const mapaOficina =
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3756.48997749896!2d-101.18086075414018!3d19.691752985187936!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842d0de254266b33%3A0xc3759eabebefb7fa!2sBatalla%20de%20Casa%20Mata%20300%2C%20Chapultepec%20Sur%2C%2058260%20Morelia%2C%20Mich.!5e0!3m2!1ses!2smx!4v1685121446802!5m2!1ses!2smx';
+---
+
+<Base
+  titulo="Contacto | UREPPSA"
+  descripcion="Llámanos, escríbenos por WhatsApp o envíanos un mensaje: con gusto resolvemos tus dudas."
+>
+  <!-- Encabezado -->
+  <section class="portada">
+    <div class="contenedor">
+      <span class="etiqueta">Contacto</span>
+      <h1>Platiquemos de <em>tu futura casa</em>.</h1>
+      <p>Llámanos, escríbenos por WhatsApp o déjanos un mensaje: respondemos rápido y sin compromiso.</p>
+    </div>
+  </section>
+
+  <div class="contenedor">
+    <section class="seccion seccion-compacta contacto-rejilla">
+      <!-- Formulario -->
+      <form class="tarjeta formulario revelar" action="https://formspree.io/f/xaygeknp" method="POST">
+        <h2>Envíanos un mensaje</h2>
+        <div class="campo">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" name="Nombre" required autocomplete="name" />
+        </div>
+        <div class="campo-doble">
+          <div class="campo">
+            <label for="telefono">Teléfono (10 dígitos)</label>
+            <input
+              type="tel"
+              id="telefono"
+              name="Tel"
+              pattern="[0-9]{10}"
+              inputmode="numeric"
+              required
+              autocomplete="tel"
+            />
+          </div>
+          <div class="campo">
+            <label for="correo">Correo electrónico</label>
+            <input type="email" id="correo" name="Mail" required autocomplete="email" />
+          </div>
+        </div>
+        <div class="campo">
+          <label for="destino">¿Con quién quieres hablar?</label>
+          <select id="destino" name="Destino" required>
+            <option value="">Selecciona una opción</option>
+            <option value="igarza@ureppsa.mx">Gerencia Comercial</option>
+            <option value="enieto@ureppsa.mx">Asesor Comercial</option>
+          </select>
+        </div>
+        <div class="campo">
+          <label for="asunto">¿En qué te ayudamos?</label>
+          <textarea id="asunto" name="Asunto" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primario">Enviar mensaje</button>
+        <small>
+          Al enviar aceptas el tratamiento de tus datos conforme a nuestro
+          <a href="/aviso-de-privacidad/">Aviso de Privacidad</a>.
+        </small>
+      </form>
+
+      <!-- Información directa -->
+      <aside class="lado">
+        <div class="tarjeta lado-tarjeta revelar" style="--retraso: 100ms">
+          <h2>Directo y sin formularios</h2>
+          <a
+            class="btn btn-whatsapp"
+            href={enlaceWhatsApp(CELULAR_VENTAS, 'Hola, quiero informes de los desarrollos de UREPPSA')}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icono nombre="whatsapp" /> WhatsApp
+          </a>
+          <ul class="datos">
+            <li>
+              <Icono nombre="telephone-fill" tamano={17} />
+              <span>Oficina: <a href="tel:+524433242601">{TELEFONO_OFICINA}</a></span>
+            </li>
+            <li>
+              <Icono nombre="phone-fill" tamano={17} />
+              <span>Celular: <a href="tel:+527531200721">{CELULAR_VENTAS}</a></span>
+            </li>
+            <li>
+              <Icono nombre="envelope-fill" tamano={17} />
+              <span><a href={`mailto:${CORREO_VENTAS}`}>{CORREO_VENTAS}</a></span>
+            </li>
+            <li>
+              <Icono nombre="facebook" tamano={17} />
+              <span><a href={FACEBOOK_UREPPSA} target="_blank" rel="noopener noreferrer">UREPPSA en Facebook</a></span>
+            </li>
+            <li>
+              <Icono nombre="geo-alt-fill" tamano={17} />
+              <span>Casa Mata #300, Col. Chapultepec Sur, C.P. 58260, Morelia, Michoacán</span>
+            </li>
+          </ul>
+        </div>
+        <div class="tarjeta lado-mapa revelar" style="--retraso: 180ms">
+          <iframe
+            src={mapaOficina}
+            title="Oficina de UREPPSA en Morelia"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </aside>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .portada {
+    position: relative;
+    padding-block: clamp(2.5rem, 6vw, 4.5rem);
+    background:
+      radial-gradient(60% 80% at 85% 20%, var(--verde-claro) 0%, transparent 70%),
+      radial-gradient(50% 70% at 10% 90%, var(--terracota-claro) 0%, transparent 70%);
+  }
+
+  .portada::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(43, 38, 32, 0.1) 1.2px, transparent 1.2px);
+    background-size: 24px 24px;
+    mask-image: radial-gradient(65% 70% at 35% 40%, black, transparent);
+    pointer-events: none;
+  }
+
+  .portada h1 {
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+  }
+
+  .portada h1 em {
+    font-style: normal;
+    background: linear-gradient(90deg, var(--verde), #6cb26f 45%, var(--terracota));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .portada p {
+    font-size: 1.15rem;
+    color: var(--tinta-suave);
+    max-width: 36rem;
+    margin-bottom: 0;
+  }
+
+  .seccion-compacta {
+    padding-block: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .contacto-rejilla {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 2rem;
+    align-items: start;
+  }
+
+  /* Formulario */
+  .formulario {
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .formulario h2 {
+    margin: 0;
+    font-size: 1.4rem;
+  }
+
+  .campo {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .campo-doble {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+  }
+
+  label {
+    font-family: var(--titulos);
+    font-weight: 700;
+    font-size: 0.92rem;
+  }
+
+  input,
+  select,
+  textarea {
+    font-family: var(--texto);
+    font-size: 1rem;
+    color: var(--tinta);
+    background: var(--crema);
+    border: 2px solid transparent;
+    border-radius: var(--radio-chico);
+    padding: 0.7rem 0.9rem;
+    transition: border-color 0.15s ease, background 0.15s ease;
+    width: 100%;
+  }
+
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none;
+    border-color: var(--verde);
+    background: var(--blanco);
+  }
+
+  input:user-invalid,
+  select:user-invalid,
+  textarea:user-invalid {
+    border-color: var(--rojo);
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  .formulario .btn {
+    justify-self: start;
+  }
+
+  .formulario small {
+    color: var(--tinta-suave);
+  }
+
+  /* Lado derecho */
+  .lado {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .lado-tarjeta {
+    padding: 1.75rem;
+    display: grid;
+    gap: 1.1rem;
+  }
+
+  .lado-tarjeta h2 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .lado-tarjeta .btn {
+    justify-content: center;
+  }
+
+  .datos {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .datos li {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    color: var(--tinta-suave);
+  }
+
+  .datos li :global(svg) {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    color: var(--verde);
+  }
+
+  .lado-mapa {
+    overflow: hidden;
+  }
+
+  .lado-mapa iframe {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 0;
+  }
+
+  @media (max-width: 860px) {
+    .contacto-rejilla {
+      grid-template-columns: 1fr;
+    }
+    .campo-doble {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

@@ -85,6 +85,16 @@ const financiamiento = [
               loading={i === 0 ? 'eager' : 'lazy'}
             />
             <div class="escaparate-barra">
+              {d.data.logo && (
+                <Image
+                  class="escaparate-barra-logo"
+                  src={d.data.logo}
+                  alt=""
+                  width={52}
+                  densities={[1, 2]}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                />
+              )}
               <div class="escaparate-info">
                 <strong>{d.data.nombre}</strong>
                 <span>{nombreCiudad(d.data.ciudad.id)} · {d.data.precio}</span>
@@ -221,6 +231,7 @@ const financiamiento = [
         ))}
       </div>
       <div class="financiamiento-cta revelar">
+        <a href="/financiamiento/" class="btn btn-primario">Conoce el proceso completo</a>
         <a
           href={enlaceWhatsApp(CELULAR_VENTAS, 'Hola, quiero saber qué opciones de financiamiento tengo para una casa UREPPSA')}
           class="btn btn-whatsapp"
@@ -447,6 +458,18 @@ const financiamiento = [
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  .escaparate-barra-logo {
+    width: 46px;
+    height: 46px;
+    object-fit: contain;
+    flex-shrink: 0;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.55);
+    backdrop-filter: blur(6px);
+    padding: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
   }
 
   .escaparate-info {
@@ -701,7 +724,10 @@ const financiamiento = [
 
   .financiamiento-cta {
     margin-top: 2rem;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.9rem;
   }
 
   @media (max-width: 900px) {
