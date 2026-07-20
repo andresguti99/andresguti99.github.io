@@ -12,6 +12,14 @@
   "precio": "DESDE $1,230,120.00",
   "imagenes": [
     "../../assets/desarrollos/puerto-internacional/r1-portico.jpg",
+    "../../assets/desarrollos/puerto-internacional/calle-terminada.png",
+    "../../assets/desarrollos/puerto-internacional/fachadas-terminadas.jpg",
+    "../../assets/desarrollos/puerto-internacional/aerea-01.jpg",
+    "../../assets/desarrollos/puerto-internacional/aerea-02.jpg",
+    "../../assets/desarrollos/puerto-internacional/aerea-03.jpg",
+    "../../assets/desarrollos/puerto-internacional/avance-obra-aerea.png",
+    "../../assets/desarrollos/puerto-internacional/avance-obra-panoramica.png",
+    "../../assets/desarrollos/puerto-internacional/obra-nuevas-etapas.png",
     "../../assets/desarrollos/puerto-internacional/r2-area-juegos.jpg",
     "../../assets/desarrollos/puerto-internacional/r3-parque-lineal.jpg",
     "../../assets/desarrollos/puerto-internacional/r4-parque-lineal.jpg",
@@ -35,6 +43,7 @@
         "../../assets/desarrollos/puerto-internacional/velero/velero-planta-alta.png"
       ],
       "imagenes": [
+        "../../assets/desarrollos/puerto-internacional/velero/fachadas-terminadas.jpg",
         "../../assets/desarrollos/puerto-internacional/velero/r1-velero.jpg",
         "../../assets/desarrollos/puerto-internacional/velero/r2-velero.jpg",
         "../../assets/desarrollos/puerto-internacional/velero/r4-velero.jpg",
@@ -56,6 +65,7 @@
         "../../assets/desarrollos/puerto-internacional/velero-plus/velero-plus-planta-alta.png"
       ],
       "imagenes": [
+        "../../assets/desarrollos/puerto-internacional/velero-plus/fachadas-terminadas.jpg",
         "../../assets/desarrollos/puerto-internacional/velero-plus/r1-velero-plus.jpg",
         "../../assets/desarrollos/puerto-internacional/velero-plus/r2-velero-plus.jpg",
         "../../assets/desarrollos/puerto-internacional/velero-plus/r3-velero-plus.jpg",
