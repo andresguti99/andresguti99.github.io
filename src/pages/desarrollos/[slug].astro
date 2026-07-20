@@ -5,6 +5,7 @@ import Base from '../../layouts/Base.astro';
 import Icono from '../../components/Icono.astro';
 import TarjetaDesarrollo from '../../components/TarjetaDesarrollo.astro';
 import { enlaceWhatsApp, enlaceTelefono, CELULAR_VENTAS, FACEBOOK_UREPPSA } from '../../lib/contacto';
+import { ID_ORGANIZACION, migasDePan, precioNumero, descripcionFoto } from '../../lib/seo';
 
 export async function getStaticPaths() {
   const desarrollos = await getCollection('desarrollos');
@@ -84,7 +85,63 @@ const etiquetaPlano = (total: number, i: number) => {
 };
 
 // Imagen para la tarjeta al compartir el proyecto en WhatsApp/Facebook.
-const imagenSocial = (await getImage({ src: d.imagenes[0], width: 1200 })).src;
+// En JPEG: WhatsApp no siempre muestra vistas previas WebP, y compartir por
+// WhatsApp es el canal principal de este sitio.
+const imagenSocial = (await getImage({ src: d.imagenes[0], width: 1200, format: 'jpeg' })).src;
+
+// ── SEO ──────────────────────────────────────────────────────────────────
+// Título y descripción con lo que la gente realmente busca (ciudad + intención
+// de compra), distintos según el estado del desarrollo para no anunciar como
+// "en venta" lo que ya se entregó.
+const urlCiudad = `/casas-en-venta/${d.ciudad.id}/`;
+const tituloSEO = d.disponible
+  ? `${d.nombre}, casas en venta en ${ciudad.data.nombre} | UREPPSA`
+  : `${d.nombre}, desarrollo en ${ciudad.data.nombre} | UREPPSA`;
+const descripcionSEO = d.disponible
+  ? `Casas en venta en ${lugar}: ${d.nombre}, ${d.precio.toLowerCase()}. Conoce galería, planos y modelos, y agenda tu visita con UREPPSA.`
+  : `${d.nombre}, fraccionamiento entregado por UREPPSA en ${lugar} (${d.anio}). Conoce nuestra trayectoria y descubre los desarrollos disponibles hoy.`;
+
+// Descripción de cada foto a partir del nombre de su archivo (cocina, fachada,
+// vista aérea…), para búsqueda de imágenes y lectores de pantalla.
+const altFoto = (img: ImageMetadata, contexto: string, i: number) => {
+  const detalle = descripcionFoto(img.src);
+  // Archivos que solo repiten el nombre del modelo ("velero.jpg" en el modelo
+  // Velero) no describen nada: mejor el número de fotografía.
+  const repetido = !detalle || contexto.toLowerCase().includes(detalle.toLowerCase());
+  return repetido ? `${contexto}, fotografía ${i + 1}` : `${contexto}: ${detalle}`;
+};
+
+// Datos estructurados: migas de pan siempre; ficha de producto con precio solo
+// para desarrollos disponibles (los entregados ya no son una oferta).
+const urlPagina = new URL(Astro.url.pathname, Astro.site).href;
+const datosEstructurados: object[] = [
+  migasDePan([
+    ['Inicio', 'https://www.ureppsa.com/'],
+    [`Casas en venta en ${ciudad.data.nombre}`, new URL(urlCiudad, Astro.site).href],
+    [d.nombre, urlPagina],
+  ]),
+];
+const precioDesde = precioNumero(d.precio);
+if (d.disponible) {
+  datosEstructurados.push({
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: d.nombre,
+    description: descripcionSEO,
+    image: [new URL(imagenSocial, Astro.site).href],
+    brand: { '@id': ID_ORGANIZACION },
+    ...(precioDesde && {
+      offers: {
+        '@type': 'Offer',
+        url: urlPagina,
+        price: precioDesde,
+        priceCurrency: 'MXN',
+        availability: 'https://schema.org/InStock',
+        seller: { '@id': ID_ORGANIZACION },
+      },
+    }),
+  });
+}
 
 // Filas del comparador de modelos (solo las que algún modelo tiene).
 const filasComparador = (
@@ -109,11 +166,12 @@ const secciones = [
 ---
 
 <Base
-  titulo={`${d.nombre} | UREPPSA`}
-  descripcion={`${d.nombre} en ${lugar}. ${d.precio}. Desarrollo habitacional de UREPPSA.`}
+  titulo={tituloSEO}
+  descripcion={descripcionSEO}
   mensajeWhatsApp={mensajeWA}
   telefonoWhatsApp={telefonoContacto}
   imagenSocial={imagenSocial}
+  datosEstructurados={datosEstructurados}
 >
   <!-- ══ Héroe ══ -->
   <section class="heroe-desarrollo">
@@ -136,11 +194,18 @@ const secciones = [
       </nav>
       <div class="heroe-panel">
         {d.logo && (
-          <Image class="heroe-logo" src={d.logo} alt="" width={96} densities={[1, 2]} loading="eager" />
+          <Image class="heroe-logo" src={d.logo} alt={`Logo de ${d.nombre}`} width={96} densities={[1, 2]} loading="eager" />
         )}
         <div class="heroe-datos">
-          <h1>{d.nombre}</h1>
-          <p class="heroe-lugar"><Icono nombre="geo-alt-fill" tamano={15} /> {lugar}</p>
+          <!-- La ubicación (y la intención de compra cuando está en venta) vive
+               dentro del h1: es la frase que la gente busca, no solo el nombre -->
+          <h1>
+            {d.nombre}
+            <a class="heroe-lugar" href={urlCiudad}>
+              <Icono nombre="geo-alt-fill" tamano={15} />
+              {d.disponible ? `Casas en venta en ${lugar}` : lugar}
+            </a>
+          </h1>
           <div class="heroe-precio-fila">
             <span class={`pildora ${d.disponible ? 'pildora-disponible' : 'pildora-vendido'}`}>
               {d.disponible ? 'Disponible' : 'Vendido'}
@@ -217,11 +282,11 @@ const secciones = [
           <button
             class="galeria-item"
             data-visor={g.grande.src}
-            aria-label={`Ampliar fotografía ${i + 1} de ${d.nombre}`}
+            aria-label={`Ampliar ${altFoto(g.img, d.nombre, i)}`}
           >
             <Image
               src={g.img}
-              alt={`${d.nombre}, fotografía ${i + 1}`}
+              alt={altFoto(g.img, d.nombre, i)}
               width={960}
               widths={[420, 640, 960]}
               sizes="(max-width: 720px) 74vw, (min-width: 721px) 40vw"
@@ -477,10 +542,10 @@ const secciones = [
       </header>
       <div class="modal-galeria">
         {m.galeria.map((g, j) => (
-          <button class="galeria-item" data-visor={g.grande.src} aria-label={`Ampliar fotografía ${j + 1} del modelo ${m.nombre}`}>
+          <button class="galeria-item" data-visor={g.grande.src} aria-label={`Ampliar ${altFoto(g.img, `modelo ${m.nombre}`, j)}`}>
             <Image
               src={g.img}
-              alt={`Modelo ${m.nombre}, fotografía ${j + 1}`}
+              alt={altFoto(g.img, `Modelo ${m.nombre}`, j)}
               width={560}
               widths={[360, 560]}
               sizes="(max-width: 720px) 50vw, 25vw"
@@ -804,9 +869,19 @@ const secciones = [
     display: flex;
     align-items: center;
     gap: 0.4rem;
+    /* Vive dentro del h1: recupera la letra y el peso de texto normal */
+    font-family: var(--texto);
+    font-weight: 600;
     font-size: 1.02rem;
     color: var(--tinta-suave);
+    margin-top: 0.3rem;
     margin-bottom: 0.55rem;
+    text-decoration: none;
+  }
+
+  .heroe-lugar:hover {
+    color: var(--terracota);
+    text-decoration: underline;
   }
 
   .heroe-precio-fila {

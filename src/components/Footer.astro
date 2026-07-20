@@ -1,6 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
 import { TELEFONO_OFICINA, CELULAR_VENTAS, CORREO_VENTAS, FACEBOOK_UREPPSA, enlaceTelefono } from '../lib/contacto';
 const anio = new Date().getFullYear();
+const ciudades = (await getCollection('ciudades')).sort((a, b) =>
+  a.data.nombre.localeCompare(b.data.nombre)
+);
 ---
 
 <footer class="pie" id="contacto">
@@ -8,10 +12,12 @@ const anio = new Date().getFullYear();
     <div>
       <p class="pie-marca">UREPPSA</p>
       <p class="pie-lema">Cada vivienda, un compromiso.</p>
-      <p class="pie-texto">
+      <!-- <address>: marca la dirección como el dato de contacto del negocio,
+           una señal clara para el SEO local -->
+      <address class="pie-texto">
         Casa Mata #300, Col. Chapultepec Sur,<br />
         C.P. 58260, Morelia, Michoacán
-      </p>
+      </address>
     </div>
     <div>
       <h3>Contacto</h3>
@@ -19,6 +25,17 @@ const anio = new Date().getFullYear();
         Teléfono: <a href={enlaceTelefono(TELEFONO_OFICINA)}>{TELEFONO_OFICINA}</a><br />
         Celular: <a href={enlaceTelefono(CELULAR_VENTAS)}>{CELULAR_VENTAS}</a><br />
         Correo: <a href={`mailto:${CORREO_VENTAS}`}>{CORREO_VENTAS}</a>
+      </p>
+    </div>
+    <div>
+      <h3>Casas por ciudad</h3>
+      <p class="pie-texto">
+        {ciudades.map((c) => (
+          <>
+            <a href={`/casas-en-venta/${c.id}/`}>{c.data.nombre}</a>
+            <br />
+          </>
+        ))}
       </p>
     </div>
     <div>
@@ -73,6 +90,7 @@ const anio = new Date().getFullYear();
   .pie-texto {
     font-size: 0.95rem;
     line-height: 1.9;
+    font-style: normal; /* <address> viene en cursiva por defecto */
   }
 
   .pie a {

@@ -1,0 +1,203 @@
+---
+import { getCollection } from 'astro:content';
+import { getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import TarjetaDesarrollo from '../../components/TarjetaDesarrollo.astro';
+import Icono from '../../components/Icono.astro';
+import { enlaceWhatsApp, CELULAR_VENTAS } from '../../lib/contacto';
+import { migasDePan } from '../../lib/seo';
+import { ANIOS_EXPERIENCIA } from '../../lib/empresa';
+
+// Página de aterrizaje por ciudad: la URL y el texto que responden a
+// búsquedas como "casas en venta en Celaya". Se genera una por cada
+// ciudad del catálogo; agregar una ciudad nueva es solo crear su JSON.
+export async function getStaticPaths() {
+  const ciudades = await getCollection('ciudades');
+  return ciudades.map((c) => ({ params: { ciudad: c.id }, props: { ciudad: c } }));
+}
+
+const { ciudad } = Astro.props;
+const c = ciudad.data;
+const lugar = `${c.nombre}${c.estado ? `, ${c.estado}` : ''}`;
+
+const todos = await getCollection('desarrollos');
+const ciudades = await getCollection('ciudades');
+// Primero lo que está en venta hoy; después la trayectoria, de reciente a antiguo.
+const propios = todos
+  .filter((d) => d.data.ciudad.id === ciudad.id)
+  .sort((a, b) => Number(b.data.disponible) - Number(a.data.disponible) || b.data.anio - a.data.anio);
+const disponibles = propios.filter((d) => d.data.disponible);
+const entregados = propios.length - disponibles.length;
+
+// Con inventario la página vende; sin inventario presume trayectoria e invita
+// a contactar, sin anunciar "en venta" lo que no lo está.
+const hayVenta = disponibles.length > 0;
+const titulo = hayVenta
+  ? `Casas en venta en ${c.nombre}${c.estado ? `, ${c.estado}` : ''} | UREPPSA`
+  : `Desarrollos habitacionales en ${c.nombre} | UREPPSA`;
+const descripcion = hayVenta
+  ? `Casas nuevas en venta en ${lugar}: ${disponibles.map((d) => d.data.nombre).join(' y ')}. Crédito Infonavit, Fovissste o bancario. Agenda tu visita con UREPPSA.`
+  : `UREPPSA en ${lugar}: ${propios.length} ${propios.length === 1 ? 'desarrollo entregado' : 'desarrollos entregados'}. Más de ${ANIOS_EXPERIENCIA} años construyendo hogares en México. Escríbenos para conocer lo que viene.`;
+
+const mensajeWA = `Quiero informes de casas en ${c.nombre}`;
+const otras = ciudades.filter((o) => o.id !== ciudad.id).sort((a, b) => a.data.nombre.localeCompare(b.data.nombre));
+
+// La foto del desarrollo más reciente como tarjeta al compartir (JPEG:
+// WhatsApp no siempre muestra vistas previas WebP).
+const portada = propios[0]?.data.imagenes[0];
+const imagenSocial = portada ? (await getImage({ src: portada, width: 1200, format: 'jpeg' })).src : undefined;
+
+const urlPagina = new URL(Astro.url.pathname, Astro.site).href;
+const datosEstructurados: object[] = [
+  migasDePan([
+    ['Inicio', 'https://www.ureppsa.com/'],
+    [`Casas en venta en ${c.nombre}`, urlPagina],
+  ]),
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: `Desarrollos de UREPPSA en ${lugar}`,
+    itemListElement: propios.map((d, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: d.data.nombre,
+      url: new URL(`/desarrollos/${d.id}/`, Astro.site).href,
+    })),
+  },
+];
+---
+
+<Base
+  titulo={titulo}
+  descripcion={descripcion}
+  mensajeWhatsApp={mensajeWA}
+  imagenSocial={imagenSocial}
+  datosEstructurados={datosEstructurados}
+>
+  <!-- Encabezado -->
+  <section class="portada">
+    <div class="contenedor">
+      <span class="etiqueta">{lugar}</span>
+      <h1>
+        {hayVenta ? <>Casas en venta en <em>{c.nombre}</em>.</> : <>Nuestra huella en <em>{c.nombre}</em>.</>}
+      </h1>
+      {c.descripcion && <p>{c.descripcion}</p>}
+    </div>
+  </section>
+
+  <div class="contenedor">
+    <section class="seccion seccion-compacta">
+      <div class="seccion-encabezado revelar">
+        <span class="etiqueta">Desarrollos</span>
+        <h2>
+          {hayVenta
+            ? `Disponible${disponibles.length > 1 ? 's' : ''} hoy en ${c.nombre}`
+            : `Lo que hemos construido en ${c.nombre}`}
+        </h2>
+        {hayVenta && entregados > 0 && (
+          <p>Y {entregados} {entregados === 1 ? 'desarrollo más entregado' : 'desarrollos más entregados'} que respaldan nuestro trabajo en la ciudad.</p>
+        )}
+      </div>
+      <div class="rejilla-ciudad">
+        {propios.map((d, i) => (
+          <div class="revelar" style={`--retraso: ${(i % 3) * 90}ms`}>
+            <TarjetaDesarrollo desarrollo={d} nombreCiudad={c.nombre} />
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section class="seccion seccion-compacta">
+      <div class="cta-ciudad tarjeta revelar">
+        <div>
+          <h2>{hayVenta ? `¿Te imaginas viviendo en ${c.nombre}?` : `¿Buscas casa en ${c.nombre}?`}</h2>
+          <p>
+            Escríbenos sin compromiso: te damos informes, opciones de crédito y
+            te acompañamos en todo el proceso.
+          </p>
+        </div>
+        <div class="cta-acciones">
+          <a
+            href={enlaceWhatsApp(CELULAR_VENTAS, mensajeWA)}
+            class="btn btn-whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Icono nombre="whatsapp" /> Escríbenos
+          </a>
+          <a href="/financiamiento/" class="btn btn-claro">Opciones de financiamiento</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Otras ciudades -->
+    <section class="seccion seccion-compacta">
+      <div class="seccion-encabezado revelar">
+        <span class="etiqueta">Más ciudades</span>
+        <h2>También construimos en…</h2>
+      </div>
+      <nav class="otras-ciudades revelar" aria-label="Otras ciudades con desarrollos UREPPSA">
+        {otras.map((o) => (
+          <a href={`/casas-en-venta/${o.id}/`}>{o.data.nombre}</a>
+        ))}
+      </nav>
+    </section>
+  </div>
+</Base>
+
+<style>
+  .rejilla-ciudad {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+    gap: 1.5rem;
+  }
+
+  .cta-ciudad {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem 2rem;
+    padding: 2rem;
+  }
+
+  .cta-ciudad h2 {
+    margin-bottom: 0.35rem;
+  }
+
+  .cta-ciudad p {
+    color: var(--tinta-suave);
+    max-width: 46ch;
+  }
+
+  .cta-acciones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .otras-ciudades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  /* Mismo aspecto que los filtros de ciudad de la portada */
+  .otras-ciudades a {
+    font-family: var(--titulos);
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: var(--tinta);
+    background: var(--blanco);
+    border: 2px solid rgba(43, 38, 32, 0.12);
+    border-radius: 999px;
+    padding: 0.45rem 1.1rem;
+    text-decoration: none;
+    transition: border-color 0.15s ease;
+  }
+
+  .otras-ciudades a:hover {
+    border-color: var(--verde);
+  }
+</style>

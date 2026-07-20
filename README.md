@@ -51,6 +51,10 @@ Notas:
 - **Planos**: siempre `[planta baja, planta alta]`, en horizontal.
 - **Datos de contacto generales** (teléfono, celular/WhatsApp, correo,
   Facebook): un solo lugar, `src/lib/contacto.ts`.
+- **Ciudad nueva** → crear su JSON en `src/content/ciudades/` (nombre, estado,
+  `descripcion` para su página "Casas en venta en…", y posición x/y del pin).
+  Su página `/casas-en-venta/<ciudad>/`, el pin del mapa, el filtro y el
+  enlace del pie se generan solos.
 - Las guías de venta en PDF dentro de `images/` **no** se suben al repositorio
   (es público); ver `.gitignore`.
 

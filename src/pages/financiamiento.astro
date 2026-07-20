@@ -70,12 +70,26 @@ const preguntas = [
       'Desde la primera visita hasta la entrega de llaves: te orientamos con el crédito, revisamos tu expediente, damos seguimiento al trámite y estamos disponibles por WhatsApp durante todo el proceso.',
   },
 ];
+
+// Las mismas preguntas del acordeón, como datos estructurados: las hace
+// elegibles para mostrarse desplegables directamente en los resultados de
+// Google (una sola fuente: editar `preguntas` actualiza ambas).
+const faqEstructurado = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: preguntas.map((p) => ({
+    '@type': 'Question',
+    name: p.pregunta,
+    acceptedAnswer: { '@type': 'Answer', text: p.respuesta },
+  })),
+};
 ---
 
 <Base
-  titulo="Financiamiento | UREPPSA"
+  titulo="Financiamiento: Infonavit, crédito bancario o directo | UREPPSA"
   descripcion="Infonavit, crédito bancario o compra directa: te acompañamos paso a paso para estrenar tu casa UREPPSA."
   mensajeWhatsApp={MENSAJE_FINANCIAMIENTO}
+  datosEstructurados={[faqEstructurado]}
 >
   <!-- Encabezado -->
   <section class="portada">

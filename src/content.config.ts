@@ -91,6 +91,8 @@ const ciudades = defineCollection({
   schema: z.object({
     nombre: z.string(),
     estado: z.string().optional(),
+    /** Párrafo propio de la página "Casas en venta en …" de la ciudad. */
+    descripcion: z.string().optional(),
     // Posición del pin sobre el mapa de México, en porcentaje del ancho/alto
     x: z.number().min(0).max(100),
     y: z.number().min(0).max(100),

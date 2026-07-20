@@ -7,6 +7,12 @@ import Footer from '../components/Footer.astro';
 import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
 import AvisoCookies from '../components/AvisoCookies.astro';
 import { ANIOS_EXPERIENCIA, MUNICIPIOS, CASAS_TEXTO } from '../lib/empresa';
+import { CORREO_VENTAS } from '../lib/contacto';
+import { ID_ORGANIZACION, jsonLdSeguro } from '../lib/seo';
+// Precarga de la letra latina de cada familia: evita el parpadeo de fuente
+// (y el brinco de texto que cuenta contra Core Web Vitals) en móviles lentos.
+import nunitoWoff2 from '@fontsource-variable/nunito/files/nunito-latin-wght-normal.woff2?url';
+import figtreeWoff2 from '@fontsource-variable/figtree/files/figtree-latin-wght-normal.woff2?url';
 
 interface Props {
   titulo: string;
@@ -19,6 +25,8 @@ interface Props {
   imagenSocial?: string;
   /** false en páginas que no deben indexarse (404). */
   indexar?: boolean;
+  /** Bloques JSON-LD adicionales de la página (productos, migas de pan, FAQ…). */
+  datosEstructurados?: object[];
 }
 
 const {
@@ -28,21 +36,29 @@ const {
   telefonoWhatsApp,
   imagenSocial = '/UP_logo.png',
   indexar = true,
+  datosEstructurados = [],
 } = Astro.props;
 
 const urlCanonica = new URL(Astro.url.pathname, Astro.site);
 const urlImagenSocial = new URL(imagenSocial, Astro.site);
 
-// Datos estructurados de la empresa para buscadores
+// Datos estructurados de la empresa para buscadores. El doble tipo la declara
+// además como negocio local de construcción de vivienda, lo que la hace
+// elegible para los resultados enriquecidos locales (dirección, teléfono,
+// zona de servicio); el @id fijo permite que los bloques de cada página
+// (productos, migas) la referencien como una sola entidad.
 const organizacion = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': ['Organization', 'HomeAndConstructionBusiness'],
+  '@id': ID_ORGANIZACION,
   name: 'UREPPSA',
   legalName: 'Urbanización Edificación y Proyectos Profesionales S.A. de C.V.',
   url: 'https://www.ureppsa.com',
   logo: 'https://www.ureppsa.com/UP_logo.png',
+  image: 'https://www.ureppsa.com/UP_logo.png',
   slogan: 'Cada Vivienda un Compromiso',
   telephone: '+52 443 324 2601',
+  email: CORREO_VENTAS,
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Casa Mata #300, Col. Chapultepec Sur',
@@ -51,6 +67,7 @@ const organizacion = {
     addressRegion: 'Michoacán',
     addressCountry: 'MX',
   },
+  areaServed: ['Michoacán', 'Guanajuato', 'Guerrero'],
   sameAs: ['https://www.facebook.com/ureppsa/'],
 };
 ---
@@ -66,6 +83,8 @@ const organizacion = {
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <meta name="theme-color" content="#211d18" />
+    <link rel="preload" as="font" type="font/woff2" href={nunitoWoff2} crossorigin />
+    <link rel="preload" as="font" type="font/woff2" href={figtreeWoff2} crossorigin />
     {indexar ? <link rel="canonical" href={urlCanonica} /> : <meta name="robots" content="noindex" />}
 
     <!-- Modo oscuro: preferencia guardada, o la del sistema; se aplica antes
@@ -87,12 +106,20 @@ const organizacion = {
     <meta property="og:description" content={descripcion} />
     <meta property="og:image" content={urlImagenSocial} />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={urlImagenSocial} />
 
-    <script type="application/ld+json" set:html={JSON.stringify(organizacion)} />
+    <script type="application/ld+json" set:html={jsonLdSeguro(organizacion)} />
+    {datosEstructurados.map((bloque) => (
+      <script type="application/ld+json" set:html={jsonLdSeguro(bloque)} />
+    ))}
 
     {
       import.meta.env.PROD && (
         <>
+          {/* Adelantar la conexión a los dominios de analítica: DNS+TLS listos
+              antes de que sus scripts los pidan */}
+          <link rel="preconnect" href="https://www.googletagmanager.com" />
+          <link rel="preconnect" href="https://connect.facebook.net" />
           {/* Google Analytics (gtag.js) */}
           <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-E1002VD8TF" />
           <script is:inline>
