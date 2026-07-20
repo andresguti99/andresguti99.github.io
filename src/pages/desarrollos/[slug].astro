@@ -709,24 +709,19 @@ const secciones = [
   }
 
   /* Panel glass con la información del proyecto */
+  /* Tarjeta sólida del tema: el texto usa los mismos colores que el resto del
+     sitio y se lee siempre, sin importar qué tan clara sea la foto detrás. */
   .heroe-panel {
     display: flex;
     align-items: center;
     gap: 1.25rem;
     padding: clamp(1rem, 2.5vw, 1.5rem);
     border-radius: 22px;
-    /* Opacidad alta: el texto debe leerse aunque la foto detrás sea clara */
-    background: rgba(21, 18, 14, 0.78);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: var(--blanco);
+    color: var(--tinta);
+    border: 1px solid rgba(43, 38, 32, 0.08);
+    box-shadow: var(--sombra-alta);
     animation: entrada 0.65s 0.2s ease both;
-  }
-
-  .heroe-desarrollo h1,
-  .heroe-lugar,
-  .heroe-precio {
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
   }
 
   @keyframes entrada {
@@ -744,9 +739,8 @@ const secciones = [
     width: clamp(64px, 7vw, 92px);
     height: clamp(64px, 7vw, 92px);
     object-fit: contain;
-    background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    background: var(--crema);
+    border: 1px solid rgba(43, 38, 32, 0.08);
     border-radius: 16px;
     padding: 7px;
     flex-shrink: 0;
@@ -779,7 +773,7 @@ const secciones = [
     align-items: center;
     gap: 0.4rem;
     font-size: 1.02rem;
-    opacity: 0.9;
+    color: var(--tinta-suave);
     margin-bottom: 0.55rem;
   }
 
@@ -794,7 +788,8 @@ const secciones = [
     font-family: var(--titulos);
     font-weight: 800;
     font-size: 1.25rem;
-    color: var(--amarillo);
+    /* Mismo color de precio que en las tarjetas del catálogo */
+    color: var(--terracota);
   }
 
   .heroe-chip {
@@ -806,8 +801,9 @@ const secciones = [
     font-size: 0.82rem;
     padding: 0.3rem 0.8rem;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.14);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: var(--crema);
+    border: 1px solid rgba(43, 38, 32, 0.1);
+    color: var(--tinta-suave);
   }
 
   .heroe-cta {
