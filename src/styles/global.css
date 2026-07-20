@@ -28,6 +28,9 @@
   --exito-texto: #1f5a2a;
   --peligro-texto: #c0492f;
 
+  /* Carbón de la barra de navegación y el pie: fijo en ambos esquemas */
+  --carbon: #211d18;
+
   /* Forma y profundidad */
   --radio: 18px;
   --radio-chico: 10px;
@@ -49,10 +52,12 @@ html[data-esquema='oscuro'] {
   --sombra: 0 10px 30px rgba(0, 0, 0, 0.4);
   --sombra-alta: 0 18px 44px rgba(0, 0, 0, 0.55);
   --puntos: rgba(241, 234, 223, 0.08);
-  --verde-claro: color-mix(in srgb, var(--verde) 24%, #221d17);
-  --terracota-claro: color-mix(in srgb, var(--terracota) 22%, #221d17);
-  --rojo-claro: color-mix(in srgb, var(--rojo) 24%, #221d17);
-  --exito-claro: color-mix(in srgb, var(--exito) 26%, #221d17);
+  /* Tonos precalculados (mezcla del acento sobre #221d17): valores fijos en
+     lugar de color-mix() para no romper en navegadores/WebViews viejos */
+  --verde-claro: #253420;
+  --terracota-claro: #4a2e22;
+  --rojo-claro: #48281d;
+  --exito-claro: #253420;
   --exito-texto: #8fd39a;
   --peligro-texto: #eb9c8b;
 }
@@ -107,6 +112,51 @@ img {
 
 .seccion {
   padding-block: clamp(3rem, 7vw, 5.5rem);
+}
+
+.seccion-compacta {
+  padding-block: clamp(1.75rem, 4vw, 3rem);
+}
+
+/* Portada de páginas interiores: gradientes cálidos + retícula de puntos +
+   acento en degradado sobre el título. Compartida por financiamiento,
+   contacto y 404; el héroe del inicio tiene su propia variante. */
+.portada {
+  position: relative;
+  padding-block: clamp(2.5rem, 6vw, 4.5rem);
+  background:
+    radial-gradient(60% 80% at 85% 20%, var(--verde-claro) 0%, transparent 70%),
+    radial-gradient(50% 70% at 10% 90%, var(--terracota-claro) 0%, transparent 70%);
+}
+
+.portada::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(var(--puntos) 1.2px, transparent 1.2px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(65% 70% at 35% 40%, black, transparent);
+  -webkit-mask-image: radial-gradient(65% 70% at 35% 40%, black, transparent);
+  pointer-events: none;
+}
+
+.portada h1 {
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+}
+
+.portada h1 em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--verde), #6cb26f 45%, var(--terracota));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.portada p {
+  font-size: 1.15rem;
+  color: var(--tinta-suave);
+  max-width: 36rem;
+  margin-bottom: 0;
 }
 
 .seccion-encabezado {

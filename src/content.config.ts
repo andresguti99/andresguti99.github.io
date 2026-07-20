@@ -33,7 +33,7 @@ const desarrollos = defineCollection({
       precio: z.string(),
       disponible: z.boolean(),
       /** Sin teléfono propio ⇒ la página usa el celular general de ventas. */
-      telefono: z.string().optional(),
+      telefono: z.string().min(1).optional(),
       facebook: z.string().url().optional(),
       ubicacion: z.string().optional(),
       mapa: z.string().optional(),
@@ -59,6 +59,30 @@ const desarrollos = defineCollection({
           })
         )
         .optional(),
+    })
+    .superRefine((datos, ctx) => {
+      // Con `modelos`, la ficha plana no se muestra: avisar en el build en
+      // lugar de ignorar datos en silencio.
+      const camposPlanos = [
+        'nombreModelo',
+        'planos',
+        'plantas',
+        'recamaras',
+        'banos',
+        'superficie',
+        'construccion',
+        'caracteristicasVivienda',
+      ] as const;
+      if (datos.modelos && datos.modelos.length > 0) {
+        for (const campo of camposPlanos) {
+          if (datos[campo] !== undefined) {
+            ctx.addIssue({
+              code: z.ZodIssueCode.custom,
+              message: `El campo "${campo}" se ignora cuando el desarrollo tiene "modelos"; muévelo dentro del modelo correspondiente o elimínalo.`,
+            });
+          }
+        }
+      }
     }),
 });
 

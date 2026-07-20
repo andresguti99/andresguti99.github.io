@@ -42,16 +42,25 @@ import logo from '../../images/UREPPSA/UP_logo.png';
     })
   );
 
-  // Alternador de modo oscuro: guarda la preferencia explícita del visitante
+  // Al pasar a escritorio se limpia el estado del menú móvil, para que al
+  // volver a angosto no reaparezca abierto
+  window.matchMedia('(min-width: 861px)').addEventListener('change', (evento) => {
+    if (evento.matches) {
+      menu.classList.remove('abierto');
+      boton.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Alternador de modo oscuro: guarda la preferencia explícita del visitante.
+  // localStorage puede lanzar en navegación privada; el cambio visual aplica igual.
   document.querySelector('[data-tema-boton]')?.addEventListener('click', () => {
     const raiz = document.documentElement;
-    if (raiz.dataset.esquema === 'oscuro') {
-      delete raiz.dataset.esquema;
-      localStorage.setItem('esquema', 'claro');
-    } else {
-      raiz.dataset.esquema = 'oscuro';
-      localStorage.setItem('esquema', 'oscuro');
-    }
+    const nuevo = raiz.dataset.esquema === 'oscuro' ? 'claro' : 'oscuro';
+    if (nuevo === 'claro') delete raiz.dataset.esquema;
+    else raiz.dataset.esquema = 'oscuro';
+    try {
+      localStorage.setItem('esquema', nuevo);
+    } catch {}
   });
 </script>
 
@@ -60,7 +69,7 @@ import logo from '../../images/UREPPSA/UP_logo.png';
     position: sticky;
     top: 0;
     z-index: 50;
-    background: #211d18;
+    background: var(--carbon);
     border-bottom: 3px solid var(--verde);
   }
 
@@ -179,7 +188,7 @@ import logo from '../../images/UREPPSA/UP_logo.png';
       top: 100%;
       left: 0;
       right: 0;
-      background: #211d18;
+      background: var(--carbon);
       border-bottom: 3px solid var(--verde);
       padding: 0.75rem 1.25rem 1.25rem;
     }

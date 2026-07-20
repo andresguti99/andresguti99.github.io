@@ -13,13 +13,13 @@
   "banos": "2",
   "superficie": "96 m2",
   "construccion": "97 m2",
-  "caracteristicasVivienda": "<ul><li>Ecotencias (Baños Bajo Consumo, 6 lamparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rapido)</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas con Muros Independientes</li></ul>",
-  "caracteristicasConjunto": "<ul><li>876 Viviendas</li><li>Regimen de Propiedas en Condominio</li><li>19 Áreas Verdes Equipadas</li></ul>",
+  "caracteristicasVivienda": "<ul><li>Ecotecnias (Baños Bajo Consumo, 6 lámparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rápido)</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas con Muros Independientes</li></ul>",
+  "caracteristicasConjunto": "<ul><li>876 Viviendas</li><li>Régimen de Propiedad en Condominio</li><li>19 Áreas Verdes Equipadas</li></ul>",
   "planos": [
-    "../../assets/desarrollos/puerto-pacifico/Plantas_PuertoPacifico.jpeg"
+    "../../assets/desarrollos/puerto-pacifico/plantas-puerto-pacifico.jpeg"
   ],
   "imagenes": [
-    "../../assets/desarrollos/puerto-pacifico/PUERTO_PACIFICO_PORTICO.jpg",
-    "../../assets/desarrollos/puerto-pacifico/7 02 R.jpg"
+    "../../assets/desarrollos/puerto-pacifico/puerto-pacifico-portico.jpg",
+    "../../assets/desarrollos/puerto-pacifico/7-02-r.jpg"
   ]
 }

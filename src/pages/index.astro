@@ -5,7 +5,8 @@ import Base from '../layouts/Base.astro';
 import MapaMexico from '../components/MapaMexico.astro';
 import TarjetaDesarrollo from '../components/TarjetaDesarrollo.astro';
 import Icono from '../components/Icono.astro';
-import { CELULAR_VENTAS, enlaceWhatsApp } from '../lib/contacto';
+import { CELULAR_VENTAS, MENSAJE_INFORMES, MENSAJE_FINANCIAMIENTO, enlaceWhatsApp } from '../lib/contacto';
+import { ESTADISTICAS, ANIOS_EXPERIENCIA, CASAS_TEXTO } from '../lib/empresa';
 
 const ciudades = await getCollection('ciudades');
 const nombreCiudad = (id: string) => ciudades.find((c) => c.id === id)?.data.nombre ?? id;
@@ -13,8 +14,10 @@ const nombreCiudad = (id: string) => ciudades.find((c) => c.id === id)?.data.nom
 const desarrollos = (await getCollection('desarrollos')).sort((a, b) => b.data.anio - a.data.anio);
 const testimonios = await getCollection('testimonios');
 
-// Escaparate del héroe: únicamente los proyectos disponibles hoy.
-const destacados = desarrollos.filter((d) => d.data.disponible);
+// Escaparate del héroe: los proyectos disponibles hoy; si algún día no
+// hubiera ninguno, muestra los más recientes para no dejar el héroe vacío.
+const disponibles = desarrollos.filter((d) => d.data.disponible);
+const destacados = disponibles.length > 0 ? disponibles : desarrollos.slice(0, 3);
 
 // Logos para la marquesina de trayectoria.
 const conLogo = desarrollos.filter((d) => d.data.logo);
@@ -24,11 +27,7 @@ const imagenSocial = destacados.length
   ? (await getImage({ src: destacados[0].data.imagenes[0], width: 1200 })).src
   : undefined;
 
-const estadisticas = [
-  { valor: 30, texto: 'años de experiencia' },
-  { valor: 5000, texto: 'casas entregadas' },
-  { valor: 20, texto: 'municipios en México' },
-];
+const estadisticas = ESTADISTICAS;
 
 const financiamiento = [
   {
@@ -58,12 +57,12 @@ const financiamiento = [
         <h1>Cada vivienda, <em>un compromiso</em>.</h1>
         <p>
           Construimos fraccionamientos seguros y llenos de vida para familias mexicanas,
-          con más de 30 años de experiencia y más de 5,000 hogares entregados.
+          con más de {ANIOS_EXPERIENCIA} años de experiencia y más de {CASAS_TEXTO} hogares entregados.
         </p>
         <div class="heroe-acciones">
           <a href="#desarrollos" class="btn btn-primario">Explora nuestros desarrollos</a>
           <a
-            href={enlaceWhatsApp(CELULAR_VENTAS, 'Hola, quiero informes de los desarrollos de UREPPSA')}
+            href={enlaceWhatsApp(CELULAR_VENTAS, MENSAJE_INFORMES)}
             class="btn btn-whatsapp"
             target="_blank"
             rel="noopener noreferrer"
@@ -88,6 +87,7 @@ const financiamiento = [
               widths={[480, 720, 1040]}
               sizes="(max-width: 900px) 100vw, 50vw"
               loading={i === 0 ? 'eager' : 'lazy'}
+              fetchpriority={i === 0 ? 'high' : undefined}
             />
             <div class="escaparate-barra">
               {d.data.logo && (
@@ -104,7 +104,9 @@ const financiamiento = [
                 <strong>{d.data.nombre}</strong>
                 <span>{nombreCiudad(d.data.ciudad.id)} · {d.data.precio}</span>
               </div>
-              <span class="pildora pildora-disponible">Disponible</span>
+              <span class={`pildora ${d.data.disponible ? 'pildora-disponible' : 'pildora-vendido'}`}>
+                {d.data.disponible ? 'Disponible' : 'Vendido'}
+              </span>
             </div>
           </a>
         ))}
@@ -132,7 +134,7 @@ const financiamiento = [
   </section>
 
   <!-- Marquesina de trayectoria -->
-  <section class="marquesina" aria-label="Nuestros fraccionamientos a lo largo de 30 años">
+  <section class="marquesina" aria-label={`Nuestros fraccionamientos a lo largo de ${ANIOS_EXPERIENCIA} años`}>
     <p class="marquesina-titulo">Tres décadas de fraccionamientos que ya son hogar</p>
     <div class="marquesina-vista">
       <div class="marquesina-pista">
@@ -238,7 +240,7 @@ const financiamiento = [
       <div class="financiamiento-cta revelar">
         <a href="/financiamiento/" class="btn btn-primario">Conoce el proceso completo</a>
         <a
-          href={enlaceWhatsApp(CELULAR_VENTAS, 'Hola, quiero saber qué opciones de financiamiento tengo para una casa UREPPSA')}
+          href={enlaceWhatsApp(CELULAR_VENTAS, MENSAJE_FINANCIAMIENTO)}
           class="btn btn-whatsapp"
           target="_blank"
           rel="noopener noreferrer"
@@ -270,10 +272,14 @@ const financiamiento = [
       puntos.forEach((punto, i) => punto.classList.toggle('activo', i === actual));
     };
 
-    const iniciar = () => {
-      if (laminas.length > 1) temporizador = setInterval(() => mostrar(actual + 1), 5000);
-    };
+    const sinMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)');
     const detener = () => clearInterval(temporizador);
+    const iniciar = () => {
+      detener(); // nunca dos intervalos a la vez
+      if (laminas.length > 1 && !sinMovimiento.matches) {
+        temporizador = setInterval(() => mostrar(actual + 1), 5000);
+      }
+    };
 
     puntos.forEach((punto) =>
       punto.addEventListener('click', () => {
@@ -284,7 +290,7 @@ const financiamiento = [
     );
     escaparate.addEventListener('mouseenter', detener);
     escaparate.addEventListener('mouseleave', iniciar);
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) iniciar();
+    iniciar();
   }
 
   // ── Cifras que cuentan hacia arriba ──────────────────────────────────
@@ -336,6 +342,12 @@ const financiamiento = [
 
   chips.forEach((chip) => chip.addEventListener('click', () => filtrar(chip.dataset.ciudad!)));
   window.addEventListener('filtrar-ciudad', (evento) => filtrar((evento as CustomEvent<string>).detail));
+
+  // Enlaces antiguos tipo desarrollos.html?city=X llegan como /?ciudad=x#desarrollos
+  const ciudadInicial = new URLSearchParams(location.search).get('ciudad');
+  if (ciudadInicial && chips.some((chip) => chip.dataset.ciudad === ciudadInicial)) {
+    filtrar(ciudadInicial);
+  }
 </script>
 
 <style>

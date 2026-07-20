@@ -18,10 +18,17 @@ const ruta = `/node_modules/bootstrap-icons/icons/${nombre}.svg`;
 if (!(ruta in modulos)) {
   throw new Error(`Ícono de Bootstrap desconocido: "${nombre}"`);
 }
-const svg = (await modulos[ruta]()).replace(
-  'width="16" height="16"',
-  `width="${tamano}" height="${tamano}" aria-hidden="true"`
+const original = await modulos[ruta]();
+// Sustituye el tamaño fijo de bootstrap-icons; si el formato del SVG cambiara
+// en una actualización del paquete, el build falla aquí en vez de dejar
+// íconos de 16px por todo el sitio sin aviso.
+const svg = original.replace(
+  /\swidth="16" height="16"/,
+  ` width="${tamano}" height="${tamano}" aria-hidden="true"`
 );
+if (svg === original) {
+  throw new Error(`Icono: no pude ajustar el tamaño de "${nombre}" (¿cambió el formato de bootstrap-icons?)`);
+}
 ---
 
 <Fragment set:html={svg} />

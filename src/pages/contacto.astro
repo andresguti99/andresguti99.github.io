@@ -8,6 +8,7 @@ import {
   FACEBOOK_UREPPSA,
   enlaceWhatsApp,
   enlaceTelefono,
+  MENSAJE_INFORMES,
 } from '../lib/contacto';
 
 const mapaOficina =
@@ -32,6 +33,8 @@ const mapaOficina =
       <!-- Formulario -->
       <form class="tarjeta formulario revelar" action="https://formspree.io/f/xaygeknp" method="POST">
         <h2>Envíanos un mensaje</h2>
+        {/* Trampa anti-spam de Formspree: campo oculto que los bots llenan y los humanos no */}
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
         <div class="campo">
           <label for="nombre">Nombre</label>
           <input type="text" id="nombre" name="Nombre" required autocomplete="name" />
@@ -79,7 +82,7 @@ const mapaOficina =
           <h2>Directo y sin formularios</h2>
           <a
             class="btn btn-whatsapp"
-            href={enlaceWhatsApp(CELULAR_VENTAS, 'Hola, quiero informes de los desarrollos de UREPPSA')}
+            href={enlaceWhatsApp(CELULAR_VENTAS, MENSAJE_INFORMES)}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -123,46 +126,7 @@ const mapaOficina =
 </Base>
 
 <style>
-  .portada {
-    position: relative;
-    padding-block: clamp(2.5rem, 6vw, 4.5rem);
-    background:
-      radial-gradient(60% 80% at 85% 20%, var(--verde-claro) 0%, transparent 70%),
-      radial-gradient(50% 70% at 10% 90%, var(--terracota-claro) 0%, transparent 70%);
-  }
-
-  .portada::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(var(--puntos) 1.2px, transparent 1.2px);
-    background-size: 24px 24px;
-    mask-image: radial-gradient(65% 70% at 35% 40%, black, transparent);
-    pointer-events: none;
-  }
-
-  .portada h1 {
-    font-size: clamp(2.2rem, 5vw, 3.2rem);
-  }
-
-  .portada h1 em {
-    font-style: normal;
-    background: linear-gradient(90deg, var(--verde), #6cb26f 45%, var(--terracota));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-
-  .portada p {
-    font-size: 1.15rem;
-    color: var(--tinta-suave);
-    max-width: 36rem;
-    margin-bottom: 0;
-  }
-
-  .seccion-compacta {
-    padding-block: clamp(1.75rem, 4vw, 3rem);
-  }
+  /* .portada y .seccion-compacta viven en global.css */
 
   .contacto-rejilla {
     display: grid;
@@ -222,8 +186,16 @@ const mapaOficina =
     background: var(--blanco);
   }
 
-  input:user-invalid,
-  select:user-invalid,
+  /* Selectores separados: si un motor viejo no conoce :user-invalid,
+     solo descarta su propia regla y no una lista completa */
+  input:user-invalid {
+    border-color: var(--rojo);
+  }
+
+  select:user-invalid {
+    border-color: var(--rojo);
+  }
+
   textarea:user-invalid {
     border-color: var(--rojo);
   }

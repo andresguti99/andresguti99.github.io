@@ -2,7 +2,7 @@
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import Icono from './Icono.astro';
-import { FACEBOOK_UREPPSA } from '../lib/contacto';
+import { contactoDe } from '../lib/contacto';
 
 interface Props {
   desarrollo: CollectionEntry<'desarrollos'>;
@@ -12,7 +12,7 @@ interface Props {
 const { desarrollo, nombreCiudad } = Astro.props;
 const { nombre, precio, disponible, imagenes, logo, modelos, facebook } = desarrollo.data;
 // Sin página propia ⇒ enlaza a la página general de UREPPSA
-const enlaceFacebook = facebook ?? FACEBOOK_UREPPSA;
+const { facebook: enlaceFacebook } = contactoDe({ facebook });
 ---
 
 <article class="tarjeta tarjeta-desarrollo" data-ciudad-tarjeta={desarrollo.data.ciudad.id}>
@@ -38,7 +38,9 @@ const enlaceFacebook = facebook ?? FACEBOOK_UREPPSA;
         <h3>{nombre}</h3>
         <p class="tarjeta-ciudad">{nombreCiudad}</p>
         <p class="tarjeta-precio">{precio}</p>
-        {modelos && <p class="tarjeta-modelos">{modelos.length} modelos de vivienda</p>}
+        {modelos && modelos.length > 0 && (
+          <p class="tarjeta-modelos">{modelos.length} modelos de vivienda</p>
+        )}
       </div>
     </div>
   </a>

@@ -1,0 +1,16 @@
+{
+  "name": "UREPPSA",
+  "short_name": "UREPPSA",
+  "description": "Desarrollos habitacionales. Cada Vivienda un Compromiso.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#faf6ef",
+  "theme_color": "#211d18",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}

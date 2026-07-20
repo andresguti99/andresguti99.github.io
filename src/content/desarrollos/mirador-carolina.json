@@ -14,12 +14,12 @@
   "superficie": "90 m2",
   "construccion": "66.84 m2",
   "caracteristicasVivienda": "<ul><li>Muros Independientes</li></ul>",
-  "caracteristicasConjunto": "<ul><li>92 Viviendas</li><li>Regimen de Propiedad en Condominio</li><li>Áreas Verdes</li></ul>",
+  "caracteristicasConjunto": "<ul><li>92 Viviendas</li><li>Régimen de Propiedad en Condominio</li><li>Áreas Verdes</li></ul>",
   "planos": [
-    "../../assets/desarrollos/mirador-carolina/Plantas_MiradorCarolina.jpeg"
+    "../../assets/desarrollos/mirador-carolina/plantas-mirador-carolina.jpeg"
   ],
   "imagenes": [
-    "../../assets/desarrollos/mirador-carolina/DSC05698 r.jpg",
-    "../../assets/desarrollos/mirador-carolina/DSC05691 r.jpg"
+    "../../assets/desarrollos/mirador-carolina/dsc05698-r.jpg",
+    "../../assets/desarrollos/mirador-carolina/dsc05691-r.jpg"
   ]
 }

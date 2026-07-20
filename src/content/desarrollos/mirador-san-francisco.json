@@ -14,12 +14,12 @@
   "superficie": "112.2 m2",
   "construccion": "111.56 m2",
   "caracteristicasVivienda": "<ul><li>Muros Independientes</li></ul>",
-  "caracteristicasConjunto": "<ul><li>40 Viviendas</li><li>Regimen de Propiedas en Condominio</li><li>Áreas Verdes Equipadas</li></ul>",
+  "caracteristicasConjunto": "<ul><li>40 Viviendas</li><li>Régimen de Propiedad en Condominio</li><li>Áreas Verdes Equipadas</li></ul>",
   "planos": [
-    "../../assets/desarrollos/mirador-san-francisco/Plantas_MiradorFrancisco.jpeg"
+    "../../assets/desarrollos/mirador-san-francisco/plantas-mirador-francisco.jpeg"
   ],
   "imagenes": [
-    "../../assets/desarrollos/mirador-san-francisco/DSC07623 r.jpg",
-    "../../assets/desarrollos/mirador-san-francisco/DSC07624 r.jpg"
+    "../../assets/desarrollos/mirador-san-francisco/dsc07623-r.jpg",
+    "../../assets/desarrollos/mirador-san-francisco/dsc07624-r.jpg"
   ]
 }

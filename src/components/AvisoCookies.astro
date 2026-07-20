@@ -11,11 +11,19 @@
 </div>
 
 <script>
+  // localStorage puede lanzar (modo privado, cookies bloqueadas): en ese caso
+  // el aviso se muestra y el botón lo cierra aunque no pueda recordarse.
   const aviso = document.querySelector<HTMLElement>('[data-aviso-cookies]')!;
-  if (!localStorage.getItem('cookies-aceptadas')) {
+  let aceptadas = false;
+  try {
+    aceptadas = Boolean(localStorage.getItem('cookies-aceptadas'));
+  } catch {}
+  if (!aceptadas) {
     aviso.hidden = false;
     aviso.querySelector('[data-aceptar]')?.addEventListener('click', () => {
-      localStorage.setItem('cookies-aceptadas', '1');
+      try {
+        localStorage.setItem('cookies-aceptadas', '1');
+      } catch {}
       aviso.hidden = true;
     });
   }
@@ -37,6 +45,7 @@
     gap: 0.7rem;
     padding: 1.1rem 1.25rem;
     border-radius: var(--radio);
+    background: rgba(255, 255, 255, 0.94); /* respaldo sin color-mix */
     background: color-mix(in srgb, var(--blanco) 88%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);

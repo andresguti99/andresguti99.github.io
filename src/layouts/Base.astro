@@ -12,15 +12,21 @@ interface Props {
   descripcion?: string;
   /** Mensaje prellenado del botón flotante de WhatsApp. */
   mensajeWhatsApp?: string;
+  /** Teléfono destino del botón flotante (p. ej. el del desarrollo en su página). */
+  telefonoWhatsApp?: string;
   /** Imagen para las tarjetas al compartir en WhatsApp/Facebook (ruta del sitio). */
   imagenSocial?: string;
+  /** false en páginas que no deben indexarse (404). */
+  indexar?: boolean;
 }
 
 const {
   titulo,
   descripcion = 'Descubre tu hogar ideal con UREPPSA. Más de 20 municipios. Más de 30 años de experiencia. Más de 5,000 casas entregadas.',
   mensajeWhatsApp,
+  telefonoWhatsApp,
   imagenSocial = '/UP_logo.png',
+  indexar = true,
 } = Astro.props;
 
 const urlCanonica = new URL(Astro.url.pathname, Astro.site);
@@ -56,7 +62,10 @@ const organizacion = {
     <title>{titulo}</title>
     <meta name="description" content={descripcion} />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="canonical" href={urlCanonica} />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#211d18" />
+    {indexar ? <link rel="canonical" href={urlCanonica} /> : <meta name="robots" content="noindex" />}
 
     <!-- Modo oscuro: preferencia guardada, o la del sistema; se aplica antes
          del primer pintado para evitar el destello de tema incorrecto -->
@@ -134,7 +143,7 @@ const organizacion = {
       <slot />
     </main>
     <Footer />
-    <WhatsAppFlotante mensaje={mensajeWhatsApp} />
+    <WhatsAppFlotante mensaje={mensajeWhatsApp} telefono={telefonoWhatsApp} />
     <AvisoCookies />
     <script>
       // Revelado suave de secciones al entrar al viewport

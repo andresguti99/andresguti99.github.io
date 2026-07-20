@@ -3,16 +3,33 @@
   <head>
     <meta charset="utf-8" />
     <title>UREPPSA | Desarrollos</title>
-    <!-- Redirección de las URLs del sitio anterior (desarrollos.html?project=X)
-         a las nuevas páginas por proyecto, para que los enlaces publicados en
-         Facebook y WhatsApp sigan funcionando. -->
+    <!-- Redirección de las URLs del sitio anterior a las nuevas páginas, para
+         que los enlaces publicados durante años sigan funcionando:
+         · desarrollos.html?project=X → /desarrollos/x/
+         · desarrollos.html?city=X    → /?ciudad=x#desarrollos (catálogo filtrado)
+         Los demás parámetros (utm_*, fbclid…) se conservan para no perder la
+         atribución de campañas en Analytics. -->
     <script>
       var params = new URLSearchParams(location.search);
       var kebab = function (s) {
         return s.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
       };
       var proyecto = params.get('project');
-      location.replace(proyecto ? '/desarrollos/' + kebab(proyecto) + '/' : '/#desarrollos');
+      var ciudad = params.get('city');
+      params.delete('project');
+      params.delete('city');
+      var resto = params.toString();
+
+      var destino;
+      if (proyecto) {
+        destino = '/desarrollos/' + kebab(proyecto) + '/' + (resto ? '?' + resto : '');
+      } else if (ciudad) {
+        params.set('ciudad', kebab(ciudad));
+        destino = '/?' + params.toString() + '#desarrollos';
+      } else {
+        destino = (resto ? '/?' + resto : '/') + '#desarrollos';
+      }
+      location.replace(destino);
     </script>
     <meta http-equiv="refresh" content="0;url=/#desarrollos" />
   </head>

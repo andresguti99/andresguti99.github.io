@@ -8,15 +8,15 @@
   "facebook": "https://www.facebook.com/PuertoInternacional/",
   "ubicacion": "Lázaro Cárdenas, Michoacán<br>El desarrollo más cercano al Puerto, por el canal lateral 03, entre Club Pacífico y la Universidad Michoacana.",
   "mapa": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4911.635619576558!2d-102.19971930000001!3d17.9831289!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315db8d73ebd5f%3A0x7046df993aea381e!2sPuerto%20Internacional%20LZC!5e1!3m2!1sen!2smx!4v1783832069851!5m2!1sen!2smx\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
-  "logo": "../../assets/desarrollos/puerto-internacional/Logo_Puerto_Internacional.png",
+  "logo": "../../assets/desarrollos/puerto-internacional/logo-puerto-internacional.png",
   "precio": "DESDE $1,230,120.00",
   "imagenes": [
-    "../../assets/desarrollos/puerto-internacional/R1_Portico.jpg",
-    "../../assets/desarrollos/puerto-internacional/R2_Area_Juegos.jpg",
-    "../../assets/desarrollos/puerto-internacional/R3_Parque_Lineal.jpg",
-    "../../assets/desarrollos/puerto-internacional/R4_Parque_Lineal.jpg",
-    "../../assets/desarrollos/puerto-internacional/R5_Paso_Peatonal.jpg",
-    "../../assets/desarrollos/puerto-internacional/VeleroPlus/R2_Velero_Plus.jpg"
+    "../../assets/desarrollos/puerto-internacional/r1-portico.jpg",
+    "../../assets/desarrollos/puerto-internacional/r2-area-juegos.jpg",
+    "../../assets/desarrollos/puerto-internacional/r3-parque-lineal.jpg",
+    "../../assets/desarrollos/puerto-internacional/r4-parque-lineal.jpg",
+    "../../assets/desarrollos/puerto-internacional/r5-paso-peatonal.jpg",
+    "../../assets/desarrollos/puerto-internacional/velero-plus/r2-velero-plus.jpg"
   ],
   "modelos": [
     {
@@ -31,14 +31,14 @@
       "distribucion": "<strong>Planta baja:</strong> sala, comedor, cocina con alacena y medio baño.<br><strong>Planta alta:</strong> tres recámaras con área de guardado y un baño completo.",
       "caracteristicasVivienda": "<ul><li>Casas solas con muros independientes, más altas</li><li>Arquitectura contemporánea orientada para clima cálido, con ventilación cruzada</li><li>Aislante térmico en azotea (temperaturas más bajas en interiores todo el año)</li><li>Diseño estructural para zona de alta sismicidad</li><li>Equipada con ecotecnias: inodoros de bajo consumo, llaves ahorradoras, calentador de rápida recuperación y lámparas LED</li></ul>",
       "planos": [
-        "../../assets/desarrollos/puerto-internacional/Velero/Velero_Planta_Baja.png",
-        "../../assets/desarrollos/puerto-internacional/Velero/Velero_Planta_Alta.png"
+        "../../assets/desarrollos/puerto-internacional/velero/velero-planta-baja.png",
+        "../../assets/desarrollos/puerto-internacional/velero/velero-planta-alta.png"
       ],
       "imagenes": [
-        "../../assets/desarrollos/puerto-internacional/Velero/R1_Velero.jpg",
-        "../../assets/desarrollos/puerto-internacional/Velero/R2_Velero.jpg",
-        "../../assets/desarrollos/puerto-internacional/Velero/R4_Velero.jpg",
-        "../../assets/desarrollos/puerto-internacional/Velero/R5_Velero.jpg"
+        "../../assets/desarrollos/puerto-internacional/velero/r1-velero.jpg",
+        "../../assets/desarrollos/puerto-internacional/velero/r2-velero.jpg",
+        "../../assets/desarrollos/puerto-internacional/velero/r4-velero.jpg",
+        "../../assets/desarrollos/puerto-internacional/velero/r5-velero.jpg"
       ]
     },
     {
@@ -52,14 +52,14 @@
       "distribucion": "<strong>Planta baja:</strong> sala, comedor, cocina con alacena y medio baño.<br><strong>Planta alta:</strong> tres recámaras con área de guardado y dos baños completos.",
       "caracteristicasVivienda": "<ul><li>Cocina integral equipada con parrilla, campana, tarja y barra de desayunador</li><li>Un baño completo más y mayor superficie construida que Velero</li><li>Cochera para dos vehículos y protecciones en todo el frente de la casa</li><li>Casas solas con muros independientes, más altas, con ventilación cruzada</li><li>Aislante térmico en azotea y diseño estructural para zona de alta sismicidad</li><li>Equipada con ecotecnias: inodoros de bajo consumo, llaves ahorradoras, calentador de rápida recuperación y lámparas LED</li></ul>",
       "planos": [
-        "../../assets/desarrollos/puerto-internacional/VeleroPlus/Velero_Plus_Planta_Baja.png",
-        "../../assets/desarrollos/puerto-internacional/VeleroPlus/Velero_Plus_Planta_Alta.png"
+        "../../assets/desarrollos/puerto-internacional/velero-plus/velero-plus-planta-baja.png",
+        "../../assets/desarrollos/puerto-internacional/velero-plus/velero-plus-planta-alta.png"
       ],
       "imagenes": [
-        "../../assets/desarrollos/puerto-internacional/VeleroPlus/R1_Velero_Plus.jpg",
-        "../../assets/desarrollos/puerto-internacional/VeleroPlus/R2_Velero_Plus.jpg",
-        "../../assets/desarrollos/puerto-internacional/VeleroPlus/R3_Velero_Plus.jpg",
-        "../../assets/desarrollos/puerto-internacional/VeleroPlus/R4_Velero_Plus.jpg"
+        "../../assets/desarrollos/puerto-internacional/velero-plus/r1-velero-plus.jpg",
+        "../../assets/desarrollos/puerto-internacional/velero-plus/r2-velero-plus.jpg",
+        "../../assets/desarrollos/puerto-internacional/velero-plus/r3-velero-plus.jpg",
+        "../../assets/desarrollos/puerto-internacional/velero-plus/r4-velero-plus.jpg"
       ]
     },
     {
@@ -73,15 +73,15 @@
       "distribucion": "<strong>Planta baja:</strong> acceso cubierto, vestíbulo, medio baño, sala, comedor, cocina con alacena y patio de servicio semicubierto; al frente, jardín y cochera para dos vehículos.<br><strong>Planta alta:</strong> vestíbulo y tres recámaras con área de guardado, con dos baños completos (uno dentro de la recámara 3).",
       "caracteristicasVivienda": "<ul><li>Cocina integral de panel art de 2.90 m con barra desayunador, mueble con cajones, parrilla, campana purificadora y fregadero de acero inoxidable</li><li>Un minisplit de 1 tonelada incluido y preparación para aire acondicionado en las tres recámaras</li><li>Pisos de loseta cerámica de 40×40 cm</li><li>Ventanas de aluminio blanco con mosquiteros</li><li>Domo con ventilación en escalera y baño general</li><li>Tinaco de 1,100 L y calentador de paso</li><li>Protecciones de acero en puerta de acceso y ventanas de sala y medio baño</li><li>Contacto, agua fría y caliente y desagüe para lavadora en patio de servicio</li><li>Ecotecnias: inodoros de bajo consumo, regaderas y llaves ahorradoras y lámparas LED</li></ul>",
       "planos": [
-        "../../assets/desarrollos/puerto-internacional/Galeon/Galeon_Planta_Baja.png",
-        "../../assets/desarrollos/puerto-internacional/Galeon/Galeon_Planta_Alta.png"
+        "../../assets/desarrollos/puerto-internacional/galeon/galeon-planta-baja.png",
+        "../../assets/desarrollos/puerto-internacional/galeon/galeon-planta-alta.png"
       ],
       "imagenes": [
-        "../../assets/desarrollos/puerto-internacional/Galeon/fachada.jpg",
-        "../../assets/desarrollos/puerto-internacional/Galeon/comedor-01.jpg",
-        "../../assets/desarrollos/puerto-internacional/Galeon/comedor-02.jpg",
-        "../../assets/desarrollos/puerto-internacional/Galeon/recamara-01.jpg",
-        "../../assets/desarrollos/puerto-internacional/Galeon/recamara-02.jpg"
+        "../../assets/desarrollos/puerto-internacional/galeon/fachada.jpg",
+        "../../assets/desarrollos/puerto-internacional/galeon/comedor-01.jpg",
+        "../../assets/desarrollos/puerto-internacional/galeon/comedor-02.jpg",
+        "../../assets/desarrollos/puerto-internacional/galeon/recamara-01.jpg",
+        "../../assets/desarrollos/puerto-internacional/galeon/recamara-02.jpg"
       ]
     },
     {
@@ -95,16 +95,16 @@
       "distribucion": "<strong>Planta baja:</strong> vestíbulo, medio baño, sala, comedor y cocina con barra desayunador; al frente, patio de servicio semicubierto, jardín y cochera para dos vehículos; en la parte posterior, área para jardín.<br><strong>Planta alta:</strong> vestíbulo y tres recámaras con área de guardado, con dos baños completos (uno dentro de la recámara 3).",
       "caracteristicasVivienda": "<ul><li>Cocina integral de panel art de 2.88 m con barra desayunador en escuadra, parrilla, campana purificadora y fregadero de acero inoxidable</li><li>Un minisplit de 1 tonelada incluido y preparación para aire acondicionado en las tres recámaras</li><li>Jardín posterior propio</li><li>Pisos de loseta cerámica de 40×40 cm</li><li>Ventanas de aluminio blanco con mosquiteros</li><li>Domo con ventilación en escalera y baño general</li><li>Tinaco de 1,100 L y calentador de paso</li><li>Protecciones de acero en puerta de acceso y ventana de medio baño</li><li>Contacto, agua fría y caliente y desagüe para lavadora en patio de servicio</li><li>Ecotecnias: inodoros de bajo consumo, regaderas y llaves ahorradoras y lámparas LED</li></ul>",
       "planos": [
-        "../../assets/desarrollos/puerto-internacional/Goleta/Goleta_Planta_Baja.png",
-        "../../assets/desarrollos/puerto-internacional/Goleta/Goleta_Planta_Alta.png"
+        "../../assets/desarrollos/puerto-internacional/goleta/goleta-planta-baja.png",
+        "../../assets/desarrollos/puerto-internacional/goleta/goleta-planta-alta.png"
       ],
       "imagenes": [
-        "../../assets/desarrollos/puerto-internacional/Goleta/fachada.png",
-        "../../assets/desarrollos/puerto-internacional/Goleta/interior-01.jpg",
-        "../../assets/desarrollos/puerto-internacional/Goleta/interior-02.jpg",
-        "../../assets/desarrollos/puerto-internacional/Goleta/interior-03.jpg",
-        "../../assets/desarrollos/puerto-internacional/Goleta/manzana-01.jpg",
-        "../../assets/desarrollos/puerto-internacional/Goleta/manzana-02.jpg"
+        "../../assets/desarrollos/puerto-internacional/goleta/fachada.png",
+        "../../assets/desarrollos/puerto-internacional/goleta/interior-01.jpg",
+        "../../assets/desarrollos/puerto-internacional/goleta/interior-02.jpg",
+        "../../assets/desarrollos/puerto-internacional/goleta/interior-03.jpg",
+        "../../assets/desarrollos/puerto-internacional/goleta/manzana-01.jpg",
+        "../../assets/desarrollos/puerto-internacional/goleta/manzana-02.jpg"
       ]
     },
     {
@@ -118,16 +118,16 @@
       "distribucion": "<strong>Planta baja:</strong> pórtico de acceso cubierto, vestíbulo, estudio, medio baño, sala, comedor y cocina con alacena; al frente, patio de servicio semicubierto, jardín y cochera para dos vehículos; en la parte posterior, área para jardín.<br><strong>Planta alta:</strong> vestíbulo y tres recámaras con área de guardado; la recámara 3 con vestidor y baño propio, más un baño general.",
       "caracteristicasVivienda": "<ul><li>Estudio en planta baja</li><li>Cocina integral de panel art de 2.76 m con barra desayunador de 1.80 m, parrilla de 5 quemadores, campana purificadora de 90 cm y tarja de acero inoxidable</li><li>Un minisplit de 1 tonelada incluido y preparación para aire acondicionado en las tres recámaras</li><li>Preparación para paneles solares</li><li>Pisos de loseta cerámica de 45×45 cm; regaderas con loseta de piso a techo</li><li>Ventanas de aluminio blanco con mosquiteros</li><li>Domo con ventilación en escalera y baño general</li><li>Tinaco tricapa de 1,100 L y calentador de paso</li><li>Protecciones de acero en puerta de acceso y ventana del estudio</li><li>Contacto, agua fría y caliente y desagüe para lavadora en patio de servicio</li><li>Ecotecnias: inodoros de bajo consumo, regaderas y llaves ahorradoras y lámparas LED</li></ul>",
       "planos": [
-        "../../assets/desarrollos/puerto-internacional/Crucero/Crucero_Planta_Baja.png",
-        "../../assets/desarrollos/puerto-internacional/Crucero/Crucero_Planta_Alta.png"
+        "../../assets/desarrollos/puerto-internacional/crucero/crucero-planta-baja.png",
+        "../../assets/desarrollos/puerto-internacional/crucero/crucero-planta-alta.png"
       ],
       "imagenes": [
-        "../../assets/desarrollos/puerto-internacional/Crucero/fachada.jpg",
-        "../../assets/desarrollos/puerto-internacional/Crucero/comedor-cocina.jpg",
-        "../../assets/desarrollos/puerto-internacional/Crucero/sala-comedor.jpg",
-        "../../assets/desarrollos/puerto-internacional/Crucero/recamara.jpg",
-        "../../assets/desarrollos/puerto-internacional/Crucero/colores.jpg",
-        "../../assets/desarrollos/puerto-internacional/Crucero/fachadas-colores.jpg"
+        "../../assets/desarrollos/puerto-internacional/crucero/fachada.jpg",
+        "../../assets/desarrollos/puerto-internacional/crucero/comedor-cocina.jpg",
+        "../../assets/desarrollos/puerto-internacional/crucero/sala-comedor.jpg",
+        "../../assets/desarrollos/puerto-internacional/crucero/recamara.jpg",
+        "../../assets/desarrollos/puerto-internacional/crucero/colores.jpg",
+        "../../assets/desarrollos/puerto-internacional/crucero/fachadas-colores.jpg"
       ]
     },
     {
@@ -141,13 +141,13 @@
       "distribucion": "<strong>Planta baja:</strong> pórtico de acceso cubierto, vestíbulo, medio baño, estudio, sala, comedor, cocina con alacena y patio de servicio semicubierto; al frente, jardín y cochera para dos vehículos.<br><strong>Planta alta:</strong> vestíbulo y tres recámaras con área de guardado; la recámara 3 con vestidor y baño propio, más un baño general.",
       "caracteristicasVivienda": "<ul><li>El modelo más amplio del conjunto: 135.39 m² construidos</li><li>Estudio en planta baja y recámaras de 3.50 m de ancho</li><li>Cocina integral de panel art de 3.00 m con barra desayunador de 1.80 m sobre mueble gabinete, parrilla de 5 quemadores, campana purificadora de 90 cm y tarja de acero inoxidable</li><li>Un minisplit de 1 tonelada incluido y preparación para aire acondicionado en las tres recámaras</li><li>Preparación para paneles solares</li><li>Fachada principal con lambrín de loseta cerámica</li><li>Pisos de loseta cerámica de 45×45 cm; regaderas con loseta de piso a techo</li><li>Ventanas de aluminio blanco con mosquiteros</li><li>Domo con ventilación en escalera y baño general</li><li>Tinaco tricapa de 1,100 L y calentador de paso</li><li>Muro de celosía entre patio y jardín</li><li>Protecciones de acero en puerta de acceso y ventanas de medio baño y estudio</li><li>Ecotecnias: inodoros de bajo consumo, regaderas y llaves ahorradoras y lámparas LED</li></ul>",
       "planos": [
-        "../../assets/desarrollos/puerto-internacional/Navio/Navio_Planta_Baja.png",
-        "../../assets/desarrollos/puerto-internacional/Navio/Navio_Planta_Alta.png"
+        "../../assets/desarrollos/puerto-internacional/navio/navio-planta-baja.png",
+        "../../assets/desarrollos/puerto-internacional/navio/navio-planta-alta.png"
       ],
       "imagenes": [
-        "../../assets/desarrollos/puerto-internacional/Navio/fachada.jpg",
-        "../../assets/desarrollos/puerto-internacional/Navio/sala.jpg",
-        "../../assets/desarrollos/puerto-internacional/Navio/interior-escalera.jpg"
+        "../../assets/desarrollos/puerto-internacional/navio/fachada.jpg",
+        "../../assets/desarrollos/puerto-internacional/navio/sala.jpg",
+        "../../assets/desarrollos/puerto-internacional/navio/interior-escalera.jpg"
       ]
     }
   ],

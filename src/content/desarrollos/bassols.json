@@ -6,7 +6,7 @@
   "disponible": false,
   "ubicacion": "Av. Narciso Bassols, Pie de Casa, 60956 Lázaro Cárdenas, Mich.",
   "mapa": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3795.0246271950036!2d-102.23238878919008!3d17.977591185463677!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315df4a5e92a95%3A0xb09f4c02f19862fb!2sConjunto%20Habitacional%20BASSOLS!5e0!3m2!1ses-419!2smx!4v1685560571036!5m2!1ses-419!2smx\" width=\"400\" height=\"300\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade\"></iframe>",
-  "logo": "../../assets/desarrollos/bassols/Logo_Bassols.jpg",
+  "logo": "../../assets/desarrollos/bassols/logo-bassols.jpg",
   "precio": "VENDIDO",
   "plantas": "2",
   "recamaras": "3 con Área de Guardado",
@@ -14,12 +14,12 @@
   "superficie": " 7 x 18 (126) m2",
   "construccion": "124 m2",
   "caracteristicasVivienda": "<ul><li>Vestidor, Aire Acondicionado y Baño Dentro de Habitación Principal</li><li>Instalación a 220v y Preparación en Habitaciones Secundarias con Ductos para los Aires Acondicionados</li><li>Acceso Cubierto, Vestíbulos y Estudio</li><li>Cocina Integral Equipada con (Parrilla, Campana, Tarja y Barra Desayunadora)</li><li>Iluminación Natural, Todo el Día</li><li>Área de Jardín en Parte Posterior</li><li>Patio de Servicio Independiente al Frente con Fregadero e Instalaciones de Lavadora</li><li>Doble Cochera</li><li>Ecotecnias (Baños Bajo Consumo, 6 Lámparas LED, Llaves Ahorradoras de Agua, Calentador Paso Rápido)</li><li>Protecciones en Todo el Frente de la Casa</li><li>Arquitectura Contemporánea</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Casas Solas con Muros Independientes</li></ul>",
-  "caracteristicasConjunto": "<ul><li>72 Viviendas en 4 Privadas</li><li>Acceso Independiente y Reja Automatizada</li><li>Regimen de Propiedad en Condominio</li><li>Área Verde en Cada Privada</li><li>Malla Electrificada en Todo el Perímetro</li><li>Alumbrado Público Subterráneo</li><li>Pavimentación de Adoquín</li></ul>",
+  "caracteristicasConjunto": "<ul><li>72 Viviendas en 4 Privadas</li><li>Acceso Independiente y Reja Automatizada</li><li>Régimen de Propiedad en Condominio</li><li>Área Verde en Cada Privada</li><li>Malla Electrificada en Todo el Perímetro</li><li>Alumbrado Público Subterráneo</li><li>Pavimentación de Adoquín</li></ul>",
   "imagenes": [
-    "../../assets/desarrollos/bassols/Bassols.jpg",
-    "../../assets/desarrollos/bassols/Baño_Principal.jpg",
-    "../../assets/desarrollos/bassols/Cocina.jpg",
-    "../../assets/desarrollos/bassols/Hab_Principal.jpg",
-    "../../assets/desarrollos/bassols/Sala_PBaja.jpg"
+    "../../assets/desarrollos/bassols/bassols.jpg",
+    "../../assets/desarrollos/bassols/bano-principal.jpg",
+    "../../assets/desarrollos/bassols/cocina.jpg",
+    "../../assets/desarrollos/bassols/hab-principal.jpg",
+    "../../assets/desarrollos/bassols/sala-pbaja.jpg"
   ]
 }
