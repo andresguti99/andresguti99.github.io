@@ -32,7 +32,8 @@ const desarrollos = defineCollection({
       descripcion: z.string(),
       precio: z.string(),
       disponible: z.boolean(),
-      telefono: z.string(),
+      /** Sin teléfono propio ⇒ la página usa el celular general de ventas. */
+      telefono: z.string().optional(),
       facebook: z.string().url().optional(),
       ubicacion: z.string().optional(),
       mapa: z.string().optional(),

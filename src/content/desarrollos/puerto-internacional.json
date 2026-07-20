@@ -16,7 +16,6 @@
     "../../assets/desarrollos/puerto-internacional/R3_Parque_Lineal.jpg",
     "../../assets/desarrollos/puerto-internacional/R4_Parque_Lineal.jpg",
     "../../assets/desarrollos/puerto-internacional/R5_Paso_Peatonal.jpg",
-    "../../assets/desarrollos/puerto-internacional/Velero/R3_Velero.jpg",
     "../../assets/desarrollos/puerto-internacional/VeleroPlus/R2_Velero_Plus.jpg"
   ],
   "modelos": [
@@ -38,7 +37,6 @@
       "imagenes": [
         "../../assets/desarrollos/puerto-internacional/Velero/R1_Velero.jpg",
         "../../assets/desarrollos/puerto-internacional/Velero/R2_Velero.jpg",
-        "../../assets/desarrollos/puerto-internacional/Velero/R3_Velero.jpg",
         "../../assets/desarrollos/puerto-internacional/Velero/R4_Velero.jpg",
         "../../assets/desarrollos/puerto-internacional/Velero/R5_Velero.jpg"
       ]

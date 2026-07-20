@@ -1,5 +1,5 @@
 ---
-import { TELEFONO_OFICINA, CELULAR_VENTAS, CORREO_VENTAS, FACEBOOK_UREPPSA } from '../lib/contacto';
+import { TELEFONO_OFICINA, CELULAR_VENTAS, CORREO_VENTAS, FACEBOOK_UREPPSA, enlaceTelefono } from '../lib/contacto';
 const anio = new Date().getFullYear();
 ---
 
@@ -16,8 +16,8 @@ const anio = new Date().getFullYear();
     <div>
       <h3>Contacto</h3>
       <p class="pie-texto">
-        Teléfono: <a href="tel:+524433242601">{TELEFONO_OFICINA}</a><br />
-        Celular: <a href="tel:+527531200721">{CELULAR_VENTAS}</a><br />
+        Teléfono: <a href={enlaceTelefono(TELEFONO_OFICINA)}>{TELEFONO_OFICINA}</a><br />
+        Celular: <a href={enlaceTelefono(CELULAR_VENTAS)}>{CELULAR_VENTAS}</a><br />
         Correo: <a href={`mailto:${CORREO_VENTAS}`}>{CORREO_VENTAS}</a>
       </p>
     </div>
