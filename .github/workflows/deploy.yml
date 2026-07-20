@@ -22,9 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Obtener el código
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Construir el sitio con Astro
-        uses: withastro/action@v3
+        uses: withastro/action@v6
 
   deploy:
     needs: build
@@ -35,4 +35,4 @@ jobs:
     steps:
       - name: Publicar en GitHub Pages
         id: despliegue
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
