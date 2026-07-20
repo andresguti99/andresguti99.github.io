@@ -1,10 +1,8 @@
 /* ==========================================================================
    UREPPSA v2 — sistema de diseño
-   Los nombres de variables conservan los colores de la paleta original
-   (--verde = color primario, --terracota = acento), pero cada paleta de
-   prueba puede redefinir sus valores vía html[data-paleta="..."].
-   El modo oscuro (html[data-esquema="oscuro"]) solo redefine los neutros,
-   así funciona en combinación con cualquier paleta.
+   Paleta definitiva: crema, verde y terracota (--verde = color primario,
+   --terracota = acento). El modo oscuro (html[data-esquema="oscuro"]) solo
+   redefine los neutros; los acentos son los mismos en ambos esquemas.
    ========================================================================== */
 
 :root {
@@ -40,60 +38,6 @@
   /* Tipografía */
   --titulos: 'Nunito Variable', system-ui, sans-serif;
   --texto: 'Figtree Variable', system-ui, sans-serif;
-}
-
-/* ── Paletas de prueba (el selector flotante las aplica) ─────────────────── */
-
-/* Clásica: inspirada en el sitio original (fondo blanco, azul y rojo) */
-html[data-paleta='clasica'] {
-  --crema: #f6f8fa;
-  --tinta: #212529;
-  --tinta-suave: #64707c;
-  --verde: #0d6efd;
-  --verde-oscuro: #0a53c2;
-  --verde-claro: #e7f0ff;
-  --terracota: #dc3545;
-  --terracota-claro: #fdebed;
-  --amarillo: #f5b32f;
-}
-
-/* Océano: azul profundo de puerto con coral (a juego con los "Puertos") */
-html[data-paleta='oceano'] {
-  --crema: #f3f6f7;
-  --tinta: #14222b;
-  --tinta-suave: #5b6d78;
-  --verde: #14608a;
-  --verde-oscuro: #0d4463;
-  --verde-claro: #e2eef5;
-  --terracota: #e2725b;
-  --terracota-claro: #fcebe7;
-  --amarillo: #f2b544;
-}
-
-/* Bosque: pino profundo con dorado, premium natural */
-html[data-paleta='bosque'] {
-  --crema: #f4f4ee;
-  --tinta: #20241d;
-  --tinta-suave: #6b7164;
-  --verde: #226249;
-  --verde-oscuro: #163f30;
-  --verde-claro: #e3efe7;
-  --terracota: #b98a2f;
-  --terracota-claro: #f6efdc;
-  --amarillo: #dfaf37;
-}
-
-/* Atardecer: terracota como primario con bugambilia de acento */
-html[data-paleta='atardecer'] {
-  --crema: #faf3ec;
-  --tinta: #33241c;
-  --tinta-suave: #7d685c;
-  --verde: #c05b33;
-  --verde-oscuro: #93411f;
-  --verde-claro: #f9e8df;
-  --terracota: #a83968;
-  --terracota-claro: #f9e4ee;
-  --amarillo: #f2a03d;
 }
 
 /* ── Modo oscuro: redefine neutros; los acentos vienen de la paleta activa ─ */

@@ -6,7 +6,6 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
 import AvisoCookies from '../components/AvisoCookies.astro';
-import SelectorPaleta from '../components/SelectorPaleta.astro';
 
 interface Props {
   titulo: string;
@@ -59,13 +58,13 @@ const organizacion = {
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
     <link rel="canonical" href={urlCanonica} />
 
-    <!-- ⚠️ SOLO PRUEBAS: aplica la paleta/esquema guardados antes del primer pintado -->
+    <!-- Modo oscuro: preferencia guardada, o la del sistema; se aplica antes
+         del primer pintado para evitar el destello de tema incorrecto -->
     <script is:inline>
       try {
-        var paleta = localStorage.getItem('paleta-prueba');
-        if (paleta) document.documentElement.dataset.paleta = paleta;
-        var esquema = localStorage.getItem('esquema-prueba');
-        if (esquema) document.documentElement.dataset.esquema = esquema;
+        var esquema = localStorage.getItem('esquema');
+        if (!esquema && window.matchMedia('(prefers-color-scheme: dark)').matches) esquema = 'oscuro';
+        if (esquema === 'oscuro') document.documentElement.dataset.esquema = 'oscuro';
       } catch (e) {}
     </script>
 
@@ -137,8 +136,6 @@ const organizacion = {
     <Footer />
     <WhatsAppFlotante mensaje={mensajeWhatsApp} />
     <AvisoCookies />
-    {/* ⚠️ SOLO PRUEBAS DE DISEÑO: quitar antes del lanzamiento */}
-    <SelectorPaleta />
     <script>
       // Revelado suave de secciones al entrar al viewport
       const observador = new IntersectionObserver(

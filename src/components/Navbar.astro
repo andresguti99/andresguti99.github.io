@@ -10,14 +10,18 @@ import logo from '../../images/UREPPSA/UP_logo.png';
       <Image src={logo} alt="UREPPSA" width={112} densities={[1, 2]} loading="eager" />
     </a>
     <p class="lema">Cada Vivienda un Compromiso</p>
-    <button class="menu-boton" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menú">
-      <Icono nombre="list" tamano={32} />
-    </button>
     <nav id="menu-principal" class="menu" aria-label="Navegación principal">
       <a href="/#desarrollos"><Icono nombre="houses-fill" tamano={18} /> Desarrollos</a>
       <a href="/financiamiento/"><Icono nombre="piggy-bank-fill" tamano={18} /> Financiamiento</a>
       <a href="/contacto/" class="btn btn-primario btn-nav"><Icono nombre="telephone-fill" tamano={16} /> Contacto</a>
     </nav>
+    <button class="tema-boton" data-tema-boton aria-label="Alternar modo oscuro">
+      <span class="icono-luna"><Icono nombre="moon-stars-fill" tamano={18} /></span>
+      <span class="icono-sol"><Icono nombre="sun-fill" tamano={18} /></span>
+    </button>
+    <button class="menu-boton" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menú">
+      <Icono nombre="list" tamano={32} />
+    </button>
   </div>
 </header>
 
@@ -37,6 +41,18 @@ import logo from '../../images/UREPPSA/UP_logo.png';
       boton.setAttribute('aria-expanded', 'false');
     })
   );
+
+  // Alternador de modo oscuro: guarda la preferencia explícita del visitante
+  document.querySelector('[data-tema-boton]')?.addEventListener('click', () => {
+    const raiz = document.documentElement;
+    if (raiz.dataset.esquema === 'oscuro') {
+      delete raiz.dataset.esquema;
+      localStorage.setItem('esquema', 'claro');
+    } else {
+      raiz.dataset.esquema = 'oscuro';
+      localStorage.setItem('esquema', 'oscuro');
+    }
+  });
 </script>
 
 <style>
@@ -109,6 +125,42 @@ import logo from '../../images/UREPPSA/UP_logo.png';
     color: #fff;
     cursor: pointer;
     padding: 0.25rem;
+  }
+
+  .tema-boton {
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 50%;
+    width: 2.3rem;
+    height: 2.3rem;
+    color: #f3ede2;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: background 0.15s ease, transform 0.15s ease;
+  }
+
+  .tema-boton:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: scale(1.08);
+  }
+
+  .icono-sol {
+    display: none;
+  }
+
+  :global(html[data-esquema='oscuro']) .icono-luna {
+    display: none;
+  }
+
+  :global(html[data-esquema='oscuro']) .icono-sol {
+    display: block;
+  }
+
+  .icono-luna,
+  .icono-sol {
+    line-height: 0;
   }
 
   @media (max-width: 860px) {

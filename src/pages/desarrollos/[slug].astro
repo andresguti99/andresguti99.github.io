@@ -238,7 +238,18 @@ const secciones = [
                   sizes="(max-width: 720px) 100vw, 33vw"
                   loading="lazy"
                 />
-                <span class="modelo-precio-chip">{m.precio ?? 'Consultar precio'}</span>
+                {m.precio ? (
+                  <span class="modelo-precio-chip">{m.precio}</span>
+                ) : (
+                  <a
+                    class="modelo-precio-chip modelo-precio-enlace"
+                    href={enlaceWhatsApp(d.telefono, `Quiero saber el precio del modelo ${m.nombre} en ${d.nombre}`)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Icono nombre="whatsapp" tamano={14} /> Consultar precio
+                  </a>
+                )}
               </div>
               <div class="modelo-cuerpo">
                 {m.etapa && <p class="modelo-etapa">{m.etapa}</p>}
@@ -273,7 +284,20 @@ const secciones = [
                     <tr class={etiqueta === 'Precio' ? 'fila-precio' : ''}>
                       <th scope="row">{etiqueta}</th>
                       {modelos.map((m) => (
-                        <td>{valor(m) ?? (etiqueta === 'Precio' ? 'Consultar precio' : '—')}</td>
+                        <td>
+                          {etiqueta === 'Precio' && !m.precio ? (
+                            <a
+                              class="consultar-enlace"
+                              href={enlaceWhatsApp(d.telefono, `Quiero saber el precio del modelo ${m.nombre} en ${d.nombre}`)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <Icono nombre="whatsapp" tamano={14} /> Consultar precio
+                            </a>
+                          ) : (
+                            valor(m) ?? '—'
+                          )}
+                        </td>
                       ))}
                     </tr>
                   ))}
@@ -409,7 +433,18 @@ const secciones = [
         <div>
           {m.etapa && <p class="modelo-etapa">{m.etapa}</p>}
           <h3>{m.nombre}</h3>
-          <p class="modal-precio">{m.precio ?? 'Consultar precio'}</p>
+          {m.precio ? (
+            <p class="modal-precio">{m.precio}</p>
+          ) : (
+            <a
+              class="modal-precio consultar-enlace"
+              href={enlaceWhatsApp(d.telefono, `Quiero saber el precio del modelo ${m.nombre} en ${d.nombre}`)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icono nombre="whatsapp" tamano={15} /> Consultar precio
+            </a>
+          )}
         </div>
         <button class="modal-cerrar" data-cerrar aria-label="Cerrar">
           <Icono nombre="x-lg" tamano={22} />
@@ -980,6 +1015,9 @@ const secciones = [
     position: absolute;
     left: 0.8rem;
     bottom: 0.8rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
     font-family: var(--titulos);
     font-weight: 800;
     font-size: 0.9rem;
@@ -989,6 +1027,39 @@ const secciones = [
     background: rgba(21, 18, 14, 0.55);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  /* Sin precio publicado: el chip es un enlace directo a WhatsApp */
+  .modelo-precio-enlace {
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+
+  .modelo-precio-enlace:hover {
+    background: #25d366;
+    color: #073b1a;
+    border-color: transparent;
+  }
+
+  .consultar-enlace {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--titulos);
+    font-weight: 800;
+    color: var(--verde);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .consultar-enlace:hover {
+    text-decoration: underline;
+  }
+
+  .fila-precio .consultar-enlace,
+  a.modal-precio {
+    color: var(--terracota);
   }
 
   .modelo-cuerpo {
