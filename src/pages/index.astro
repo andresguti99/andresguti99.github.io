@@ -6,7 +6,7 @@ import MapaMexico from '../components/MapaMexico.astro';
 import TarjetaDesarrollo from '../components/TarjetaDesarrollo.astro';
 import Icono from '../components/Icono.astro';
 import { CELULAR_VENTAS, MENSAJE_INFORMES, MENSAJE_FINANCIAMIENTO, enlaceWhatsApp } from '../lib/contacto';
-import { ESTADISTICAS, ANIOS_EXPERIENCIA, CASAS_TEXTO } from '../lib/empresa';
+import { ESTADISTICAS, ANIOS_EXPERIENCIA, MUNICIPIOS, CASAS_TEXTO } from '../lib/empresa';
 
 const ciudades = await getCollection('ciudades');
 const nombreCiudad = (id: string) => ciudades.find((c) => c.id === id)?.data.nombre ?? id;
@@ -153,7 +153,10 @@ const financiamiento = [
       <div class="seccion-encabezado revelar">
         <span class="etiqueta">Presencia</span>
         <h2>¿Dónde construimos?</h2>
-        <p>De la costa del Pacífico al Bajío: elige tu ciudad para ver sus desarrollos.</p>
+        <p>
+          Más de {MUNICIPIOS} municipios nos han visto construir; estas son nuestras plazas más
+          relevantes. Elige tu ciudad para ver sus desarrollos.
+        </p>
       </div>
       <div class="revelar" style="--retraso: 120ms">
         <MapaMexico />
@@ -166,8 +169,11 @@ const financiamiento = [
     <div class="contenedor">
       <div class="seccion-encabezado revelar">
         <span class="etiqueta">Catálogo</span>
-        <h2>Nuestros desarrollos</h2>
-        <p>Del más reciente al más querido: cada uno cuenta la historia de cientos de familias.</p>
+        <h2>Algunos de nuestros desarrollos</h2>
+        <p>
+          Una muestra de nuestra trayectoria, del más reciente al más querido: cada uno cuenta la
+          historia de cientos de familias.
+        </p>
       </div>
       <div class="filtros revelar" role="group" aria-label="Filtrar por ciudad" style="--retraso: 80ms">
         <button class="chip activo" data-ciudad="todas">Todas las ciudades</button>

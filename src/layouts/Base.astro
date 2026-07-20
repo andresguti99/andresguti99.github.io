@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFlotante from '../components/WhatsAppFlotante.astro';
 import AvisoCookies from '../components/AvisoCookies.astro';
+import { ANIOS_EXPERIENCIA, MUNICIPIOS, CASAS_TEXTO } from '../lib/empresa';
 
 interface Props {
   titulo: string;
@@ -22,7 +23,7 @@ interface Props {
 
 const {
   titulo,
-  descripcion = 'Descubre tu hogar ideal con UREPPSA. Más de 20 municipios. Más de 30 años de experiencia. Más de 5,000 casas entregadas.',
+  descripcion = `Descubre tu hogar ideal con UREPPSA. Más de ${MUNICIPIOS} municipios. Más de ${ANIOS_EXPERIENCIA} años de experiencia. Más de ${CASAS_TEXTO} casas entregadas.`,
   mensajeWhatsApp,
   telefonoWhatsApp,
   imagenSocial = '/UP_logo.png',

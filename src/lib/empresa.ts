@@ -1,8 +1,8 @@
 /** Cifras de trayectoria de la empresa: un solo lugar para actualizarlas.
  *  Las usan la banda de cifras, el texto del héroe y la marquesina de logos. */
-export const ANIOS_EXPERIENCIA = 30;
+export const ANIOS_EXPERIENCIA = 35;
 export const CASAS_ENTREGADAS = 5000;
-export const MUNICIPIOS = 20;
+export const MUNICIPIOS = 25;
 
 const formato = new Intl.NumberFormat('es-MX');
 
