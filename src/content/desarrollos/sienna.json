@@ -16,7 +16,7 @@
   "banos": "2 Completos, Uno en Cada Planta",
   "superficie": "4.6 x 16.5 (75.9) m2",
   "construccion": "77.16 m2",
-  "caracteristicasVivienda": "<ul>\n<li>Iluminación Natural todo el día </li> <li>Patio de Servicio con Lavadero e Instalaciones de Lavadora </li> <li> Ecotencias (Inodoros de Bajo Consumo, 6 lamparas LED, LLaves Ahorradoras de Agua, Calentador Paso Rapido)</li> <li> Aislante Térmico de Espuma Poliestireno Estruido XPS de 1.25” de Espesor (Mejor Temperatura Interior en Todas las Temporadas)</li> <li>Cristales con Sol-Lite (Capas de Control Solar y Filtros UV, Mayor Privacidad)</li> </ul>",
+  "caracteristicasVivienda": "<ul><li>Iluminación natural todo el día y domo con ventilación en sala y escalera</li><li>Cristales Sol-Lite con capa de control solar y filtro UV: mayor frescura y privacidad</li><li>Aislante térmico XPS de 1.25\" en azotea (mejor temperatura interior en todas las temporadas)</li><li>Impermeabilizante con garantía de cinco años</li><li>Color personalizado de cada vivienda</li><li>Pisos de loseta cerámica y azulejo antiderrapante en regaderas</li><li>Puerta de acceso multipanel de acero con cerradura de pomo y cerrojo</li><li>Cocina con fregadero de acero inoxidable de 80 cm y tinaco de 750 L</li><li>Patio de servicio con lavadero e instalaciones para lavadora</li><li>Instalación para gas y ductos para teléfono, TV e internet</li><li>Extractor de aire en baño de planta baja</li><li>Ecotecnias: inodoros de bajo consumo, llaves ahorradoras, seis lámparas LED y calentador de paso</li></ul>",
   "caracteristicasConjunto": "<ul> <li> 150 Viviendas en Primera Etapa</li> <li>Régimen de Propiedad en Condominio</li><li>Pórtico de Accesso Controlado con Caseta de Vigilancia</li>\n<li>Circuito Cerrado</li>\n<li>Barda Perimetral con Cerco Electrificado</li>\n<li>Áreas Verdes Equipadas</li>\n<li>Área Especial de Recolección de Residuos</li></ul>",
   "planos": [
     "../../assets/desarrollos/sienna/Planta_Baja_Color.png",
@@ -27,5 +27,6 @@
     "../../assets/desarrollos/sienna/Sala.jpg",
     "../../assets/desarrollos/sienna/Cocina.jpg",
     "../../assets/desarrollos/sienna/IMG_4063.JPG"
-  ]
+  ],
+  "nombreModelo": "Nova"
 }

@@ -238,14 +238,16 @@ const secciones = [
                   sizes="(max-width: 720px) 100vw, 33vw"
                   loading="lazy"
                 />
-                <span class="modelo-precio-chip">{m.precio}</span>
+                <span class="modelo-precio-chip">{m.precio ?? 'Consultar precio'}</span>
               </div>
               <div class="modelo-cuerpo">
+                {m.etapa && <p class="modelo-etapa">{m.etapa}</p>}
                 <h3>{m.nombre}</h3>
                 <ul class="modelo-datos">
-                  {m.recamaras && <li><Icono nombre="door-open-fill" tamano={15} /> {m.recamaras} rec.</li>}
+                  {/* En la tarjeta solo la cifra compacta; el detalle completo vive en el diálogo */}
+                  {m.recamaras && <li><Icono nombre="door-open-fill" tamano={15} /> {m.recamaras.split(' ')[0]} rec.</li>}
                   {m.banos && <li><Icono nombre="droplet-fill" tamano={15} /> {m.banos} baños</li>}
-                  {m.plantas && <li><Icono nombre="building-fill" tamano={15} /> {m.plantas} plantas</li>}
+                  {m.construccion && <li><Icono nombre="bricks" tamano={15} /> {m.construccion.split(' ')[0]} m²</li>}
                 </ul>
                 <button class="btn btn-primario modelo-abrir" data-abrir-modelo={i}>
                   Ver modelo <Icono nombre="chevron-right" tamano={16} />
@@ -270,7 +272,9 @@ const secciones = [
                   {filasComparador.map(([etiqueta, valor]) => (
                     <tr class={etiqueta === 'Precio' ? 'fila-precio' : ''}>
                       <th scope="row">{etiqueta}</th>
-                      {modelos.map((m) => <td>{valor(m) ?? '—'}</td>)}
+                      {modelos.map((m) => (
+                        <td>{valor(m) ?? (etiqueta === 'Precio' ? 'Consultar precio' : '—')}</td>
+                      ))}
                     </tr>
                   ))}
                 </tbody>
@@ -281,12 +285,23 @@ const secciones = [
       </section>
     )}
 
+    <!-- ══ El conjunto (desarrollos con modelos) ══ -->
+    {modelos.length > 0 && d.caracteristicasConjunto && (
+      <section class="seccion seccion-compacta">
+        <div class="seccion-encabezado revelar">
+          <span class="etiqueta">El conjunto</span>
+          <h2>Un conjunto pensado para vivirse</h2>
+        </div>
+        <div class="prosa conjunto-prosa revelar" style="--retraso: 100ms" set:html={d.caracteristicasConjunto} />
+      </section>
+    )}
+
     <!-- ══ Ficha del desarrollo sin modelos ══ -->
     {modelos.length === 0 && (
       <section class="seccion seccion-compacta" id="vivienda">
         <div class="seccion-encabezado revelar">
           <span class="etiqueta">La vivienda</span>
-          <h2>Así es tu futura casa</h2>
+          <h2>{d.nombreModelo ? `Modelo ${d.nombreModelo}` : 'Así es tu futura casa'}</h2>
         </div>
         <dl class="ficha revelar">
           {ficha(d).map(([etiqueta, valor, icono]) => (
@@ -392,8 +407,9 @@ const secciones = [
     <dialog class="modal-modelo" data-modelo={i} aria-label={`Modelo ${m.nombre}`}>
       <header class="modal-encabezado">
         <div>
+          {m.etapa && <p class="modelo-etapa">{m.etapa}</p>}
           <h3>{m.nombre}</h3>
-          <p class="modal-precio">{m.precio}</p>
+          <p class="modal-precio">{m.precio ?? 'Consultar precio'}</p>
         </div>
         <button class="modal-cerrar" data-cerrar aria-label="Cerrar">
           <Icono nombre="x-lg" tamano={22} />
@@ -422,6 +438,12 @@ const secciones = [
           </div>
         ))}
       </dl>
+      {m.distribucion && (
+        <>
+          <h4>Distribución</h4>
+          <div class="prosa distribucion" set:html={m.distribucion} />
+        </>
+      )}
       {m.planosGrandes.length > 0 && (
         <>
           <h4>Planos</h4>
@@ -981,6 +1003,16 @@ const secciones = [
     margin: 0;
   }
 
+  .modelo-etapa {
+    font-family: var(--titulos);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--terracota);
+    margin: 0;
+  }
+
   .modelo-datos {
     list-style: none;
     display: flex;
@@ -1092,12 +1124,23 @@ const secciones = [
     font-weight: 800;
   }
 
-  /* ══ Planos ══ */
+  /* ══ Planos ══
+     Apilados en una sola columna (planta baja arriba, planta alta abajo, el
+     orden estándar) y a todo lo ancho: los planos horizontales se leen mejor. */
   .planos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1rem;
-    margin-bottom: 1rem;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    max-width: 880px;
+    margin: 0 auto 1rem;
+  }
+
+  .planos .galeria-item {
+    width: 100%;
+  }
+
+  .planos .galeria-item img {
+    width: 100%;
   }
 
   .planos figure {
@@ -1123,6 +1166,27 @@ const secciones = [
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 1.5rem;
     margin-bottom: 1.25rem;
+  }
+
+  /* Lista del conjunto en dos columnas en pantallas amplias */
+  .conjunto-prosa {
+    max-width: 60rem;
+  }
+
+  .conjunto-prosa :global(ul) {
+    columns: 2;
+    column-gap: 2.5rem;
+  }
+
+  @media (max-width: 720px) {
+    .conjunto-prosa :global(ul) {
+      columns: 1;
+    }
+  }
+
+  .distribucion {
+    color: var(--tinta-suave);
+    max-width: 46rem;
   }
 
   /* ══ Ubicación + contacto ══ */

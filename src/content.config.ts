@@ -40,12 +40,19 @@ const desarrollos = defineCollection({
       logo: image().optional(),
       imagenes: z.array(image()).min(1),
       planos: z.array(image()).optional(),
+      /** Nombre del modelo único (desarrollos sin arreglo de modelos), p. ej. "Nova". */
+      nombreModelo: z.string().optional(),
       modelos: z
         .array(
           z.object({
             ...camposVivienda,
             nombre: z.string(),
-            precio: z.string(),
+            /** Sin precio ⇒ la página muestra "Consultar precio". */
+            precio: z.string().optional(),
+            /** Etapa o condominio al que pertenece, p. ej. "Condominio 9 · Puerto Xiamen". */
+            etapa: z.string().optional(),
+            /** Distribución por planta, en HTML breve. */
+            distribucion: z.string().optional(),
             imagenes: z.array(image()).min(1),
             planos: z.array(image()).optional(),
           })

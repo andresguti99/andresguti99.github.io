@@ -6,10 +6,10 @@
   "disponible": true,
   "telefono": "+52 753 136 3839",
   "facebook": "https://www.facebook.com/PuertoInternacional/",
-  "ubicacion": "Lázaro Cárdenas<br>Michoacán",
+  "ubicacion": "Lázaro Cárdenas, Michoacán<br>El desarrollo más cercano al Puerto, por el canal lateral 03, entre Club Pacífico y la Universidad Michoacana.",
   "mapa": "<iframe src=\"https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4911.635619576558!2d-102.19971930000001!3d17.9831289!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x84315db8d73ebd5f%3A0x7046df993aea381e!2sPuerto%20Internacional%20LZC!5e1!3m2!1sen!2smx!4v1783832069851!5m2!1sen!2smx\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"strict-origin-when-cross-origin\"></iframe>",
   "logo": "../../assets/desarrollos/puerto-internacional/Logo_Puerto_Internacional.png",
-  "precio": "DESDE $880,675.00",
+  "precio": "DESDE $1,230,120.00",
   "imagenes": [
     "../../assets/desarrollos/puerto-internacional/R1_Portico.jpg",
     "../../assets/desarrollos/puerto-internacional/R2_Area_Juegos.jpg",
@@ -22,14 +22,15 @@
   "modelos": [
     {
       "nombre": "Velero",
-      "precio": "PREVENTA $880,675.00",
+      "precio": "DESDE $1,230,120.00",
+      "etapa": "Condominio 10 · Puerto Vancouver",
       "plantas": "2",
-      "recamaras": "3",
+      "recamaras": "3 con área de guardado",
       "banos": "1 1/2",
-      "superficie": "96 m2",
-      "construccion": "90.52 m2",
-      "caracteristicasVivienda": "<ul><li>Casas Solas</li><li>Muros Independientes</li><li>Mas Altas</li><li>Ventilación Cruzada</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Áreas Verdes Equipadas</li><li>Ecotencias (Inodoros de Bajo Consumo, LLaves Ahorradoras de Agua, Calentador de Rapida Recuperacion, 6 lamparas LED)</li><li>Aislante Térmico en Azotea de Espuma de Poliestireno Estruido (Temperatura MAS Bajas en Interiores Todo el Año)</li><li>Arquitectura Contemporánea</li></ul>",
-      "caracteristicasConjunto": "<ul><li>Totalmente Cerrado</li><li>Barda Perimetral con Cerco Electrificado</li><li>Acceso Controlado Independiente y Reja Automatizada</li><li>Régimen de Propiedad en Condominio</li><li>Áreas Verdes Equipadas</li><li>Parque Lineal Equipado:<ul><li>Ciclovia</li><li>Bancas</li><li>Juegos Infantiles</li><li>Jardinería</li></ul></li></ul>",
+      "superficie": "96 m²",
+      "construccion": "90.52 m²",
+      "distribucion": "<strong>Planta baja:</strong> sala, comedor, cocina con alacena y medio baño.<br><strong>Planta alta:</strong> tres recámaras con área de guardado y un baño completo.",
+      "caracteristicasVivienda": "<ul><li>Casas solas con muros independientes, más altas</li><li>Arquitectura contemporánea orientada para clima cálido, con ventilación cruzada</li><li>Aislante térmico en azotea (temperaturas más bajas en interiores todo el año)</li><li>Diseño estructural para zona de alta sismicidad</li><li>Equipada con ecotecnias: inodoros de bajo consumo, llaves ahorradoras, calentador de rápida recuperación y lámparas LED</li></ul>",
       "planos": [
         "../../assets/desarrollos/puerto-internacional/Velero/Velero_Planta_Baja.png",
         "../../assets/desarrollos/puerto-internacional/Velero/Velero_Planta_Alta.png"
@@ -44,17 +45,17 @@
     },
     {
       "nombre": "Velero Plus",
-      "precio": "PREVENTA $999,500.00",
+      "etapa": "Condominio 10 · Puerto Vancouver",
       "plantas": "2",
-      "recamaras": "3",
+      "recamaras": "3 con área de guardado",
       "banos": "2 1/2",
-      "superficie": "96 m2",
-      "construccion": "94.69 m2",
-      "caracteristicasVivienda": "<ul><li>Cocina Integral Equipada con (Parrilla, Campana, Tarja y Barra de Desayunador)</li><li>Mayor Superfice Construida (Contra Velero)</li><li>Un Baño Completo Más</li><li>Protecciones en Todo el Frente de la Casa</li><li>Cochera para Dos Vehiculos</li><li>Casas Solas</li><li>Muros Independientes</li><li>Mas Altas</li><li>Ventilación Cruzada</li><li>Orientadas para Clima Cálido</li><li>Diseño Estructural para Zona de Alta Sismicidad</li><li>Áreas Verdes Equipadas</li><li>Ecotencias (Inodoros de Bajo Consumo, LLaves Ahorradoras de Agua, Calentador de Rapida Recuperacion, 6 lamparas LED)</li><li>Aislante Térmico en Azotea de Espuma de Poliestireno Estruido (Temperatura MAS Bajas en Interiores Todo el Año)</li><li>Arquitectura Contemporánea</li></ul>",
-      "caracteristicasConjunto": "<ul><li>Totalmente Cerrado</li><li>Barda Perimetral con Cerco Electrificado</li><li>Acceso Controlado Independiente y Reja Automatizada</li><li>Régimen de Propiedad en Condominio</li><li>Áreas Verdes Equipadas</li><li>Parque Lineal Equipado:<ul><li>Ciclovia</li><li>Bancas</li><li>Juegos Infantiles</li><li>Jardinería</li></ul></li></ul>",
+      "superficie": "96 m²",
+      "construccion": "94.69 m²",
+      "distribucion": "<strong>Planta baja:</strong> sala, comedor, cocina con alacena y medio baño.<br><strong>Planta alta:</strong> tres recámaras con área de guardado y dos baños completos.",
+      "caracteristicasVivienda": "<ul><li>Cocina integral equipada con parrilla, campana, tarja y barra de desayunador</li><li>Un baño completo más y mayor superficie construida que Velero</li><li>Cochera para dos vehículos y protecciones en todo el frente de la casa</li><li>Casas solas con muros independientes, más altas, con ventilación cruzada</li><li>Aislante térmico en azotea y diseño estructural para zona de alta sismicidad</li><li>Equipada con ecotecnias: inodoros de bajo consumo, llaves ahorradoras, calentador de rápida recuperación y lámparas LED</li></ul>",
       "planos": [
-        "../../assets/desarrollos/puerto-internacional/VeleroPlus/Velero_Plus_Planta_Baja.jpg",
-        "../../assets/desarrollos/puerto-internacional/VeleroPlus/Velero_Plus_Planta_Alta.jpg"
+        "../../assets/desarrollos/puerto-internacional/VeleroPlus/Velero_Plus_Planta_Baja.png",
+        "../../assets/desarrollos/puerto-internacional/VeleroPlus/Velero_Plus_Planta_Alta.png"
       ],
       "imagenes": [
         "../../assets/desarrollos/puerto-internacional/VeleroPlus/R1_Velero_Plus.jpg",
@@ -62,6 +63,95 @@
         "../../assets/desarrollos/puerto-internacional/VeleroPlus/R3_Velero_Plus.jpg",
         "../../assets/desarrollos/puerto-internacional/VeleroPlus/R4_Velero_Plus.jpg"
       ]
+    },
+    {
+      "nombre": "Galeón",
+      "etapa": "Condominio 9 · Puerto Xiamen",
+      "plantas": "2",
+      "recamaras": "3 con área de guardado",
+      "banos": "2 1/2",
+      "superficie": "126 m² (7.00 × 18.00 m)",
+      "construccion": "112.12 m²",
+      "distribucion": "<strong>Planta baja:</strong> acceso cubierto, vestíbulo, medio baño, sala, comedor, cocina con alacena y patio de servicio semicubierto; al frente, jardín y cochera para dos vehículos.<br><strong>Planta alta:</strong> vestíbulo y tres recámaras con área de guardado, con dos baños completos (uno dentro de la recámara 3).",
+      "caracteristicasVivienda": "<ul><li>Cocina integral de panel art de 2.90 m con barra desayunador, mueble con cajones, parrilla, campana purificadora y fregadero de acero inoxidable</li><li>Un minisplit de 1 tonelada incluido y preparación para aire acondicionado en las tres recámaras</li><li>Pisos de loseta cerámica de 40×40 cm</li><li>Ventanas de aluminio blanco con mosquiteros</li><li>Domo con ventilación en escalera y baño general</li><li>Tinaco de 1,100 L y calentador de paso</li><li>Protecciones de acero en puerta de acceso y ventanas de sala y medio baño</li><li>Contacto, agua fría y caliente y desagüe para lavadora en patio de servicio</li><li>Ecotecnias: inodoros de bajo consumo, regaderas y llaves ahorradoras y lámparas LED</li></ul>",
+      "planos": [
+        "../../assets/desarrollos/puerto-internacional/Galeon/Galeon_Planta_Baja.png",
+        "../../assets/desarrollos/puerto-internacional/Galeon/Galeon_Planta_Alta.png"
+      ],
+      "imagenes": [
+        "../../assets/desarrollos/puerto-internacional/Galeon/fachada.jpg",
+        "../../assets/desarrollos/puerto-internacional/Galeon/comedor-01.jpg",
+        "../../assets/desarrollos/puerto-internacional/Galeon/comedor-02.jpg",
+        "../../assets/desarrollos/puerto-internacional/Galeon/recamara-01.jpg",
+        "../../assets/desarrollos/puerto-internacional/Galeon/recamara-02.jpg"
+      ]
+    },
+    {
+      "nombre": "Goleta",
+      "etapa": "Condominio 9 · Puerto Xiamen",
+      "plantas": "2",
+      "recamaras": "3 con área de guardado",
+      "banos": "2 1/2",
+      "superficie": "126 m² (7.00 × 18.00 m)",
+      "construccion": "117.53 m²",
+      "distribucion": "<strong>Planta baja:</strong> vestíbulo, medio baño, sala, comedor y cocina con barra desayunador; al frente, patio de servicio semicubierto, jardín y cochera para dos vehículos; en la parte posterior, área para jardín.<br><strong>Planta alta:</strong> vestíbulo y tres recámaras con área de guardado, con dos baños completos (uno dentro de la recámara 3).",
+      "caracteristicasVivienda": "<ul><li>Cocina integral de panel art de 2.88 m con barra desayunador en escuadra, parrilla, campana purificadora y fregadero de acero inoxidable</li><li>Un minisplit de 1 tonelada incluido y preparación para aire acondicionado en las tres recámaras</li><li>Jardín posterior propio</li><li>Pisos de loseta cerámica de 40×40 cm</li><li>Ventanas de aluminio blanco con mosquiteros</li><li>Domo con ventilación en escalera y baño general</li><li>Tinaco de 1,100 L y calentador de paso</li><li>Protecciones de acero en puerta de acceso y ventana de medio baño</li><li>Contacto, agua fría y caliente y desagüe para lavadora en patio de servicio</li><li>Ecotecnias: inodoros de bajo consumo, regaderas y llaves ahorradoras y lámparas LED</li></ul>",
+      "planos": [
+        "../../assets/desarrollos/puerto-internacional/Goleta/Goleta_Planta_Baja.png",
+        "../../assets/desarrollos/puerto-internacional/Goleta/Goleta_Planta_Alta.png"
+      ],
+      "imagenes": [
+        "../../assets/desarrollos/puerto-internacional/Goleta/fachada.png",
+        "../../assets/desarrollos/puerto-internacional/Goleta/interior-01.jpg",
+        "../../assets/desarrollos/puerto-internacional/Goleta/interior-02.jpg",
+        "../../assets/desarrollos/puerto-internacional/Goleta/interior-03.jpg",
+        "../../assets/desarrollos/puerto-internacional/Goleta/manzana-01.jpg",
+        "../../assets/desarrollos/puerto-internacional/Goleta/manzana-02.jpg"
+      ]
+    },
+    {
+      "nombre": "Crucero",
+      "etapa": "Condominio 9 · Puerto Xiamen",
+      "plantas": "2",
+      "recamaras": "3 con área de guardado; la recámara 3 con vestidor",
+      "banos": "2 1/2",
+      "superficie": "137.22 m² (7.00 × 19.60 m)",
+      "construccion": "123.98 m²",
+      "distribucion": "<strong>Planta baja:</strong> pórtico de acceso cubierto, vestíbulo, estudio, medio baño, sala, comedor y cocina con alacena; al frente, patio de servicio semicubierto, jardín y cochera para dos vehículos; en la parte posterior, área para jardín.<br><strong>Planta alta:</strong> vestíbulo y tres recámaras con área de guardado; la recámara 3 con vestidor y baño propio, más un baño general.",
+      "caracteristicasVivienda": "<ul><li>Estudio en planta baja</li><li>Cocina integral de panel art de 2.76 m con barra desayunador de 1.80 m, parrilla de 5 quemadores, campana purificadora de 90 cm y tarja de acero inoxidable</li><li>Un minisplit de 1 tonelada incluido y preparación para aire acondicionado en las tres recámaras</li><li>Preparación para paneles solares</li><li>Pisos de loseta cerámica de 45×45 cm; regaderas con loseta de piso a techo</li><li>Ventanas de aluminio blanco con mosquiteros</li><li>Domo con ventilación en escalera y baño general</li><li>Tinaco tricapa de 1,100 L y calentador de paso</li><li>Protecciones de acero en puerta de acceso y ventana del estudio</li><li>Contacto, agua fría y caliente y desagüe para lavadora en patio de servicio</li><li>Ecotecnias: inodoros de bajo consumo, regaderas y llaves ahorradoras y lámparas LED</li></ul>",
+      "planos": [
+        "../../assets/desarrollos/puerto-internacional/Crucero/Crucero_Planta_Baja.png",
+        "../../assets/desarrollos/puerto-internacional/Crucero/Crucero_Planta_Alta.png"
+      ],
+      "imagenes": [
+        "../../assets/desarrollos/puerto-internacional/Crucero/fachada.jpg",
+        "../../assets/desarrollos/puerto-internacional/Crucero/comedor-cocina.jpg",
+        "../../assets/desarrollos/puerto-internacional/Crucero/sala-comedor.jpg",
+        "../../assets/desarrollos/puerto-internacional/Crucero/recamara.jpg",
+        "../../assets/desarrollos/puerto-internacional/Crucero/colores.jpg",
+        "../../assets/desarrollos/puerto-internacional/Crucero/fachadas-colores.jpg"
+      ]
+    },
+    {
+      "nombre": "Navío",
+      "etapa": "Condominio 9 · Puerto Xiamen",
+      "plantas": "2",
+      "recamaras": "3 con área de guardado; la recámara 3 con vestidor",
+      "banos": "2 1/2",
+      "superficie": "132.84 m² (7.38 × 18.00 m)",
+      "construccion": "135.39 m²",
+      "distribucion": "<strong>Planta baja:</strong> pórtico de acceso cubierto, vestíbulo, medio baño, estudio, sala, comedor, cocina con alacena y patio de servicio semicubierto; al frente, jardín y cochera para dos vehículos.<br><strong>Planta alta:</strong> vestíbulo y tres recámaras con área de guardado; la recámara 3 con vestidor y baño propio, más un baño general.",
+      "caracteristicasVivienda": "<ul><li>El modelo más amplio del conjunto: 135.39 m² construidos</li><li>Estudio en planta baja y recámaras de 3.50 m de ancho</li><li>Cocina integral de panel art de 3.00 m con barra desayunador de 1.80 m sobre mueble gabinete, parrilla de 5 quemadores, campana purificadora de 90 cm y tarja de acero inoxidable</li><li>Un minisplit de 1 tonelada incluido y preparación para aire acondicionado en las tres recámaras</li><li>Preparación para paneles solares</li><li>Fachada principal con lambrín de loseta cerámica</li><li>Pisos de loseta cerámica de 45×45 cm; regaderas con loseta de piso a techo</li><li>Ventanas de aluminio blanco con mosquiteros</li><li>Domo con ventilación en escalera y baño general</li><li>Tinaco tricapa de 1,100 L y calentador de paso</li><li>Muro de celosía entre patio y jardín</li><li>Protecciones de acero en puerta de acceso y ventanas de medio baño y estudio</li><li>Ecotecnias: inodoros de bajo consumo, regaderas y llaves ahorradoras y lámparas LED</li></ul>",
+      "planos": [
+        "../../assets/desarrollos/puerto-internacional/Navio/Navio_Planta_Baja.png",
+        "../../assets/desarrollos/puerto-internacional/Navio/Navio_Planta_Alta.png"
+      ],
+      "imagenes": [
+        "../../assets/desarrollos/puerto-internacional/Navio/fachada.jpg",
+        "../../assets/desarrollos/puerto-internacional/Navio/sala.jpg",
+        "../../assets/desarrollos/puerto-internacional/Navio/interior-escalera.jpg"
+      ]
     }
-  ]
+  ],
+  "caracteristicasConjunto": "<ul><li>Conjunto totalmente cerrado, con cerco perimetral electrificado y portones de acceso automatizados</li><li>Privadas de no más de 20 viviendas</li><li>Vialidad central de 26 m con parque lineal de 1 km en camellón central</li><li>Todos los servicios subterráneos: agua potable, drenaje sanitario, energía eléctrica y alumbrado público</li><li>Áreas verdes equipadas y con mobiliario urbano, distribuidas cerca de las viviendas</li><li>Áreas comerciales y de servicios al frente del desarrollo y locales al interior</li><li>Guarniciones y banquetas de concreto hidráulico</li><li>Régimen de propiedad en condominio</li><li>Lotes orientados norte–sur, lo más recomendable para el clima cálido de la región</li></ul>"
 }
