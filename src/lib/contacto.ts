@@ -3,7 +3,7 @@
 export const TELEFONO_OFICINA = '443 324 2601';
 export const CELULAR_VENTAS = '443 376 2167';
 export const CORREO_VENTAS = 'lgarza@ureppsa.com';
-export const FACEBOOK_UREPPSA = 'https://www.facebook.com/ureppsa.mx/';
+export const FACEBOOK_UREPPSA = 'https://www.facebook.com/ureppsa/';
 
 /** Enlace tel: con lada de México a partir de un número con o sin espacios. */
 export function enlaceTelefono(numero: string): string {
