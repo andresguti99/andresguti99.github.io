@@ -12,3 +12,6 @@ dist/
 # Documentos internos de ventas: no publicar en el repositorio público
 images/**/*.pdf
 images/**/*.pdf.pdf
+
+# Carpeta de trabajo de Claude Code (worktrees y configuración local)
+.claude/
