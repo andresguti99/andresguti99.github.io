@@ -1083,11 +1083,12 @@ const secciones = [
   }
 
   /* Sello legal en la esquina de toda foto ampliable (galería, planos y
-     modelos): las imágenes no son una promesa contractual */
+     modelos): las imágenes no son una promesa contractual. A la izquierda,
+     porque la lupa de ampliar vive en la esquina derecha. */
   .galeria-item::after {
     content: 'Imágenes de carácter ilustrativo';
     position: absolute;
-    right: 0.5rem;
+    left: 0.5rem;
     bottom: 0.5rem;
     font-size: 0.6rem;
     letter-spacing: 0.02em;

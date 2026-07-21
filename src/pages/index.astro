@@ -537,8 +537,12 @@ const financiamiento = [
   /* La ciudad discreta arriba; el precio en amarillo debajo */
   .escaparate-info .escaparate-lugar {
     color: rgba(255, 255, 255, 0.88);
+    font-family: var(--texto);
     font-weight: 600;
     font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .escaparate-info span {

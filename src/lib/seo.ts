@@ -46,7 +46,7 @@ const ACENTOS: Record<string, string> = {
 };
 
 /** Describe una fotografía a partir del nombre de su archivo fuente:
- *  "aerea-conjunto.abc123.webp" → "vista aérea del conjunto".
+ *  "aerea-conjunto.abc123.webp" → "vista aérea del desarrollo".
  *  Los archivos ya se nombran por su contenido (cocina, fachada, sala…),
  *  así que ese nombre es la mejor descripción disponible para buscadores
  *  y lectores de pantalla. Devuelve undefined si no hay nombre útil. */
