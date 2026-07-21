@@ -18,9 +18,15 @@ const opciones = [
   },
   {
     icono: 'cash-coin',
-    titulo: 'Compra directa',
+    titulo: 'Compra de contado',
     texto:
-      'Trato directo con nosotros, sin intermediarios: apartado sencillo y un plan de pagos claro, de persona a persona.',
+      'Apartado sencillo y un plan de pagos claro, de persona a persona, siempre directamente con nosotros.',
+  },
+  {
+    icono: 'piggy-bank-fill',
+    titulo: 'Otros créditos',
+    texto:
+      '¿Fovissste, caja popular, cofinanciamiento u otro esquema? Platícanos tu caso y te orientamos sin costo hacia la opción que mejor te convenga.',
   },
 ];
 
@@ -87,7 +93,7 @@ const faqEstructurado = {
 
 <Base
   titulo="Financiamiento: Infonavit, crédito bancario o directo | UREPPSA"
-  descripcion="Infonavit, crédito bancario o compra directa: te acompañamos paso a paso para estrenar tu casa UREPPSA."
+  descripcion="Infonavit, Fovissste, crédito bancario o compra de contado: te acompañamos paso a paso para estrenar tu casa UREPPSA."
   mensajeWhatsApp={MENSAJE_FINANCIAMIENTO}
   datosEstructurados={[faqEstructurado]}
 >
@@ -97,8 +103,9 @@ const faqEstructurado = {
       <span class="etiqueta">Financiamiento</span>
       <h1>Tu casa, <em>a tu manera</em>.</h1>
       <p>
-        Hay más de un camino para llegar a tu hogar. Conoce las opciones y déjanos
-        acompañarte en el que mejor se acomode a tu vida.
+        Hay más de un camino para llegar a tu hogar. Todas nuestras ventas son directas, sin
+        intermediarios ni revendedores: siempre tratas con UREPPSA. Conoce las opciones y déjanos
+        acompañarte en la que mejor se acomode a tu vida.
       </p>
     </div>
   </section>

@@ -2,7 +2,7 @@
   "nombre": "Nueva Sienna Residencial",
   "ciudad": "celaya",
   "anio": 2021,
-  "descripcion": "Vivienda de 3 Recamaras <br>Entrega Inmediata <br>Sin Costo de Apartado<br>Fraccionamiento Totalmente Cerrado<br>Visita La Casa Muestra",
+  "descripcion": "Vivienda de 3 Recámaras <br>Entrega Inmediata<br>Fraccionamiento Totalmente Cerrado<br>Visita La Casa Muestra",
   "disponible": true,
   "telefono": "+52 461 377 7723",
   "facebook": "https://www.facebook.com/NuevaSiennaResidencial/",
@@ -17,7 +17,7 @@
   "superficie": "4.6 x 16.5 (75.9) m2",
   "construccion": "77.16 m2",
   "caracteristicasVivienda": "<ul><li>Iluminación natural todo el día y domo con ventilación en sala y escalera</li><li>Cristales Sol-Lite con capa de control solar y filtro UV: mayor frescura y privacidad</li><li>Aislante térmico XPS de 1.25\" en azotea (mejor temperatura interior en todas las temporadas)</li><li>Impermeabilizante con garantía de cinco años</li><li>Color personalizado de cada vivienda</li><li>Pisos de loseta cerámica y azulejo antiderrapante en regaderas</li><li>Puerta de acceso multipanel de acero con cerradura de pomo y cerrojo</li><li>Cocina con fregadero de acero inoxidable de 80 cm y tinaco de 750 L</li><li>Patio de servicio con lavadero e instalaciones para lavadora</li><li>Instalación para gas y ductos para teléfono, TV e internet</li><li>Extractor de aire en baño de planta baja</li><li>Ecotecnias: inodoros de bajo consumo, llaves ahorradoras, seis lámparas LED y calentador de paso</li></ul>",
-  "caracteristicasConjunto": "<ul> <li> 150 Viviendas en Primera Etapa</li> <li>Régimen de Propiedad en Condominio</li><li>Pórtico de Acceso Controlado con Caseta de Vigilancia</li>\n<li>Circuito Cerrado</li>\n<li>Barda Perimetral con Cerco Electrificado</li>\n<li>Áreas Verdes Equipadas</li>\n<li>Área Especial de Recolección de Residuos</li></ul>",
+  "caracteristicasConjunto": "<ul> <li> 143 Viviendas en Segunda Etapa</li> <li>Régimen de Propiedad en Condominio</li><li>Pórtico de Acceso Controlado con Caseta de Vigilancia</li>\n<li>Circuito Cerrado</li>\n<li>Barda Perimetral con Cerco Electrificado</li>\n<li>Áreas Verdes Equipadas con Juegos</li>\n<li>Área Especial de Recolección de Residuos</li></ul>",
   "planos": [
     "../../assets/desarrollos/sienna/planta-baja-color.png",
     "../../assets/desarrollos/sienna/planta-alta-color.png"

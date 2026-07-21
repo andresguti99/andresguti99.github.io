@@ -71,7 +71,9 @@ type Vivienda = {
 const ficha = (v: Vivienda) =>
   (
     [
-      ['Plantas', v.plantas, 'building-fill'],
+      // Oculta por ahora a petición del equipo (2026-07): para reactivarla
+      // basta descomentar esta línea; el resto se acomoda solo.
+      // ['Plantas', v.plantas, 'building-fill'],
       ['Recámaras', v.recamaras, 'door-open-fill'],
       ['Baños', v.banos, 'droplet-fill'],
       ['Terreno', v.superficie, 'arrows-angle-expand'],
@@ -147,7 +149,8 @@ if (d.disponible) {
 const filasComparador = (
   [
     ['Precio', (m: (typeof modelos)[number]) => m.precio],
-    ['Plantas', (m) => m.plantas],
+    // Oculta por ahora, igual que en la ficha; descomentar para reactivar.
+    // ['Plantas', (m) => m.plantas],
     ['Recámaras', (m) => m.recamaras],
     ['Baños', (m) => m.banos],
     ['Terreno', (m) => m.superficie],
@@ -160,7 +163,7 @@ const secciones = [
   { href: '#galeria', texto: 'Galería' },
   ...(d.tourVirtual ? [{ href: '#tour', texto: 'Recorrido' }] : []),
   ...(modelos.length > 0 ? [{ href: '#modelos', texto: 'Modelos' }] : [{ href: '#vivienda', texto: 'La vivienda' }]),
-  ...(modelos.length > 0 && d.caracteristicasConjunto ? [{ href: '#conjunto', texto: 'El conjunto' }] : []),
+  ...(modelos.length > 0 && d.caracteristicasConjunto ? [{ href: '#conjunto', texto: 'El desarrollo' }] : []),
   { href: '#ubicacion', texto: 'Ubicación' },
 ];
 ---
@@ -401,12 +404,12 @@ const secciones = [
       </section>
     )}
 
-    <!-- ══ El conjunto (desarrollos con modelos) ══ -->
+    <!-- ══ El desarrollo (desarrollos con modelos) ══ -->
     {modelos.length > 0 && d.caracteristicasConjunto && (
       <section class="seccion seccion-compacta" id="conjunto">
         <div class="seccion-encabezado revelar">
-          <span class="etiqueta">El conjunto</span>
-          <h2>Un conjunto pensado para vivirse</h2>
+          <span class="etiqueta">El desarrollo</span>
+          <h2>Un desarrollo pensado para vivirse</h2>
         </div>
         <div class="prosa conjunto-prosa revelar" style="--retraso: 100ms" set:html={d.caracteristicasConjunto} />
       </section>
@@ -457,7 +460,7 @@ const secciones = [
             )}
             {d.caracteristicasConjunto && (
               <div>
-                <h3>El conjunto</h3>
+                <h3>El desarrollo</h3>
                 <div class="prosa" set:html={d.caracteristicasConjunto} />
               </div>
             )}
@@ -601,7 +604,7 @@ const secciones = [
         )}
         {m.caracteristicasConjunto && (
           <div>
-            <h4>El conjunto</h4>
+            <h4>El desarrollo</h4>
             <div class="prosa" set:html={m.caracteristicasConjunto} />
           </div>
         )}
@@ -1077,6 +1080,22 @@ const secciones = [
     cursor: zoom-in;
     border-radius: var(--radio);
     overflow: hidden;
+  }
+
+  /* Sello legal en la esquina de toda foto ampliable (galería, planos y
+     modelos): las imágenes no son una promesa contractual */
+  .galeria-item::after {
+    content: 'Imágenes de carácter ilustrativo';
+    position: absolute;
+    right: 0.5rem;
+    bottom: 0.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.02em;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(20, 17, 14, 0.45);
+    padding: 0.15rem 0.5rem;
+    border-radius: 999px;
+    pointer-events: none;
   }
 
   .galeria-item img {
@@ -1567,6 +1586,20 @@ const secciones = [
     max-width: 100vw;
     max-height: 100vh;
     outline: none;
+  }
+
+  /* El sello legal también en pantalla completa, donde más se mira la foto */
+  .visor[open]::after {
+    content: 'Imágenes de carácter ilustrativo';
+    position: fixed;
+    left: 1rem;
+    bottom: 1rem;
+    font-size: 0.68rem;
+    color: rgba(255, 255, 255, 0.75);
+    background: rgba(20, 17, 14, 0.5);
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    pointer-events: none;
   }
 
   .visor[open] {

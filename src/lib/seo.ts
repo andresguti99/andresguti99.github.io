@@ -28,8 +28,10 @@ export const migasDePan = (pasos: [string, string][]) => ({
   })),
 });
 
-/** Palabras de los nombres de archivo que llevan acento en pantalla. */
+/** Palabras de los nombres de archivo que llevan acento en pantalla (o que
+ *  en pantalla se dicen distinto, como conjunto → desarrollo). */
 const ACENTOS: Record<string, string> = {
+  conjunto: 'del desarrollo',
   aerea: 'aérea',
   panoramica: 'panorámica',
   area: 'área',
