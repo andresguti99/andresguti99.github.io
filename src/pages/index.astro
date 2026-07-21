@@ -11,6 +11,19 @@ import { ESTADISTICAS, ANIOS_EXPERIENCIA, MUNICIPIOS, CASAS_TEXTO } from '../lib
 const ciudades = await getCollection('ciudades');
 const nombreCiudad = (id: string) => ciudades.find((c) => c.id === id)?.data.nombre ?? id;
 
+// "Celaya - Gto.": ciudad con estado abreviado, para espacios compactos.
+const ABREVIATURAS_ESTADO: Record<string, string> = {
+  Michoacán: 'Mich.',
+  Guanajuato: 'Gto.',
+  Guerrero: 'Gro.',
+};
+const ciudadCorta = (id: string) => {
+  const c = ciudades.find((x) => x.id === id);
+  if (!c) return id;
+  const abrev = c.data.estado ? (ABREVIATURAS_ESTADO[c.data.estado] ?? c.data.estado) : '';
+  return abrev ? `${c.data.nombre} - ${abrev}` : c.data.nombre;
+};
+
 const desarrollos = (await getCollection('desarrollos')).sort((a, b) => b.data.anio - a.data.anio);
 const testimonios = await getCollection('testimonios');
 
@@ -112,7 +125,8 @@ const financiamiento = [
               )}
               <div class="escaparate-info">
                 <strong>{d.data.nombre}</strong>
-                <span>{nombreCiudad(d.data.ciudad.id)} · {d.data.precio}</span>
+                <span class="escaparate-lugar">{ciudadCorta(d.data.ciudad.id)}</span>
+                <span>{d.data.precio}</span>
               </div>
               <span class={`pildora ${d.data.disponible ? 'pildora-disponible' : 'pildora-vendido'}`}>
                 {d.data.disponible ? 'Disponible' : 'Vendido'}
@@ -518,6 +532,13 @@ const financiamiento = [
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  /* La ciudad discreta arriba; el precio en amarillo debajo */
+  .escaparate-info .escaparate-lugar {
+    color: rgba(255, 255, 255, 0.88);
+    font-weight: 600;
+    font-size: 0.85rem;
   }
 
   .escaparate-info span {
