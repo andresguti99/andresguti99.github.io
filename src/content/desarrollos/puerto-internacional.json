@@ -34,7 +34,7 @@
       "plantas": "2",
       "recamaras": "3 con área de guardado",
       "banos": "1 1/2",
-      "superficie": "96 m²",
+      "superficie": "96 m² (6.00 × 16.00 m)",
       "construccion": "90.52 m²",
       "distribucion": "<strong>Planta baja:</strong> sala, comedor, cocina con alacena y medio baño.<br><strong>Planta alta:</strong> tres recámaras con área de guardado y un baño completo.",
       "caracteristicasVivienda": "<ul><li>Casas solas con muros independientes, más altas</li><li>Arquitectura contemporánea orientada para clima cálido, con ventilación cruzada</li><li>Aislante térmico en azotea (temperaturas más bajas en interiores todo el año)</li><li>Diseño estructural para zona de alta sismicidad</li><li>Equipada con ecotecnias: inodoros de bajo consumo, llaves ahorradoras, calentador de rápida recuperación y lámparas LED</li></ul>",
@@ -56,10 +56,10 @@
       "plantas": "2",
       "recamaras": "3 con área de guardado",
       "banos": "2 1/2",
-      "superficie": "96 m²",
+      "superficie": "96 m² (6.00 × 16.00 m)",
       "construccion": "94.19 m²",
       "distribucion": "<strong>Planta baja:</strong> sala, comedor, cocina con alacena y medio baño.<br><strong>Planta alta:</strong> tres recámaras con área de guardado y dos baños completos uno dentro de recámara 1.",
-      "caracteristicasVivienda": "<ul><li>Cocina integral equipada con parrilla, campana, tarja y barra de desayunador</li><li>Un baño completo más dentro de recámara 1 y mayor superficie construida que Velero</li><li>Cochera para dos vehículos y protecciones en todo el frente de la casa</li><li>Casas solas con muros independientes, más altas, con ventilación cruzada</li><li>Aislante térmico en azotea y diseño estructural para zona de alta sismicidad</li><li>Cancelería con cristal templado en las áreas de regadera</li><li>Equipada con ecotecnias: inodoros de bajo consumo, llaves ahorradoras, calentador de rápida recuperación y lámparas LED</li></ul>",
+      "caracteristicasVivienda": "<ul><li>Cocina integral equipada con parrilla, campana, tarja y barra de desayunador</li><li>Un baño completo más en una recámara y mayor superficie construida que Velero</li><li>Cochera para dos vehículos y protecciones en planta baja</li><li>Casas solas con muros independientes, más altas, con ventilación cruzada</li><li>Aislante térmico en azotea (temperaturas más bajas en interiores todo el año)</li><li>Diseño estructural para zona de alta sismicidad</li><li>Cancelería con cristal templado en las áreas de regadera</li><li>Equipada con ecotecnias: inodoros de bajo consumo, llaves ahorradoras, calentador de rápida recuperación y lámparas LED</li></ul>",
       "planos": [
         "../../assets/desarrollos/puerto-internacional/velero-plus/velero-plus-planta-baja.png",
         "../../assets/desarrollos/puerto-internacional/velero-plus/velero-plus-planta-alta.png"
